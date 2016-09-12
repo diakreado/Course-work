@@ -4,7 +4,9 @@ import javax.swing.*;
 
 public class MainWindow {
 
-    JLabel label;
+    /* Вынесены в поля, чтобы из Engine был доступ к ним */
+    JTextField textField1;
+    JTextField textField2;
 
 
     MainWindow() {
@@ -20,19 +22,31 @@ public class MainWindow {
         panel.setLayout(null); // Сделано, чтобы можно было самому задавать местоположение объектов
 
 
-        /* Создаём поле ввода текста, устанавливаем его местоположение и помещаем на панель */
-        JTextField textField = new JTextField();
-        panel.add(textField);
-        textField.setBounds(25, 55, 95, 23);
+        /* Создаём 2 поля ввода текста, помещаем на панель и устанавливаем их местоположение */
+        textField1 = new JTextField();
+        panel.add(textField1);
+        textField1.setBounds(25, 55, 95, 23);
 
-         /* Создаём поле вывода текста...*/
-        label = new JLabel();
-        panel.add(label);
-        label.setBounds(275,55,95,23);
+        textField2 = new JTextField();
+        panel.add(textField2);
+        textField2.setBounds(235, 55, 95, 23);
 
+
+         /* Создаём 2 метки для указания валют, помещаем ...*/
+        JLabel labelUSD = new JLabel("usd");
+        panel.add(labelUSD);
+        labelUSD.setBounds(335,55,95,23);
+
+        JLabel labelRUB = new JLabel("руб");
+        panel.add(labelRUB);
+        labelRUB.setBounds(125,55,95,23);
+
+
+        /* Создаём  движок и делаем его слушателем сигналов*/
         Engine engine = new Engine(this);
 
-        textField.addActionListener(engine);
+        textField1.addActionListener(engine);
+        textField2.addActionListener(engine);
 
 
         frame.add(panel); // Устанавливаем панель на фрейм
