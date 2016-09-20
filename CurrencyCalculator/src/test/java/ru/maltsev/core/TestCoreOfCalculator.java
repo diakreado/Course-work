@@ -1,7 +1,5 @@
 package ru.maltsev.core;
 
-import ru.maltsev.core.CoreOfCalculator;
-
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
