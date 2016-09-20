@@ -12,10 +12,14 @@
 предоставляется возможность исследовать лабиринт
 
 В итоге планирается какая-то смесь этого 
+
+
 ![This is not displayed](Diagrams/1408084891_labirint-link-mega-droid.ru-1.png)
 
 
 с этим 
+
+
 ![This is not displayed](Diagrams/in8.png)
 
 
