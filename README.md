@@ -42,6 +42,6 @@
 
 ## Диаграмма компонентов
 
-Планируется использование патерна [MVC](https://ru.wikipedia.org/wiki/Model-View-Controller)
+Планируется использование патерна [MVP](https://ru.wikipedia.org/wiki/Model-View-Presenter)
 
-![This is not displayed](Diagrams/MVC-Process.png)
+![This is not displayed](Diagrams/MVP-Process.png)
