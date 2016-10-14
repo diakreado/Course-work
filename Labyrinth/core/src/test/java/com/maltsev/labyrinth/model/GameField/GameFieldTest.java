@@ -15,6 +15,11 @@ public class GameFieldTest {
         assertEquals(false ,gameField.isItPossibleWay(1,1));
         assertEquals(false ,gameField.isItPossibleWay(2,4));
         assertEquals(false ,gameField.isItPossibleWay(0,3));
+
+        assertEquals(true ,gameField.isItPossibleWay(new PointOnTheField(0,0)));
+        assertEquals(true ,gameField.isItPossibleWay(new PointOnTheField(4,3)));
+        assertEquals(false ,gameField.isItPossibleWay(new PointOnTheField(3,4)));
+        assertEquals(false ,gameField.isItPossibleWay(new PointOnTheField(1,4)));
     }
 
 }

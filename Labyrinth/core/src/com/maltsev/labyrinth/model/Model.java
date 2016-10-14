@@ -10,5 +10,11 @@ import com.maltsev.labyrinth.model.GameField.GameField;
 public class Model {
 
     Protagonist protagonist;
-    GameField gameField;
+    public GameField gameField;
+
+    public Model() {
+
+        gameField = new GameField();
+        protagonist = new Protagonist();
+    }
 }

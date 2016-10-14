@@ -29,6 +29,8 @@ public class View extends ApplicationAdapter {
     Texture heroImg;
     Rectangle heroPosition;
 
+    Texture block;
+
     Presenter presenter;
 
 
@@ -44,8 +46,10 @@ public class View extends ApplicationAdapter {
 
         batch = new SpriteBatch();
 
-        heroImg = new Texture("hero.png");
+        heroImg = new Texture("protagonist.png");
         heroPosition = new Rectangle();
+
+        block = new Texture("block.png");
 
         heroPosition.x = 100;
         heroPosition.y = 100;
@@ -62,7 +66,10 @@ public class View extends ApplicationAdapter {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
-        batch.draw(heroImg,heroPosition.x,heroPosition.y);
+            batch.draw(block, 0, 0);
+            batch.draw(block, presenter.getSize()*70, presenter.getSize()*70);
+
+            batch.draw(heroImg,heroPosition.x,heroPosition.y);
 
         batch.end();
 
@@ -71,7 +78,25 @@ public class View extends ApplicationAdapter {
             touchPos.set(Gdx.input.getX(),Gdx.input.getY(),0);
             camera.unproject(touchPos);
 
-            heroPosition = presenter.pressOnTheScreen(touchPos);
+            float heroPositionStartX = heroPosition.x;
+            float heroPositionStartY = heroPosition.y;
+
+            heroPosition.x = ((int)touchPos.x / 70)*70;
+            heroPosition.y = ((int)touchPos.y / 70)*70;
+
+            if (heroPosition.x < 0) heroPosition.x = 0;
+            if (heroPosition.x > presenter.getSize()*70) heroPosition.x = presenter.getSize()*70;
+            if (heroPosition.y < 0) heroPosition.y = 0;
+            if (heroPosition.y > presenter.getSize()*70) heroPosition.y = presenter.getSize()*70;
+
+            int x = (int)(heroPosition.x / 70);
+            int y = (int)(heroPosition.y / 70);
+
+            if( !(presenter.canIWalkHere(x, y))) {
+
+                heroPosition.x = heroPositionStartX;
+                heroPosition.y = heroPositionStartY;
+            }
         }
     }
 
