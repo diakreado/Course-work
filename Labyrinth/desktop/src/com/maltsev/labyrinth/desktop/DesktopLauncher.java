@@ -2,6 +2,7 @@ package com.maltsev.labyrinth.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.maltsev.labyrinth.presenter.Presenter;
 import com.maltsev.labyrinth.view.View;
 
 public class DesktopLauncher {

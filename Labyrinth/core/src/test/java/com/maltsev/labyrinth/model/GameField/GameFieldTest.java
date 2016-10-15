@@ -7,7 +7,15 @@ public class GameFieldTest {
     @Test
     public void isItPossibleWay() throws Exception {
 
-        GameField gameField = new GameField();
+        int newField[][] = {{0,1,1,1,0},
+                            {0,1,1,1,1},
+                            {0,1,1,1,1},
+                            {0,1,1,1,1},
+                            {0,0,0,0,0}};
+
+        GameField gameField = new GameField(newField);
+
+        assertEquals(true ,gameField.isItPossibleWay(0,4));
 
         assertEquals(true ,gameField.isItPossibleWay(0,0));
         assertEquals(true ,gameField.isItPossibleWay(4,4));
@@ -15,11 +23,6 @@ public class GameFieldTest {
         assertEquals(false ,gameField.isItPossibleWay(1,1));
         assertEquals(false ,gameField.isItPossibleWay(2,4));
         assertEquals(false ,gameField.isItPossibleWay(0,3));
-
-        assertEquals(true ,gameField.isItPossibleWay(new PointOnTheField(0,0)));
-        assertEquals(true ,gameField.isItPossibleWay(new PointOnTheField(4,3)));
-        assertEquals(false ,gameField.isItPossibleWay(new PointOnTheField(3,4)));
-        assertEquals(false ,gameField.isItPossibleWay(new PointOnTheField(1,4)));
     }
 
 }

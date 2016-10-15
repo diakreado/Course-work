@@ -37,7 +37,7 @@ public class View extends ApplicationAdapter {
     @Override
     public void create () {
 
-        presenter = new Presenter();
+        presenter = new Presenter(this);
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false,800,480);
@@ -51,14 +51,14 @@ public class View extends ApplicationAdapter {
 
         block = new Texture("block.png");
 
-        heroPosition.x = 100;
-        heroPosition.y = 100;
+        heroPosition.x = 0;
+        heroPosition.y = 0;
     }
 
     @Override
     public void render () {
 
-        Gdx.gl.glClearColor(0, 0, 0, 0);
+        Gdx.gl.glClearColor(255, 255, 255, 255);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         camera.update();
@@ -66,8 +66,7 @@ public class View extends ApplicationAdapter {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
-            batch.draw(block, 0, 0);
-            batch.draw(block, presenter.getSize()*70, presenter.getSize()*70);
+            presenter.drawPassableCells();
 
             batch.draw(heroImg,heroPosition.x,heroPosition.y);
 
@@ -85,19 +84,24 @@ public class View extends ApplicationAdapter {
             heroPosition.y = ((int)touchPos.y / 70)*70;
 
             if (heroPosition.x < 0) heroPosition.x = 0;
-            if (heroPosition.x > presenter.getSize()*70) heroPosition.x = presenter.getSize()*70;
+            if (heroPosition.x > presenter.getSizeX()*70) heroPosition.x = presenter.getSizeX()*70;
             if (heroPosition.y < 0) heroPosition.y = 0;
-            if (heroPosition.y > presenter.getSize()*70) heroPosition.y = presenter.getSize()*70;
+            if (heroPosition.y > presenter.getSizeY()*70) heroPosition.y = presenter.getSizeY()*70;
 
             int x = (int)(heroPosition.x / 70);
             int y = (int)(heroPosition.y / 70);
 
-            if( !(presenter.canIWalkHere(x, y))) {
+            if( !(presenter.isItPossibleWay(x, y))) {
 
                 heroPosition.x = heroPositionStartX;
                 heroPosition.y = heroPositionStartY;
             }
         }
+    }
+
+    public void drawBlock(float x, float y) {
+
+         batch.draw(block, x, y);
     }
 
     @Override

@@ -1,12 +1,8 @@
 package com.maltsev.labyrinth.presenter;
 
-
-
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
-import com.maltsev.labyrinth.model.GameField.CellOfField;
-import com.maltsev.labyrinth.model.GameField.GameField;
+import com.badlogic.gdx.math.Vector2;
 import com.maltsev.labyrinth.model.Model;
+import com.maltsev.labyrinth.view.View;
 
 import java.util.ArrayList;
 
@@ -17,36 +13,38 @@ import java.util.ArrayList;
  */
 public class Presenter {
 
-    private Model model;
+    private final Model model;
+    private final View view;
 
-    ArrayList<ArrayList< CellOfField>> matrixOfCell;
-
-    public Presenter() {
+    public Presenter(View view) {
 
         model = new Model();
-
-        matrixOfCell = new ArrayList<ArrayList<CellOfField>>(model.gameField.matrixOfCell);
-    }
-
-    public boolean canIWalkHere(int x, int y) {
-
-        return model.gameField.isItPossibleWay(x,y);
-    }
-
-    public int getSize() {
-
-        return 4;
+        this.view = view;
     }
 
 
-    public Rectangle pressOnTheScreen(Vector3 touchPos){
+    public boolean isItPossibleWay(int x, int y) {
 
-        Rectangle heroPosition = new Rectangle();
-
-        heroPosition.x = touchPos.x - 35;
-        heroPosition.y = touchPos.y - 35;
-
-        return heroPosition;
+        return model.isItPossibleWay(x,y);
     }
 
+    public int getSizeX() {
+
+        return model.getSizeOfFieldX() - 1;
+    }
+
+    public int getSizeY() {
+
+        return model.getSizeOfFieldY() - 1;
+    }
+
+    public void drawPassableCells() {
+
+        ArrayList<Vector2> passbleCells = new ArrayList<Vector2>(model.getPassableCells());
+
+        for (int i = 0; i < passbleCells.size(); i++) {
+
+            view.drawBlock(passbleCells.get(i).x*70, passbleCells.get(i).y*70);
+        }
+    }
 }
