@@ -19,7 +19,7 @@ import com.maltsev.labyrinth.presenter.Presenter;
  * Единственное, что делает View,
  * это вызывает методы презентера при каком-либо действии пользователя
  */
-public class View extends ApplicationAdapter {
+public class View extends ApplicationAdapter {                                     //TODO  Разобраться с камерой
 
     SpriteBatch batch;
     OrthographicCamera camera;
@@ -66,7 +66,7 @@ public class View extends ApplicationAdapter {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
-            presenter.drawPassableCells();
+            presenter.drawPassableCells(block);
 
             batch.draw(heroImg,heroPosition.x,heroPosition.y);
 
@@ -77,25 +77,7 @@ public class View extends ApplicationAdapter {
             touchPos.set(Gdx.input.getX(),Gdx.input.getY(),0);
             camera.unproject(touchPos);
 
-            float heroPositionStartX = heroPosition.x;
-            float heroPositionStartY = heroPosition.y;
-
-            heroPosition.x = ((int)touchPos.x / 70)*70;
-            heroPosition.y = ((int)touchPos.y / 70)*70;
-
-            if (heroPosition.x < 0) heroPosition.x = 0;
-            if (heroPosition.x > presenter.getSizeX()*70) heroPosition.x = presenter.getSizeX()*70;
-            if (heroPosition.y < 0) heroPosition.y = 0;
-            if (heroPosition.y > presenter.getSizeY()*70) heroPosition.y = presenter.getSizeY()*70;
-
-            int x = (int)(heroPosition.x / 70);
-            int y = (int)(heroPosition.y / 70);
-
-            if( !(presenter.isItPossibleWay(x, y))) {
-
-                heroPosition.x = heroPositionStartX;
-                heroPosition.y = heroPositionStartY;
-            }
+            presenter.moveProtagonist(touchPos, heroPosition, block);
         }
     }
 

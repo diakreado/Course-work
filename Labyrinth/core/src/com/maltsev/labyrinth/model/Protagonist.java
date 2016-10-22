@@ -11,4 +11,5 @@ class Protagonist {
 
         locationOfProtagonist = new PointOnTheField(startPoint);
     }
+
 }

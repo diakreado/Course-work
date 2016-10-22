@@ -42,4 +42,11 @@ public interface ModelAPI {
      * @param finalPoint - конечная точка поля
      */
     void setGameField(int gameField[][] ,PointOnTheField startPoint ,PointOnTheField finalPoint);
+
+    /**
+     * Перемещаяет протагониста в определённыю точку пространства
+     * @param x координата ячейкки по оси Х
+     * @param y координата ячейкки по оси Y
+     */
+    void moveProtagonist(int x, int y);
 }

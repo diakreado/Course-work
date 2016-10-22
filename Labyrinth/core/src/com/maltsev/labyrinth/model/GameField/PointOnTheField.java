@@ -3,8 +3,8 @@ package com.maltsev.labyrinth.model.GameField;
 
 public class PointOnTheField {
 
-    int x;
-    int y;
+    private int x;
+    private int y;
 
 
     public PointOnTheField(int x, int y) {
@@ -31,5 +31,11 @@ public class PointOnTheField {
     public int getY() {
 
         return y;
+    }
+
+    public boolean equals(PointOnTheField point) {
+
+        if (this.x == point.x && this.y == point.y) return true;
+        else return false;
     }
 }
