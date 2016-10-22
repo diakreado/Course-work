@@ -1,7 +1,5 @@
 package com.maltsev.labyrinth.model.GameField;
 
-import com.badlogic.gdx.math.Vector2;
-
 import java.util.ArrayList;
 
 /**
@@ -27,7 +25,9 @@ public class GameField {
      */
     public ArrayList< ArrayList< CellOfField>> matrixOfCell;
 
-    private ArrayList<Vector2> passableCells;
+    private ArrayList<PointOnTheField> passableCells;
+
+
 
 
     public GameField() {
@@ -35,9 +35,12 @@ public class GameField {
         this(newField);
     }
 
+    /**
+     * @param newField - объязательно матрица, где 0 - проходимый элемент, а 1 - нет
+     */
     public GameField(int newField[][]) {
 
-        passableCells = new ArrayList<Vector2>();
+        passableCells = new ArrayList<PointOnTheField>();
         matrixOfCell = new ArrayList<ArrayList<CellOfField>>();
 
         for(int x = 0; x < newField.length; x++) {
@@ -51,7 +54,7 @@ public class GameField {
 
                     isItPossibleWay = true;
 
-                    passableCells.add(new Vector2(x,y));
+                    passableCells.add(new PointOnTheField(x,y));
                 }
 
                 arrayOfCell.add(new CellOfField(isItPossibleWay));
@@ -82,7 +85,7 @@ public class GameField {
         return matrixOfCell.get(0).size();
     }
 
-    public ArrayList<Vector2> getPassableCells() {
+    public ArrayList<PointOnTheField> getPassableCells() {
 
         return passableCells;
     }

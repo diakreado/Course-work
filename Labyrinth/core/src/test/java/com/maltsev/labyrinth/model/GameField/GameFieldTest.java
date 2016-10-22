@@ -23,6 +23,11 @@ public class GameFieldTest {
         assertEquals(false ,gameField.isItPossibleWay(1,1));
         assertEquals(false ,gameField.isItPossibleWay(2,4));
         assertEquals(false ,gameField.isItPossibleWay(0,3));
+
+        assertEquals(5, gameField.getSizeOfFieldX());
+        assertEquals(5, gameField.getSizeOfFieldY());
+
+        System.out.println("\n 1. Конструктор создания поля и проверка на возможность прохождения ячейки работают правильно");
     }
 
 }

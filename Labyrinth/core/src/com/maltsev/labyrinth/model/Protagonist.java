@@ -1,8 +1,14 @@
 package com.maltsev.labyrinth.model;
 
 
-public class Protagonist {
+import com.maltsev.labyrinth.model.GameField.PointOnTheField;
 
-    int x;
-    int y;
+class Protagonist {
+
+    PointOnTheField locationOfProtagonist;
+
+    Protagonist(PointOnTheField startPoint) {
+
+        locationOfProtagonist = new PointOnTheField(startPoint);
+    }
 }

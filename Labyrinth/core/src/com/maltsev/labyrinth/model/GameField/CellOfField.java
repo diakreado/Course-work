@@ -2,7 +2,7 @@ package com.maltsev.labyrinth.model.GameField;
 
 
 
-public class CellOfField {
+class CellOfField {
 
     /**
      *  Не все ячейки пригодны для помещения в них игрока

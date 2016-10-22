@@ -1,6 +1,6 @@
 package com.maltsev.labyrinth.presenter;
 
-import com.badlogic.gdx.math.Vector2;
+import com.maltsev.labyrinth.model.GameField.PointOnTheField;
 import com.maltsev.labyrinth.model.Model;
 import com.maltsev.labyrinth.view.View;
 
@@ -40,11 +40,11 @@ public class Presenter {
 
     public void drawPassableCells() {
 
-        ArrayList<Vector2> passbleCells = new ArrayList<Vector2>(model.getPassableCells());
+        ArrayList<PointOnTheField> passbleCells = new ArrayList<PointOnTheField>(model.getPassableCells());
 
         for (int i = 0; i < passbleCells.size(); i++) {
 
-            view.drawBlock(passbleCells.get(i).x*70, passbleCells.get(i).y*70);
+            view.drawBlock(passbleCells.get(i).getX()*70, passbleCells.get(i).getY()*70);
         }
     }
 }
