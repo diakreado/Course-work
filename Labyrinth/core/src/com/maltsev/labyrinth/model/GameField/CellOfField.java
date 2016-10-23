@@ -1,13 +1,23 @@
 package com.maltsev.labyrinth.model.GameField;
 
 
-
+/**
+ *  Ячейка поля, содержит информацию, о том возможно ли на неё встать или нет
+ */
 class CellOfField {
 
     /**
-     *  Не все ячейки пригодны для помещения в них игрока
+     *  Хранит информацию о проходимости клетки
      */
-    public  boolean isItPossibleWay;
+    private boolean isItPossibleWay;
+
+    /**
+     * @return проходим ли клетка
+     */
+    public boolean getInfoAboutPatencyOfCell() {
+
+        return isItPossibleWay;
+    }
 
     /**
      * @param - является ли эта ячейка проходимой

@@ -1,6 +1,7 @@
 package com.maltsev.labyrinth.model;
 
 import com.maltsev.labyrinth.model.GameField.GameField;
+import com.maltsev.labyrinth.model.GameField.OutOfBoundaryOfTheField;
 import com.maltsev.labyrinth.model.GameField.PointOnTheField;
 
 import java.util.ArrayList;
@@ -21,8 +22,14 @@ public class Model implements ModelAPI {                                        
 
     @Override
     public boolean isItPossibleWay(int x, int y) {
+        try {
 
-        return gameField.isItPossibleWay(x,y);
+            return gameField.isItPossibleWay(x,y);
+        }
+        catch (OutOfBoundaryOfTheField ex) {
+
+            return false;
+        }
     }
 
     public boolean isGameEnded() {
@@ -33,8 +40,22 @@ public class Model implements ModelAPI {                                        
     public Model() {
 
         isGameEnded = false;
-        gameField = new GameField();
         protagonist = new Protagonist(new PointOnTheField(0,0));
+
+
+
+        int newField[][]= {{0,1,1,0,0,0},
+                {0,0,1,0,1,1},
+                {1,0,1,0,0,0},
+                {0,0,1,1,1,0},
+                {0,1,1,1,0,0},
+                {0,1,0,0,0,1},
+                {0,1,0,1,1,1},
+                {0,1,0,0,0,0},
+                {0,1,1,1,1,0},
+                {0,0,0,0,0,0}};
+
+        gameField = new GameField(newField);
     }
 
 
@@ -59,7 +80,7 @@ public class Model implements ModelAPI {                                        
     @Override
     public void setGameField(int[][] gameField, PointOnTheField startPoint, PointOnTheField finalPoint) {
 
-        throw new UnsupportedOperationException();                                                      //TODO Реализовать
+
     }
 
     public void moveProtagonist(int x, int y) {

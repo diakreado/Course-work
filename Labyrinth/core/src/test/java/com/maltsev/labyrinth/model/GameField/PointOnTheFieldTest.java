@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 public class PointOnTheFieldTest {
     @Test
-    public void performanceOfPointOnTheField() throws Exception {
+    public void constructorTest() throws Exception {
 
         PointOnTheField pointFirst = new PointOnTheField(7,4);
 
@@ -18,16 +18,35 @@ public class PointOnTheFieldTest {
         assertEquals(0 ,pointSecond.getX());
         assertEquals(1 ,pointSecond.getY());
 
-        System.out.println("\n 1.Конструктор, принимающий int, и метод, возвращающий координаты работает правильно");
-
-        PointOnTheField pointThird = new PointOnTheField(pointFirst);
-
-        assertEquals(7 ,pointThird .getX());
-        assertEquals(4 ,pointThird .getY());
-
-        System.out.println(" 2.Констркутор копирования работает правильно");
-
-        System.out.println("\n Класс Точка на плоскости работает правильно");
+        System.out.println("\nКонструктор, принимающий int, и метод, возвращающий координаты работает правильно");
     }
+
+    @Test
+    public void copyConstructorTest() throws Exception {
+
+        PointOnTheField pointFirst = new PointOnTheField(7,4);
+
+        PointOnTheField pointSecond = new PointOnTheField(pointFirst);
+
+        assertEquals(7 ,pointSecond .getX());
+        assertEquals(4 ,pointSecond.getY());
+
+        System.out.println("Констркутор копирования работает правильно");
+    }
+
+    @Test
+    public void equalsTest() throws Exception {
+
+        PointOnTheField pointFirst = new PointOnTheField(100,54);
+        PointOnTheField pointSecond = new PointOnTheField(100,54);
+        PointOnTheField pointThird = new PointOnTheField(0,0);
+
+        assertEquals(true, pointFirst.equals(100,54));
+        assertEquals(true, pointFirst.equals(pointSecond));
+        assertEquals(false, pointFirst.equals(pointThird));
+
+        System.out.println("Стравнение точек работает правильно");
+    }
+
 
 }

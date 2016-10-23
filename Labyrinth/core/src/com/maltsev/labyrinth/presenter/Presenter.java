@@ -33,12 +33,12 @@ public class Presenter {                                        //TODO Обду�
 
     public int getSizeX() {
 
-        return model.getSizeOfFieldX() - 1;
+        return model.getSizeOfFieldX() - 1;          // т.к. отсёт с нуля
     }
 
     public int getSizeY() {
 
-        return model.getSizeOfFieldY() - 1;
+        return model.getSizeOfFieldY() - 1;          // т.к. отсёт с нуля
     }
 
     public void drawPassableCells(Texture block) {
