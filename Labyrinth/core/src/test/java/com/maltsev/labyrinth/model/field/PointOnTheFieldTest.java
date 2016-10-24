@@ -1,4 +1,4 @@
-package com.maltsev.labyrinth.model.GameField;
+package com.maltsev.labyrinth.model.field;
 
 import org.junit.Test;
 
@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 public class PointOnTheFieldTest {
     @Test
-    public void constructorTest() throws Exception {
+    public void constructorOfPointTest() throws Exception {
 
         PointOnTheField pointFirst = new PointOnTheField(7,4);
 
@@ -17,12 +17,10 @@ public class PointOnTheFieldTest {
 
         assertEquals(0 ,pointSecond.getX());
         assertEquals(1 ,pointSecond.getY());
-
-        System.out.println("\nКонструктор, принимающий int, и метод, возвращающий координаты работает правильно");
     }
 
     @Test
-    public void copyConstructorTest() throws Exception {
+    public void copyConstructorOfPointTest() throws Exception {
 
         PointOnTheField pointFirst = new PointOnTheField(7,4);
 
@@ -30,22 +28,18 @@ public class PointOnTheFieldTest {
 
         assertEquals(7 ,pointSecond .getX());
         assertEquals(4 ,pointSecond.getY());
-
-        System.out.println("Констркутор копирования работает правильно");
     }
 
     @Test
-    public void equalsTest() throws Exception {
+    public void equalsOfPointTest() throws Exception {
 
         PointOnTheField pointFirst = new PointOnTheField(100,54);
         PointOnTheField pointSecond = new PointOnTheField(100,54);
         PointOnTheField pointThird = new PointOnTheField(0,0);
 
-        assertEquals(true, pointFirst.equals(100,54));
-        assertEquals(true, pointFirst.equals(pointSecond));
-        assertEquals(false, pointFirst.equals(pointThird));
-
-        System.out.println("Стравнение точек работает правильно");
+        assertTrue(pointFirst.equals(100,54));
+        assertTrue(pointFirst.equals(pointSecond));
+        assertFalse(pointFirst.equals(pointThird));
     }
 
 

@@ -1,15 +1,15 @@
 package com.maltsev.labyrinth.model;
 
-import com.maltsev.labyrinth.model.GameField.GameField;
-import com.maltsev.labyrinth.model.GameField.OutOfBoundaryOfTheField;
-import com.maltsev.labyrinth.model.GameField.PointOnTheField;
+import com.maltsev.labyrinth.model.field.GameField;
+import com.maltsev.labyrinth.model.field.OutOfBoundaryOfTheField;
+import com.maltsev.labyrinth.model.field.PointOnTheField;
+import com.maltsev.labyrinth.model.protagonist.ObjectAlreadyExists;
+import com.maltsev.labyrinth.model.protagonist.Protagonist;
 
 import java.util.ArrayList;
 
 
-public class Model implements ModelAPI {                                            //TODO реализовать сохранение и запись в файл
-
-    //TODO обдумать генерацию лабиринтов
+public class Model implements ModelAPI {
 
     private Protagonist protagonist;  // Объект обозначающий игрок
     private GameField gameField;     // Объект обозначающий игровое поле
@@ -40,9 +40,17 @@ public class Model implements ModelAPI {                                        
     public Model() {
 
         isGameEnded = false;
-        protagonist = new Protagonist(new PointOnTheField(0,0));
 
+        try {
 
+            setProtagonist();
+        }
+        catch (ObjectAlreadyExists ex) {
+
+            System.out.println(ex.getMessage());
+        }
+
+        protagonist = Protagonist.getInstance();
 
         int newField[][]= {{0,1,1,0,0,0},
                 {0,0,1,0,1,1},
@@ -58,6 +66,10 @@ public class Model implements ModelAPI {                                        
         gameField = new GameField(newField);
     }
 
+    public void setProtagonist() throws ObjectAlreadyExists {
+
+        Protagonist.setInstance(startPoint);
+    }
 
     @Override
     public int getSizeOfFieldX() {
@@ -83,11 +95,11 @@ public class Model implements ModelAPI {                                        
 
     }
 
-    public void moveProtagonist(int x, int y) {
+    public void moveProtagonist(int x, int y){
 
-        protagonist.locationOfProtagonist = new PointOnTheField(x,y);
+        protagonist.moveProtagonist(x,y);
 
-        if (protagonist.locationOfProtagonist.equals(finalPoint)) isGameEnded = true;
+        if (protagonist.getLocationOfProtagonist().equals(finalPoint)) isGameEnded = true;
         else isGameEnded = false;
     }
 }

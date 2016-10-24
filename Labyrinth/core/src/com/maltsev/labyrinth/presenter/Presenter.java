@@ -3,8 +3,9 @@ package com.maltsev.labyrinth.presenter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.maltsev.labyrinth.model.GameField.PointOnTheField;
+import com.maltsev.labyrinth.model.field.PointOnTheField;
 import com.maltsev.labyrinth.model.Model;
+import com.maltsev.labyrinth.model.protagonist.ObjectAlreadyExists;
 import com.maltsev.labyrinth.view.View;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.maltsev.labyrinth.model.GameField;
+package com.maltsev.labyrinth.model.field;
 
 /**
  * Точка на поле

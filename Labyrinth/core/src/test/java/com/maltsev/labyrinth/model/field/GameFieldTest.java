@@ -1,4 +1,4 @@
-package com.maltsev.labyrinth.model.GameField;
+package com.maltsev.labyrinth.model.field;
 
 import org.junit.Test;
 
@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 
 public class GameFieldTest {
     @Test
-    public void isItPossibleWay() throws Exception {
+    public void createFiledAndCheckPossible() throws Exception {
 
         int newField[][] = {{0,1,1,1,0},
                 {0,1,1,1,1},
@@ -20,21 +20,19 @@ public class GameFieldTest {
 
         assertEquals(true ,gameField.isItPossibleWay(0,4));
 
-        assertEquals(true ,gameField.isItPossibleWay(0,0));
-        assertEquals(true ,gameField.isItPossibleWay(4,4));
-        assertEquals(true ,gameField.isItPossibleWay(3,0));
-        assertEquals(false ,gameField.isItPossibleWay(1,1));
-        assertEquals(false ,gameField.isItPossibleWay(2,4));
-        assertEquals(false ,gameField.isItPossibleWay(0,3));
+        assertTrue(gameField.isItPossibleWay(0,0));
+        assertTrue(gameField.isItPossibleWay(4,4));
+        assertTrue(gameField.isItPossibleWay(3,0));
+        assertFalse(gameField.isItPossibleWay(1,1));
+        assertFalse(gameField.isItPossibleWay(2,4));
+        assertFalse(gameField.isItPossibleWay(0,3));
 
         assertEquals(5, gameField.getSizeOfFieldX());
         assertEquals(5, gameField.getSizeOfFieldY());
-
-        System.out.println("Тест на создание поля правильного размера и проверку проходимости ячеек - пройден.");
     }
 
     @Test
-    public void getPassableCells() throws Exception {
+    public void getArrayOfPassableCells() throws Exception {
 
         int newField[][] = {{0,1,1,1,1,1},
                             {1,1,1,1,0,0},
@@ -52,12 +50,10 @@ public class GameFieldTest {
 
         PointOnTheField thirdPoint = new PointOnTheField(passableCells.get(3));
         assertEquals(true ,thirdPoint.equals(2,0));
-
-        System.out.println("Тест на получеие массива проходимых ячеек - пройден.");
     }
 
     @Test
-    public void exceptionInConstructor() throws Exception {
+    public void throwsExceptionInConstructor() throws Exception {
 
         int newField[][] = {{0,1,1,1,0,0,0},
                 {0,1,1,1,1,0,0},
@@ -71,35 +67,33 @@ public class GameFieldTest {
 
             gameField.isItPossibleWay(2,8);
         }
-        catch (OutOfBoundaryOfTheField ex) {
+        catch (com.maltsev.labyrinth.model.field.OutOfBoundaryOfTheField ex) {
 
-            assertEquals(6 ,ex.maximumAllowableValueOfParam);
-            assertEquals("y" ,ex.nameOfParam);
-            assertEquals(8 ,ex.valueOfParam);
+            assertEquals(6 ,ex.getMaximumAllowableValueOfParam());
+            assertEquals("y" ,ex.getNameOfParam());
+            assertEquals(8 ,ex.getValueOfParam());
         }
 
         try {
 
             gameField.isItPossibleWay(5,1);
         }
-        catch (OutOfBoundaryOfTheField ex) {
+        catch (com.maltsev.labyrinth.model.field.OutOfBoundaryOfTheField ex) {
 
-            assertEquals(4 ,ex.maximumAllowableValueOfParam);
-            assertEquals("x" ,ex.nameOfParam);
-            assertEquals(5 ,ex.valueOfParam);
+            assertEquals(4 ,ex.getMaximumAllowableValueOfParam());
+            assertEquals("x" ,ex.getNameOfParam());
+            assertEquals(5 ,ex.getValueOfParam());
         }
 
         try {
 
             gameField.isItPossibleWay(2,7);         // тот самый лишний 0
         }
-        catch (OutOfBoundaryOfTheField ex) {
+        catch (com.maltsev.labyrinth.model.field.OutOfBoundaryOfTheField ex) {
 
-            assertEquals(6 ,ex.maximumAllowableValueOfParam);
-            assertEquals("y" ,ex.nameOfParam);
-            assertEquals(7 ,ex.valueOfParam);
+            assertEquals(6 ,ex.getMaximumAllowableValueOfParam());
+            assertEquals("y" ,ex.getNameOfParam());
+            assertEquals(7 ,ex.getValueOfParam());
         }
-
-        System.out.println("Тест на выбрасываение исключений при выходе за границы поля - пройден.");
     }
 }

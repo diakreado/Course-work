@@ -1,8 +1,7 @@
 package com.maltsev.labyrinth.model;
 
 
-import com.badlogic.gdx.math.Vector2;
-import com.maltsev.labyrinth.model.GameField.PointOnTheField;
+import com.maltsev.labyrinth.model.field.PointOnTheField;
 
 import java.util.ArrayList;
 
