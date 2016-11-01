@@ -1,6 +1,7 @@
 package com.maltsev.labyrinth.model;
 
 
+import com.maltsev.labyrinth.model.field.OutOfBoundaryOfTheField;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
 
 import java.util.ArrayList;
@@ -13,11 +14,12 @@ public interface ModelAPI {
 
     /**
      * Возможно ли поместить протигониста в определённую ячейку
-     * @param x координата ячейкки по оси Х
-     * @param y координата ячейкки по оси Y
+     * @param x координата ячейки по оси Х
+     * @param y координата ячейки по оси Y
      * @return возвращяет значение логического типа, если true, то протагонист может находится в этой ячейке, иначе false
+     * @throws OutOfBoundaryOfTheField бросается в том случае, когда координаты выходят за поле
      */
-    boolean isItPossibleWay(int x, int y);
+    boolean isItPossibleWay(int x, int y) throws OutOfBoundaryOfTheField;
 
     /**
      * @return Размер поля по оси Х
@@ -36,16 +38,35 @@ public interface ModelAPI {
 
     /**
      * Установка игрового поля
-     * @param gameField - игровое поле
-     * @param startPoint - начальная точка поля
-     * @param finalPoint - конечная точка поля
+     * @param newField игровое поле, строка-матрица, где 1,s,f - проходимые элементы, а 0 - нет, s - начальная точка поля, f - конечная, а новая строчка задаётся \n
      */
-    void setGameField(int gameField[][] ,PointOnTheField startPoint ,PointOnTheField finalPoint);
+    void setGameField(String newField);
 
     /**
      * Перемещаяет протагониста в определённыю точку пространства
-     * @param x координата ячейкки по оси Х
-     * @param y координата ячейкки по оси Y
+     * @param x координата ячейки по оси Х
+     * @param y координата ячейки по оси Y
+     * @throws OutOfBoundaryOfTheField выбрасывается, когда запрашиваемые координаты некорректны
      */
-    void moveProtagonist(int x, int y);
+    void movesOfProtagonist(int x, int y) throws OutOfBoundaryOfTheField;
+
+    /**
+     * @return Окончена ли игра
+     */
+    boolean isGameEnded();
+
+    /**
+     * @return Точка, местоположение героя
+     */
+    PointOnTheField getLocationOfProtagonist();
+
+    /**
+     * @return начальная точка поля
+     */
+    PointOnTheField getStartingPositionOnTheField();
+
+    /**
+     * @return конечная точка поля
+     */
+    PointOnTheField getFinishingPositionOnTheField();
 }

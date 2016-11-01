@@ -7,12 +7,12 @@ package com.maltsev.labyrinth.model.field;
 class CellOfField {
 
     /**
-     *  Хранит информацию о проходимости клетки
+     * Хранит информацию о проходимости клетки
      */
     private boolean isItPossibleWay;
 
     /**
-     * @return проходим ли клетка
+     * @return проходима ли клетка
      */
     public boolean getInfoAboutPatencyOfCell() {
 
@@ -20,7 +20,8 @@ class CellOfField {
     }
 
     /**
-     * @param - является ли эта ячейка проходимой
+     * Стандартный конструктор
+     * @param isItPossibleWay является ли эта ячейка проходимой
      */
     CellOfField(boolean isItPossibleWay) {
 

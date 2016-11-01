@@ -19,20 +19,26 @@ import com.maltsev.labyrinth.presenter.Presenter;
  * Единственное, что делает View,
  * это вызывает методы презентера при каком-либо действии пользователя
  */
-public class View extends ApplicationAdapter {                                     //TODO  Разобраться с камерой
+public class View extends ApplicationAdapter {                                     //TODO Использовать TexturePacker
 
     SpriteBatch batch;
     OrthographicCamera camera;
 
     Vector3 touchPos;
 
-    Texture heroImg;
-    Rectangle heroPosition;
+    Texture protagonistImg;
+    Rectangle protagonistPosition;
 
     Texture block;
+    Texture finishingBlock;
 
     Presenter presenter;
 
+    int protagonistWigth;
+    int protagonistHight;
+
+    int blockWigth;
+    int blockHight;
 
     @Override
     public void create () {
@@ -46,13 +52,21 @@ public class View extends ApplicationAdapter {                                  
 
         batch = new SpriteBatch();
 
-        heroImg = new Texture("protagonist.png");
-        heroPosition = new Rectangle();
+        protagonistImg = new Texture("protagonist.png");
+        protagonistPosition = new Rectangle();
+
+        protagonistWigth = protagonistImg.getWidth();
+        protagonistHight = protagonistImg.getHeight();
+
 
         block = new Texture("block.png");
+        finishingBlock = new Texture("blockFinish.png");
 
-        heroPosition.x = 0;
-        heroPosition.y = 0;
+        blockWigth = block.getWidth();
+        blockHight = block.getHeight();
+
+        protagonistPosition.x = presenter.getPositionOfProtagonist().getX();
+        protagonistPosition.y = presenter.getPositionOfProtagonist().getY();
     }
 
     @Override
@@ -61,24 +75,27 @@ public class View extends ApplicationAdapter {                                  
         Gdx.gl.glClearColor(255, 255, 255, 255);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        camera.update();
-
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
-            presenter.drawPassableCells(block);
+            presenter.drawPassableCells();
 
-            batch.draw(heroImg,heroPosition.x,heroPosition.y);
+            batch.draw(protagonistImg, protagonistPosition.x, protagonistPosition.y);
 
-        batch.end();
-
-        if (Gdx.input.isTouched()){
+             if (Gdx.input.justTouched()){
 
             touchPos.set(Gdx.input.getX(),Gdx.input.getY(),0);
             camera.unproject(touchPos);
 
-            presenter.moveProtagonist(touchPos, heroPosition, block);
-        }
+            presenter.moveProtagonist(touchPos, protagonistPosition);
+            }
+
+
+        batch.end();
+
+        camera.position.set(protagonistPosition.x, protagonistPosition.y,0);
+
+        camera.update();
     }
 
     public void drawBlock(float x, float y) {
@@ -86,12 +103,49 @@ public class View extends ApplicationAdapter {                                  
          batch.draw(block, x, y);
     }
 
+    public void drawFinishingBlock(float x, float y) {
+
+        batch.draw(finishingBlock, x, y);
+    }
+
     @Override
     public void dispose () {
 
         super.dispose();
         batch.dispose();
-        heroImg.dispose();
+        protagonistImg.dispose();
+    }
+
+    /**
+     * @return ширина изображения для протагониста
+     */
+    public int getProtagonistWigth() {
+
+        return protagonistWigth;
+    }
+
+    /**
+     * @return высота изображения для протагониста
+     */
+    public int getProtagonistHight() {
+
+        return protagonistHight;
+    }
+
+    /**
+     * @return ширина изображения для клеточки
+     */
+    public int getBlockWigth() {
+
+        return blockWigth;
+    }
+
+    /**
+     * @return высота изображения для клеточки
+     */
+    public int getBlockHight() {
+
+        return blockHight;
     }
 
 }

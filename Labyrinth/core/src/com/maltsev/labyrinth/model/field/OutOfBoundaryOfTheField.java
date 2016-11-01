@@ -21,19 +21,26 @@ public class OutOfBoundaryOfTheField extends Exception{
     private int maximumAllowableValueOfParam;
 
     /**
+     * Имя класса, который бросил исключение
+     */
+    private String infoAboutPlaceFromThrowingException;
+
+    /**
      * Конструктор, в который передаётся информация об ошибке
      * @param nameOfParam имя параметра, который не соответствует норме
      * @param valueOfParam значение параметра, которое привело к исключению
      * @param maximumAllowableValueOfParam максимально допустимое значение параметра
      */
-    OutOfBoundaryOfTheField(String nameOfParam, int valueOfParam, int maximumAllowableValueOfParam) {
+    public OutOfBoundaryOfTheField(String infoAboutPlaceFromThrowingException,String nameOfParam, int valueOfParam, int maximumAllowableValueOfParam) {
 
-        super("\n\nНеправильно задан " + nameOfParam + " : " + valueOfParam +
+        super("\n\n" + infoAboutPlaceFromThrowingException + " :" +
+                "\nНеправильно задан " + nameOfParam + " : " + valueOfParam +
                 "\nДопустимое значение : [0;" + maximumAllowableValueOfParam + "]");
 
         this.nameOfParam = nameOfParam;
         this.valueOfParam = valueOfParam;
         this.maximumAllowableValueOfParam = maximumAllowableValueOfParam;
+        this.infoAboutPlaceFromThrowingException = infoAboutPlaceFromThrowingException;
     }
 
     /**
@@ -58,5 +65,10 @@ public class OutOfBoundaryOfTheField extends Exception{
     public int getMaximumAllowableValueOfParam() {
 
         return maximumAllowableValueOfParam;
+    }
+
+    public String getInfoAboutPlaceFromThrowingException() {
+
+        return infoAboutPlaceFromThrowingException;
     }
 }

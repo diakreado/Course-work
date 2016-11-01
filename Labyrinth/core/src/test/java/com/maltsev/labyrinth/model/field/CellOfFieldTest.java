@@ -1,5 +1,6 @@
 package com.maltsev.labyrinth.model.field;
 
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -8,7 +9,7 @@ import static org.junit.Assert.*;
 public class CellOfFieldTest {
 
     @Test
-    public void createCellWithSetPatencyAndgetInfoAboutIt() throws Exception {
+    public void createCell() throws Exception {
 
         CellOfField firstCell = new CellOfField(true);
         CellOfField secondCell = new CellOfField(false);
@@ -16,5 +17,4 @@ public class CellOfFieldTest {
         assertTrue(firstCell.getInfoAboutPatencyOfCell());
         assertFalse(secondCell.getInfoAboutPatencyOfCell());
     }
-
 }

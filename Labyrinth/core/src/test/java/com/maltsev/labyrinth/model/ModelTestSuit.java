@@ -11,9 +11,10 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         FieldTestSuit.class,
-        ProtagonistTest.class
+        ProtagonistTest.class,
+        ModelTest.class })
 
-})
-public class ModelTestSuit {
-
-}
+/**
+ * Тестирование всего пакета model
+ */
+public class ModelTestSuit {}

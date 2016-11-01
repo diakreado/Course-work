@@ -3,7 +3,6 @@ package com.maltsev.labyrinth.model;
 import com.maltsev.labyrinth.model.field.GameField;
 import com.maltsev.labyrinth.model.field.OutOfBoundaryOfTheField;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
-import com.maltsev.labyrinth.model.protagonist.ObjectAlreadyExists;
 import com.maltsev.labyrinth.model.protagonist.Protagonist;
 
 import java.util.ArrayList;
@@ -11,64 +10,60 @@ import java.util.ArrayList;
 
 public class Model implements ModelAPI {
 
-    private Protagonist protagonist;  // Объект обозначающий игрок
-    private GameField gameField;     // Объект обозначающий игровое поле
+    /**
+     * Главный герой
+     */
+    private Protagonist protagonist;
 
+    /**
+     * Игровое поле
+     */
+    private GameField gameField;
 
-    PointOnTheField startPoint = new PointOnTheField(0,0);     // Точка из которой начинается игра         //TODO решить куда засунуть эти поля
-    PointOnTheField finalPoint = new PointOnTheField(0,5);    //  Точка в которой игра заканчивается
-
+    /**
+     *  Закончена ли игра
+     */
     private boolean isGameEnded;
 
+
+    /**
+     * Временно пустой конструктор
+     */
+    public Model() {}
+
     @Override
-    public boolean isItPossibleWay(int x, int y) {
-        try {
+    public void setGameField(String newField) {
 
-            return gameField.isItPossibleWay(x,y);
-        }
-        catch (OutOfBoundaryOfTheField ex) {
-
-            return false;
-        }
+        isGameEnded = false;
+        this.gameField = new GameField(newField);
+        protagonist = new Protagonist(gameField.getStartingPoint());
     }
 
+    @Override
+    public void movesOfProtagonist(int x, int y) throws OutOfBoundaryOfTheField  {
+
+        if (x < 0 || x >= getSizeOfFieldX())
+            throw new OutOfBoundaryOfTheField("Illegal request of moving protagonist", "x", x, getSizeOfFieldX() - 1);
+        if (y < 0 || y >= getSizeOfFieldY())
+            throw new OutOfBoundaryOfTheField("Illegal request of moving protagonist", "y", y, getSizeOfFieldY() - 1);
+
+
+        protagonist.movesOfProtagonist(x,y);
+
+        if (protagonist.getLocationOfProtagonist().equals(gameField.getFinishingPoint())) isGameEnded = true;
+        else isGameEnded = false;
+    }
+
+    @Override
+    public boolean isItPossibleWay(int x, int y) throws OutOfBoundaryOfTheField {
+
+        return gameField.isItPossibleWay(x,y);
+    }
+
+    @Override
     public boolean isGameEnded() {
 
         return isGameEnded;
-    }
-
-    public Model() {
-
-        isGameEnded = false;
-
-        try {
-
-            setProtagonist();
-        }
-        catch (ObjectAlreadyExists ex) {
-
-            System.out.println(ex.getMessage());
-        }
-
-        protagonist = Protagonist.getInstance();
-
-        int newField[][]= {{0,1,1,0,0,0},
-                {0,0,1,0,1,1},
-                {1,0,1,0,0,0},
-                {0,0,1,1,1,0},
-                {0,1,1,1,0,0},
-                {0,1,0,0,0,1},
-                {0,1,0,1,1,1},
-                {0,1,0,0,0,0},
-                {0,1,1,1,1,0},
-                {0,0,0,0,0,0}};
-
-        gameField = new GameField(newField);
-    }
-
-    public void setProtagonist() throws ObjectAlreadyExists {
-
-        Protagonist.setInstance(startPoint);
     }
 
     @Override
@@ -90,16 +85,20 @@ public class Model implements ModelAPI {
     }
 
     @Override
-    public void setGameField(int[][] gameField, PointOnTheField startPoint, PointOnTheField finalPoint) {
+    public PointOnTheField getLocationOfProtagonist() {
 
-
+        return protagonist.getLocationOfProtagonist();
     }
 
-    public void moveProtagonist(int x, int y){
+    @Override
+    public PointOnTheField getStartingPositionOnTheField() {
 
-        protagonist.moveProtagonist(x,y);
+        return gameField.getStartingPoint();
+    }
 
-        if (protagonist.getLocationOfProtagonist().equals(finalPoint)) isGameEnded = true;
-        else isGameEnded = false;
+    @Override
+    public PointOnTheField getFinishingPositionOnTheField() {
+
+        return gameField.getFinishingPoint();
     }
 }
