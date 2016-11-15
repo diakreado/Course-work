@@ -38,8 +38,13 @@ public class PointOnTheFieldTest {
         PointOnTheField pointThird = new PointOnTheField(0,0);
 
         assertTrue(pointFirst.equals(100,54));
-        assertTrue(pointFirst.equals(pointSecond));
+        assertEquals(pointFirst, pointSecond);
         assertFalse(pointFirst.equals(pointThird));
+
+        assertEquals(pointFirst.hashCode(), pointSecond.hashCode());
+
+        assertNotEquals(pointFirst.hashCode(), pointThird.hashCode());
+
     }
 
 

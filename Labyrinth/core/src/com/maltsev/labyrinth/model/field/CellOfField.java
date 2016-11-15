@@ -2,29 +2,28 @@ package com.maltsev.labyrinth.model.field;
 
 
 /**
- *  Ячейка поля, содержит информацию, о том возможно ли на неё встать или нет
+ *  Ячейка поля, содержит информацию, о том возможно ли на неё поместить протагониста или нет
  */
 class CellOfField {
 
     /**
-     * Хранит информацию о проходимости клетки
+     * Поле хранящее информацию о проходимости клетки
      */
-    private boolean isItPossibleWay;
+    private boolean isThisCellPossibleForMove;
 
     /**
      * @return проходима ли клетка
      */
     public boolean getInfoAboutPatencyOfCell() {
 
-        return isItPossibleWay;
+        return isThisCellPossibleForMove;
     }
 
     /**
-     * Стандартный конструктор
-     * @param isItPossibleWay является ли эта ячейка проходимой
+     * @param isThisCellPossibleForMove является ли эта ячейка проходимой
      */
-    CellOfField(boolean isItPossibleWay) {
+    CellOfField(boolean isThisCellPossibleForMove) {
 
-        this.isItPossibleWay = isItPossibleWay;
+        this.isThisCellPossibleForMove = isThisCellPossibleForMove;
     }
 }

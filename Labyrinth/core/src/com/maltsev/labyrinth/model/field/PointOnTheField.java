@@ -53,14 +53,31 @@ public class PointOnTheField {
         return y;
     }
 
-    /**
-     * @param point точка, с которой производится сравнение
-     * @return одинаковые ли точки
-     */
-    public boolean equals(PointOnTheField point) {
+    @Override
+    public boolean equals(Object obj) {
 
-        if (this.x == point.x && this.y == point.y) return true;
+        if (obj == this) {
+
+            return true;
+        }
+
+        if (obj == null || obj.getClass() != this.getClass()) {
+
+            return false;
+        }
+
+        PointOnTheField comparePoint = (PointOnTheField) obj;
+
+        if (this.x == comparePoint.x && this.y == comparePoint.y) return true;
         else return false;
+    }
+
+    @Override
+    public int hashCode() {
+
+        int result = x;
+        result = 31 * result + y;
+        return result;
     }
 
     /**
@@ -72,5 +89,14 @@ public class PointOnTheField {
 
         if (this.x == x && this.y == y) return true;
         else return false;
+    }
+
+    @Override
+    public String toString() {
+
+        return "PointOnTheField{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
     }
 }

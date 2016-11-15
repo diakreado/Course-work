@@ -1,12 +1,11 @@
 package com.maltsev.labyrinth.presenter;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.maltsev.labyrinth.model.field.OutOfBoundaryOfTheField;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
 import com.maltsev.labyrinth.model.Model;
-import com.maltsev.labyrinth.view.View;
+import com.maltsev.labyrinth.view.GameScreen;
 
 import java.util.ArrayList;
 
@@ -18,13 +17,14 @@ import java.util.ArrayList;
 public class Presenter {
 
     private Model model;
-    private View view;
+    private GameScreen view;
 
-    public Presenter(View view) {
+
+    public Presenter(GameScreen view) {
 
         this.view = view;
 
-        model = new Model();
+        model = Model.getInstance();
 
         String newField = FileReader.read("gameField.txt");    //TODO Пока так, но переделаю, чтобы была возможно создавать разные поля
 
@@ -34,8 +34,7 @@ public class Presenter {
 
     public boolean isItPossibleWay(int x, int y) {
 
-        try {return model.isItPossibleWay(x,y);}
-        catch(OutOfBoundaryOfTheField ex) {return false;}
+        return model.isItPassableCells(x,y);
     }
 
     public int getSizeOfFieldX() {
@@ -72,32 +71,28 @@ public class Presenter {
         float protagonistPositionStartX = protagonistPosition.x;
         float protagonistPositionStartY = protagonistPosition.y;
 
-        protagonistPosition.x = ((int)touchPos.x / view.getBlockWigth()) * view.getBlockWigth();
-        protagonistPosition.y = ((int)touchPos.y / view.getBlockHight()) * view.getBlockHight();
+        Rectangle newProtagonistPosition = new Rectangle();
 
-        if (protagonistPosition.x < 0) protagonistPosition.x = 0;
-        if (protagonistPosition.x > getSizeOfFieldX() * view.getBlockWigth()) protagonistPosition.x = getSizeOfFieldX() * view.getBlockWigth();
-        if (protagonistPosition.y < 0) protagonistPosition.y = 0;
-        if (protagonistPosition.y > getSizeOfFieldY() * view.getBlockHight()) protagonistPosition.y = getSizeOfFieldY() * view.getBlockHight();
+        newProtagonistPosition.x = ((int)touchPos.x / view.getBlockWigth()) * view.getBlockWigth();
+        newProtagonistPosition.y = ((int)touchPos.y / view.getBlockHight()) * view.getBlockHight();
 
-        int x = (int)(protagonistPosition.x / view.getBlockWigth());
-        int y = (int)(protagonistPosition.y / view.getBlockHight());
+        if (newProtagonistPosition.x < 0) newProtagonistPosition.x = 0;
+        if (newProtagonistPosition.x > getSizeOfFieldX() * view.getBlockWigth()) newProtagonistPosition.x = getSizeOfFieldX() * view.getBlockWigth();
+        if (newProtagonistPosition.y < 0) newProtagonistPosition.y = 0;
+        if (newProtagonistPosition.y > getSizeOfFieldY() * view.getBlockHight()) newProtagonistPosition.y = getSizeOfFieldY() * view.getBlockHight();
+
+        int x = (int)(newProtagonistPosition.x / view.getBlockWigth());
+        int y = (int)(newProtagonistPosition.y / view.getBlockHight());
 
         if( !(isItPossibleWay(x, y))) {
 
-            protagonistPosition.x = protagonistPositionStartX;
-            protagonistPosition.y = protagonistPositionStartY;
+            newProtagonistPosition.x = protagonistPositionStartX;
+            newProtagonistPosition.y = protagonistPositionStartY;
         }
 
-        try {
-            model.movesOfProtagonist((int)protagonistPosition.x / view.getBlockWigth(), (int)protagonistPosition.y / view.getBlockHight());
-        }
-        catch (OutOfBoundaryOfTheField ex)
-        {
+        model.movesOfProtagonist(x,y);
 
-        }
-
-        if (model.isGameEnded() == true) {
+        if (model.isGameEnded()) {
 
             view.drawFinishingBlock(model.getFinishingPositionOnTheField().getX() * view.getBlockWigth(),
                     model.getFinishingPositionOnTheField().getY() * view.getBlockHight());

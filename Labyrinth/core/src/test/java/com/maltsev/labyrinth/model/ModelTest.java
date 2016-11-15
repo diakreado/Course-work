@@ -14,7 +14,7 @@ public class ModelTest {
     @Test
     public void testingOfModel() throws Exception {
 
-        Model model = new Model();
+        Model model = Model.getInstance();
 
         String newField = "1s0000\n" +
                           "01111f\n" +
@@ -33,69 +33,37 @@ public class ModelTest {
 
         assertTrue(new PointOnTheField(0,0).equals(arrayOfPoint.get(0)));
         assertTrue(new PointOnTheField(0,1).equals(arrayOfPoint.get(1)));
-        assertTrue(new PointOnTheField(1,3).equals(arrayOfPoint.get(4)));
+        assertTrue(new PointOnTheField(1,1).equals(arrayOfPoint.get(2)));
         assertTrue(new PointOnTheField(1,5).equals(arrayOfPoint.get(6)));
         assertTrue(new PointOnTheField(2,5).equals(arrayOfPoint.get(9)));
 
-        assertTrue(model.isItPossibleWay(0,0));
-        assertTrue(model.isItPossibleWay(1,3));
-        assertTrue(model.isItPossibleWay(2,5));
-
-        boolean isFirstTestWithExceptionPass = false;
-        boolean isSecondTestWithExceptionPass = false;
-
-        try {
-
-            model.isItPossibleWay(6,3);
-
-        } catch (OutOfBoundaryOfTheField ex) {
-
-            isFirstTestWithExceptionPass = true;
-
-            assertEquals("Illegal request of possible way",ex.getInfoAboutPlaceFromThrowingException());
-            assertEquals(6,ex.getValueOfParam());
-            assertEquals("x",ex.getNameOfParam());
-            assertEquals(2,ex.getMaximumAllowableValueOfParam());
-        }
-
-        try {
-
-            model.isItPossibleWay(0,10);
-
-        } catch (OutOfBoundaryOfTheField ex) {
-
-            isSecondTestWithExceptionPass = true;
-
-            assertEquals("Illegal request of possible way",ex.getInfoAboutPlaceFromThrowingException());
-            assertEquals(10,ex.getValueOfParam());
-            assertEquals("y",ex.getNameOfParam());
-            assertEquals(5,ex.getMaximumAllowableValueOfParam());
-        }
-
-        assertTrue(isFirstTestWithExceptionPass);
-        assertTrue(isSecondTestWithExceptionPass);
+        assertTrue(model.isItPassableCells(0,0));
+        assertTrue(model.isItPassableCells(1,1));
+        assertTrue(model.isItPassableCells(2,5));
 
 
         model.movesOfProtagonist(1,1);
         assertTrue(new PointOnTheField(1,1).equals(model.getLocationOfProtagonist()));
 
+        assertTrue(model.movesOfProtagonist(0,5).isEmpty());
 
-        try {
-
-            model.movesOfProtagonist(-1,5);
-        } catch (OutOfBoundaryOfTheField ex) {
-
-            assertEquals(2,ex.getMaximumAllowableValueOfParam());
-        }
-
-        model.movesOfProtagonist(0,2);
-        assertTrue(new PointOnTheField(0,2).equals(model.getLocationOfProtagonist()));
+        assertTrue(new PointOnTheField(1,1).equals(model.getLocationOfProtagonist()));
 
         assertFalse(model.isGameEnded());
 
-        model.movesOfProtagonist(1,5);
+        ArrayList<PointOnTheField> way = model.movesOfProtagonist(1,5);
+        assertTrue(way.get(0).equals(1,1));
+        assertTrue(way.get(1).equals(1,2));
+        assertTrue(way.get(2).equals(1,3));
+        assertTrue(way.get(3).equals(1,4));
+        assertTrue(way.get(4).equals(1,5));
         assertTrue(new PointOnTheField(1,5).equals(model.getLocationOfProtagonist()));
 
         assertTrue(model.isGameEnded());
+
+        model.movesOfProtagonist(2,5);
+        assertTrue(new PointOnTheField(2,5).equals(model.getLocationOfProtagonist()));
+        assertTrue(model.movesOfProtagonist(0,0).isEmpty());
+
     }
 }

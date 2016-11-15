@@ -1,47 +1,44 @@
 package com.maltsev.labyrinth.view;
 
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-
 import com.maltsev.labyrinth.presenter.Presenter;
 
+public class GameScreen implements Screen {
 
-/**
- * View, как правило, реализуется в Activity,
- * которая содержит ссылку на презентер.
- * Единственное, что делает View,
- * это вызывает методы презентера при каком-либо действии пользователя
- */
-public class View extends ApplicationAdapter {                                     //TODO Использовать TexturePacker
 
-    SpriteBatch batch;
-    OrthographicCamera camera;
+    private SpriteBatch batch;
+    private OrthographicCamera camera;
 
-    Vector3 touchPos;
+    private Vector3 touchPos;
 
-    Texture protagonistImg;
-    Rectangle protagonistPosition;
+    private Texture protagonistImg;
+    private Rectangle protagonistPosition;
 
-    Texture block;
-    Texture finishingBlock;
+    private Texture block;
+    private Texture finishingBlock;
 
-    Presenter presenter;
+    private Texture grass;
 
-    int protagonistWigth;
-    int protagonistHight;
+    private Presenter presenter;
 
-    int blockWigth;
-    int blockHight;
+    private int protagonistWigth;
+    private int protagonistHight;
 
-    @Override
-    public void create () {
+    private int blockWigth;
+    private int blockHight;
+
+    final Labyrinth game;
+
+    public GameScreen(final Labyrinth gam) {
+        this.game = gam;
 
         presenter = new Presenter(this);
 
@@ -61,6 +58,9 @@ public class View extends ApplicationAdapter {                                  
 
         block = new Texture("block.png");
         finishingBlock = new Texture("blockFinish.png");
+        grass = new Texture("rpgTile019.png");
+
+
 
         blockWigth = block.getWidth();
         blockHight = block.getHeight();
@@ -70,7 +70,12 @@ public class View extends ApplicationAdapter {                                  
     }
 
     @Override
-    public void render () {
+    public void show() {
+
+    }
+
+    @Override
+    public void render (float delta) {
 
         Gdx.gl.glClearColor(255, 255, 255, 255);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -78,17 +83,25 @@ public class View extends ApplicationAdapter {                                  
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
-            presenter.drawPassableCells();
+        for(int x = -500; x < 1000; x+=64) {
 
-            batch.draw(protagonistImg, protagonistPosition.x, protagonistPosition.y);
+            for(int y = -500; y < 2000; y+=64) {
 
-             if (Gdx.input.justTouched()){
+                batch.draw(grass,x,y);
+            }
+        }
+
+        presenter.drawPassableCells();
+
+        batch.draw(protagonistImg, protagonistPosition.x, protagonistPosition.y);
+
+        if (Gdx.input.justTouched()){
 
             touchPos.set(Gdx.input.getX(),Gdx.input.getY(),0);
             camera.unproject(touchPos);
 
             presenter.moveProtagonist(touchPos, protagonistPosition);
-            }
+        }
 
 
         batch.end();
@@ -98,9 +111,29 @@ public class View extends ApplicationAdapter {                                  
         camera.update();
     }
 
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
     public void drawBlock(float x, float y) {
 
-         batch.draw(block, x, y);
+        batch.draw(block, x, y);
     }
 
     public void drawFinishingBlock(float x, float y) {
@@ -111,7 +144,7 @@ public class View extends ApplicationAdapter {                                  
     @Override
     public void dispose () {
 
-        super.dispose();
+        //super.dispose();
         batch.dispose();
         protagonistImg.dispose();
     }

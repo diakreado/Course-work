@@ -1,5 +1,6 @@
 package com.maltsev.labyrinth.model;
 
+import com.maltsev.labyrinth.model.analyzer.WayAnalyzer;
 import com.maltsev.labyrinth.model.field.GameField;
 import com.maltsev.labyrinth.model.field.OutOfBoundaryOfTheField;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
@@ -8,7 +9,22 @@ import com.maltsev.labyrinth.model.protagonist.Protagonist;
 import java.util.ArrayList;
 
 
+/**
+ *  Model реализует шаблон Singleton
+ */
 public class Model implements ModelAPI {
+
+    private static Model ourInstance = new Model();
+
+    /**
+     * @return единственный экземпляр класса
+     */
+    public static Model getInstance() {
+
+        return ourInstance;
+    }
+
+    private Model() {}
 
     /**
      * Главный герой
@@ -26,11 +42,6 @@ public class Model implements ModelAPI {
     private boolean isGameEnded;
 
 
-    /**
-     * Временно пустой конструктор
-     */
-    public Model() {}
-
     @Override
     public void setGameField(String newField) {
 
@@ -40,24 +51,43 @@ public class Model implements ModelAPI {
     }
 
     @Override
-    public void movesOfProtagonist(int x, int y) throws OutOfBoundaryOfTheField  {
+    public ArrayList<PointOnTheField> movesOfProtagonist(int x, int y) {
 
-        if (x < 0 || x >= getSizeOfFieldX())
-            throw new OutOfBoundaryOfTheField("Illegal request of moving protagonist", "x", x, getSizeOfFieldX() - 1);
-        if (y < 0 || y >= getSizeOfFieldY())
-            throw new OutOfBoundaryOfTheField("Illegal request of moving protagonist", "y", y, getSizeOfFieldY() - 1);
+        ArrayList<PointOnTheField> way = WayAnalyzer.getWay(getLocationOfProtagonist(), new PointOnTheField(x,y));
 
+        if (way.isEmpty()) return way;
 
         protagonist.movesOfProtagonist(x,y);
 
-        if (protagonist.getLocationOfProtagonist().equals(gameField.getFinishingPoint())) isGameEnded = true;
-        else isGameEnded = false;
+        isGameEnded = protagonist.getLocationOfProtagonist().equals(gameField.getFinishingPoint());
+
+        return way;
     }
 
     @Override
-    public boolean isItPossibleWay(int x, int y) throws OutOfBoundaryOfTheField {
+    public boolean isItPassableCells(int x, int y) {
 
-        return gameField.isItPossibleWay(x,y);
+        try {
+
+            return gameField.isItPassableCell(x,y);
+
+        }catch (OutOfBoundaryOfTheField ex) {
+
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isItPassableCells(PointOnTheField point) {
+
+        try {
+
+            return gameField.isItPassableCell(point);
+
+        }catch (OutOfBoundaryOfTheField ex) {
+
+            return false;
+        }
     }
 
     @Override

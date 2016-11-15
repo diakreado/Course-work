@@ -7,6 +7,7 @@ import com.badlogic.gdx.files.FileHandle;
  *  Обработка данных из файла
  */
 public class FileReader {
+
     /**
      * Чтение из файла
      * @param fileName имя файла

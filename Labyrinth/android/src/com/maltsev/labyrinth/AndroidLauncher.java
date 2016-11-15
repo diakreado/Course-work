@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.maltsev.labyrinth.view.View;
+import com.maltsev.labyrinth.view.Labyrinth;
 
 public class AndroidLauncher extends AndroidApplication {
 	@Override
@@ -15,6 +15,6 @@ public class AndroidLauncher extends AndroidApplication {
 		config.useAccelerometer = false;
 		config.useCompass = false;
 
-		initialize(new View(), config);
+		initialize(new Labyrinth(), config);
 	}
 }

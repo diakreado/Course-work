@@ -10,7 +10,7 @@ public class GameField {
     /**
      *  Матрица ячеек, т.е. само поле
      */
-    private ArrayList< ArrayList< CellOfField>> matrixOfCell;
+    private ArrayList< ArrayList< CellOfField>> field;
 
     /**
      *  Массив координат ячеек, которые являются проходимыми
@@ -18,36 +18,36 @@ public class GameField {
     private ArrayList<PointOnTheField> passableCells;
 
     /**
-     *  Размер поля по X
+     *  Размер поля по оси X
      */
     private int sizeOfFieldX;
 
     /**
-     *  Размер поля по Y
+     *  Размер поля по оси Y
      */
     private int sizeOfFieldY;
 
     /**
-     * Начальная точка поля
+     * Стартовая точка поля
      */
     private PointOnTheField startingPoint;
 
     /**
-     * Конечная точка поля
+     * Финишная точка поля
      */
     private PointOnTheField finishingPoint;
 
 
     /**
-     * Конструктор, в которм задаётся игровое поле
+     * Конструктор, в которм создаётся игровое поле
      * @param newField строка-матрица, где 1,s,f - проходимые элементы, а 0 - нет, s - начальная точка поля, f - конечная, а новая строчка задаётся \n
      */
     public GameField(String newField) {
 
         passableCells = new ArrayList<PointOnTheField>();
-        matrixOfCell = new ArrayList<ArrayList<CellOfField>>();
+        field = new ArrayList<ArrayList<CellOfField>>();
 
-        String[] field = newField.split("\\n");
+        String[] field = newField.split("\\n");   // делим полученую строчку на части
 
         int lengthX = field.length;
         int lengthY = field[field.length - 1].length();
@@ -74,7 +74,7 @@ public class GameField {
             for(int y = 0; y < lengthY; y++) {
 
                 boolean isItPossibleWay = false;
-                if (field[x].charAt(y) != '0') {            //Проверка на проходимость
+                if (field[x].charAt(y) != '0') {            // Установка проходимости
 
                     isItPossibleWay = true;
 
@@ -83,7 +83,7 @@ public class GameField {
 
                 arrayOfCell.add(new CellOfField(isItPossibleWay));
 
-                if (field[x].charAt(y) == 's' || field[x].charAt(y) == 'S') {        //Проверка на начальную, конечную точки
+                if (field[x].charAt(y) == 's' || field[x].charAt(y) == 'S') {        // Установка стартовой и финишной точек
 
                     if (!metBeginning) startingPoint = new PointOnTheField(x,y);
                     metBeginning = true;
@@ -94,7 +94,7 @@ public class GameField {
                     metEnd = true;
                 }
             }
-            matrixOfCell.add(arrayOfCell);
+            this.field.add(arrayOfCell);
         }
 
         setTheValuesOfSizeOfField();
@@ -109,15 +109,15 @@ public class GameField {
             PointOnTheField finishPoint = passableCells.get(passableCells.size() - 1);
             this.finishingPoint = new PointOnTheField(finishPoint);
         }
-    }     //TODO как-то уменьшить число строк, например, разбить на разные методы
+    }     //TODO хотелось бы уменьшить объём метода, но не знаю как
 
     /**
-     *  Фиксирование размера поля
+     *  Фиксирование размеров поля
      */
     private void setTheValuesOfSizeOfField() {
 
-        sizeOfFieldX = matrixOfCell.size();
-        sizeOfFieldY = matrixOfCell.get(0).size();
+        sizeOfFieldX = field.size();
+        sizeOfFieldY = field.get(0).size();
     }
 
     /**
@@ -126,12 +126,28 @@ public class GameField {
      * @return является ли эта ячейка проходимой
      * @throws OutOfBoundaryOfTheField - воход за граниуц поля
      */
-    public boolean isItPossibleWay(int x, int y) throws OutOfBoundaryOfTheField {
+    public boolean isItPassableCell(int x, int y) throws OutOfBoundaryOfTheField {
 
         if (x < 0 || x >= sizeOfFieldX) throw new OutOfBoundaryOfTheField("Illegal request of possible way", "x", x, sizeOfFieldX - 1);
         if (y < 0 || y >= sizeOfFieldY) throw new OutOfBoundaryOfTheField("Illegal request of possible way", "y", y, sizeOfFieldY - 1);
 
-        return matrixOfCell.get(x).get(y).getInfoAboutPatencyOfCell();
+        return field.get(x).get(y).getInfoAboutPatencyOfCell();
+    }
+
+    /**
+     * @param point точка на поле указывающая на ячейку
+     * @return является ли эта ячейка проходимой
+     * @throws OutOfBoundaryOfTheField - воход за граниуц поля
+     */
+    public boolean isItPassableCell(PointOnTheField point) throws OutOfBoundaryOfTheField {
+
+        int x = point.getX();
+        int y = point.getY();
+
+        if (x < 0 || x >= sizeOfFieldX) throw new OutOfBoundaryOfTheField("Illegal request of possible way", "x", x, sizeOfFieldX - 1);
+        if (y < 0 || y >= sizeOfFieldY) throw new OutOfBoundaryOfTheField("Illegal request of possible way", "y", y, sizeOfFieldY - 1);
+
+        return field.get(x).get(y).getInfoAboutPatencyOfCell();
     }
 
     /**
@@ -165,7 +181,6 @@ public class GameField {
 
         return finishingPoint;
     }
-
 
     /**
      * @return Массив координат проходимых ячеек

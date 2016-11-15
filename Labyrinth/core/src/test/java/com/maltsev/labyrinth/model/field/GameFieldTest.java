@@ -19,14 +19,14 @@ public class GameFieldTest {
 
         GameField gameField = new GameField(newField);
 
-        assertEquals(true ,gameField.isItPossibleWay(0,4));
+        assertEquals(true ,gameField.isItPassableCell(0,4));
 
-        assertTrue(gameField.isItPossibleWay(0,0));
-        assertTrue(gameField.isItPossibleWay(4,4));
-        assertTrue(gameField.isItPossibleWay(3,0));
-        assertFalse(gameField.isItPossibleWay(1,1));
-        assertFalse(gameField.isItPossibleWay(2,4));
-        assertFalse(gameField.isItPossibleWay(0,3));
+        assertTrue(gameField.isItPassableCell(0,0));
+        assertTrue(gameField.isItPassableCell(4,4));
+        assertTrue(gameField.isItPassableCell(3,0));
+        assertFalse(gameField.isItPassableCell(1,1));
+        assertFalse(gameField.isItPassableCell(2,4));
+        assertFalse(gameField.isItPassableCell(0,3));
 
         assertEquals(5, gameField.getSizeOfFieldX());
         assertEquals(5, gameField.getSizeOfFieldY());
@@ -72,7 +72,7 @@ public class GameFieldTest {
 
         try {
 
-            gameField.isItPossibleWay(2,8);
+            gameField.isItPassableCell(2,8);
         }
         catch (com.maltsev.labyrinth.model.field.OutOfBoundaryOfTheField ex) {
 
@@ -84,7 +84,7 @@ public class GameFieldTest {
 
         try {
 
-            gameField.isItPossibleWay(5,1);
+            gameField.isItPassableCell(5,1);
         }
         catch (com.maltsev.labyrinth.model.field.OutOfBoundaryOfTheField ex) {
 
@@ -96,7 +96,7 @@ public class GameFieldTest {
 
         try {
 
-            gameField.isItPossibleWay(2,7);         // тот самый лишний 0
+            gameField.isItPassableCell(2,7);         // тот самый лишний 0
         }
         catch (com.maltsev.labyrinth.model.field.OutOfBoundaryOfTheField ex) {
 

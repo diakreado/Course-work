@@ -17,9 +17,15 @@ public interface ModelAPI {
      * @param x координата ячейки по оси Х
      * @param y координата ячейки по оси Y
      * @return возвращяет значение логического типа, если true, то протагонист может находится в этой ячейке, иначе false
-     * @throws OutOfBoundaryOfTheField бросается в том случае, когда координаты выходят за поле
      */
-    boolean isItPossibleWay(int x, int y) throws OutOfBoundaryOfTheField;
+    boolean isItPassableCells(int x, int y);
+
+    /**
+     * Возможно ли поместить протигониста в определённую ячейку
+     * @param point точка указывающая на ячейку
+     * @return возвращяет значение логического типа, если true, то протагонист может находится в этой ячейке, иначе false
+     */
+    boolean isItPassableCells(PointOnTheField point);
 
     /**
      * @return Размер поля по оси Х
@@ -43,17 +49,18 @@ public interface ModelAPI {
     void setGameField(String newField);
 
     /**
-     * Перемещаяет протагониста в определённыю точку пространства
+     * Перемещаяет протагониста в определённыю точку пространства, если это возможно, иначе оставляет на прежнем месте.
+     * Работает только если конечная точка пути находитсся не дальше 5 клеток от начальной
      * @param x координата ячейки по оси Х
      * @param y координата ячейки по оси Y
-     * @throws OutOfBoundaryOfTheField выбрасывается, когда запрашиваемые координаты некорректны
+     * @return маршрут(массив точек) перемещения из одной точки в другую, если он возможен, иначе пустой массив
      */
-    void movesOfProtagonist(int x, int y) throws OutOfBoundaryOfTheField;
+    ArrayList<PointOnTheField> movesOfProtagonist(int x, int y) throws OutOfBoundaryOfTheField;
 
     /**
      * @return Окончена ли игра
      */
-    boolean isGameEnded();
+    boolean isGameEnded();                         // TODO планируется заменить шаблоном Наблюдатель
 
     /**
      * @return Точка, местоположение героя
