@@ -1,8 +1,6 @@
 package com.maltsev.labyrinth.model;
 
 import com.maltsev.labyrinth.model.analyzer.WayAnalyzer;
-import com.maltsev.labyrinth.model.analyzer.gameover.GameOverAnalyzer;
-import com.maltsev.labyrinth.model.analyzer.gameover.GameOverListener;
 import com.maltsev.labyrinth.model.field.GameField;
 import com.maltsev.labyrinth.model.field.OutOfBoundaryOfTheField;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
@@ -39,42 +37,35 @@ public class Model implements ModelAPI {
     private GameField gameField;
 
     /**
-     *  Анализатор конца игры
+     *  Закончена ли игра
      */
-    private GameOverAnalyzer analyzerOfGameOver;
-
-    /**
-     * Анализатор пути
-     */
-    private WayAnalyzer analyzerOfWay;
+    private boolean isGameEnded;
 
 
     @Override
-    public void setGameField(final String newField) {
+    public void setGameField(String newField) {
 
+        isGameEnded = false;
         this.gameField = new GameField(newField);
         protagonist = new Protagonist(gameField.getStartingPoint());
-        analyzerOfGameOver = new GameOverAnalyzer();
-        analyzerOfWay = new WayAnalyzer();
     }
 
     @Override
-    @org.jetbrains.annotations.Nullable
-    public ArrayList<PointOnTheField> movesOfProtagonist(final int x, final  int y) {
+    public ArrayList<PointOnTheField> movesOfProtagonist(int x, int y) {
 
-        ArrayList<PointOnTheField> way = analyzerOfWay.getWay(getLocationOfProtagonist(), new PointOnTheField(x,y));
+        ArrayList<PointOnTheField> way = WayAnalyzer.getWay(getLocationOfProtagonist(), new PointOnTheField(x,y));
 
-        if (way == null) return null;
+        if (way.isEmpty()) return way;
 
         protagonist.movesOfProtagonist(x,y);
 
-        analyzerOfGameOver.messageAboutChangingSystem();
+        isGameEnded = protagonist.getLocationOfProtagonist().equals(gameField.getFinishingPoint());
 
         return way;
     }
 
     @Override
-    public boolean isItPassableCells(final int x, final int y) {
+    public boolean isItPassableCells(int x, int y) {
 
         try {
 
@@ -87,7 +78,7 @@ public class Model implements ModelAPI {
     }
 
     @Override
-    public boolean isItPassableCells(final PointOnTheField point) {
+    public boolean isItPassableCells(PointOnTheField point) {
 
         try {
 
@@ -100,9 +91,9 @@ public class Model implements ModelAPI {
     }
 
     @Override
-    public void addListenerOfGameOver(GameOverListener listener) {
+    public boolean isGameEnded() {
 
-        analyzerOfGameOver.addListener(listener);
+        return isGameEnded;
     }
 
     @Override

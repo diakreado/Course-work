@@ -40,11 +40,10 @@ public class GameField {
 
     /**
      * Конструктор, в которм создаётся игровое поле
-     * @param newField строка-матрица, где 1,s,f - проходимые элементы, а 0 - нет,
-     *                 s - начальная точка поля, f - конечная, а новая строчка задаётся \n
+     * @param newField строка-матрица, где 1,s,f - проходимые элементы, а 0 - нет, s - начальная точка поля, f - конечная, а новая строчка задаётся \n
      */
-    public GameField(final String newField) {
-                                                            //TODO Возможно метод излишне длинный, но как укоротить идей нет.
+    public GameField(String newField) {
+
         passableCells = new ArrayList<PointOnTheField>();
         field = new ArrayList<ArrayList<CellOfField>>();
 
@@ -100,9 +99,9 @@ public class GameField {
 
         setTheValuesOfSizeOfField();
 
-        if (!metBeginning) {                                             // Если точки начала и конца не обнаружены, то
-                                                                        //  они выбираются, из проходимых ячеек,
-            PointOnTheField startPoint = passableCells.get(0);         //   как первая и последняя
+        if (!metBeginning) {
+
+            PointOnTheField startPoint = passableCells.get(0);
             this.startingPoint = new PointOnTheField(startPoint);
         }
         if (!metEnd) {
@@ -110,7 +109,7 @@ public class GameField {
             PointOnTheField finishPoint = passableCells.get(passableCells.size() - 1);
             this.finishingPoint = new PointOnTheField(finishPoint);
         }
-    }
+    }     //TODO хотелось бы уменьшить объём метода, но не знаю как
 
     /**
      *  Фиксирование размеров поля
@@ -127,15 +126,10 @@ public class GameField {
      * @return является ли эта ячейка проходимой
      * @throws OutOfBoundaryOfTheField - воход за граниуц поля
      */
-    public boolean isItPassableCell(final int x, final int y) throws OutOfBoundaryOfTheField {
+    public boolean isItPassableCell(int x, int y) throws OutOfBoundaryOfTheField {
 
-        if (x < 0 || x >= sizeOfFieldX)
-            throw new OutOfBoundaryOfTheField("Illegal request of possible way",
-                    "x", x, sizeOfFieldX - 1);
-
-        if (y < 0 || y >= sizeOfFieldY)
-            throw new OutOfBoundaryOfTheField("Illegal request of possible way",
-                    "y", y, sizeOfFieldY - 1);
+        if (x < 0 || x >= sizeOfFieldX) throw new OutOfBoundaryOfTheField("Illegal request of possible way", "x", x, sizeOfFieldX - 1);
+        if (y < 0 || y >= sizeOfFieldY) throw new OutOfBoundaryOfTheField("Illegal request of possible way", "y", y, sizeOfFieldY - 1);
 
         return field.get(x).get(y).getInfoAboutPatencyOfCell();
     }
@@ -145,24 +139,19 @@ public class GameField {
      * @return является ли эта ячейка проходимой
      * @throws OutOfBoundaryOfTheField - воход за граниуц поля
      */
-    public boolean isItPassableCell(final PointOnTheField point) throws OutOfBoundaryOfTheField {
+    public boolean isItPassableCell(PointOnTheField point) throws OutOfBoundaryOfTheField {
 
         int x = point.getX();
         int y = point.getY();
 
-        if (x < 0 || x >= sizeOfFieldX)
-            throw new OutOfBoundaryOfTheField("Illegal request of possible way",
-                    "x", x, sizeOfFieldX - 1);
-
-        if (y < 0 || y >= sizeOfFieldY)
-            throw new OutOfBoundaryOfTheField("Illegal request of possible way",
-                    "y", y, sizeOfFieldY - 1);
+        if (x < 0 || x >= sizeOfFieldX) throw new OutOfBoundaryOfTheField("Illegal request of possible way", "x", x, sizeOfFieldX - 1);
+        if (y < 0 || y >= sizeOfFieldY) throw new OutOfBoundaryOfTheField("Illegal request of possible way", "y", y, sizeOfFieldY - 1);
 
         return field.get(x).get(y).getInfoAboutPatencyOfCell();
     }
 
     /**
-     * @return размер поля по оси X (начиная отсчёт с нуля)
+     * @return размер поля по оси X
      */
     public int getSizeOfFieldX() {
 
@@ -170,7 +159,7 @@ public class GameField {
     }
 
     /**
-     * @return размер поля по оси Y (начиная отсчёт с нуля)
+     * @return размер поля по оси Y
      */
     public int getSizeOfFieldY() {
 

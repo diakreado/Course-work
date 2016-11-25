@@ -24,12 +24,10 @@ public class WayAnalyzerTest {
 
         model.setGameField(gameField);
 
-        WayAnalyzer analyzer = new WayAnalyzer();
-
         PointOnTheField startPoint1 = new PointOnTheField(0,0);
         PointOnTheField finishPoint1 = new PointOnTheField(0,4);
 
-        ArrayList<PointOnTheField> way1 = analyzer.getWay(startPoint1, finishPoint1);
+        ArrayList<PointOnTheField> way1 = WayAnalyzer.getWay(startPoint1, finishPoint1);
 
         assertTrue(way1.get(0).equals(0,0));
         assertTrue(way1.get(1).equals(0,1));
@@ -40,7 +38,7 @@ public class WayAnalyzerTest {
         PointOnTheField startPoint2 = new PointOnTheField(1,2);
         PointOnTheField finishPoint2 = new PointOnTheField(3,1);
 
-        ArrayList<PointOnTheField> way2 = analyzer.getWay(startPoint2, finishPoint2);
+        ArrayList<PointOnTheField> way2 = WayAnalyzer.getWay(startPoint2, finishPoint2);
 
         assertTrue(way2.get(0).equals(1,2));
         assertTrue(way2.get(1).equals(1,1));
@@ -52,23 +50,26 @@ public class WayAnalyzerTest {
         PointOnTheField startPoint3 = new PointOnTheField(0,0);
         PointOnTheField finishPoint3 = new PointOnTheField(4,4);
 
-        ArrayList<PointOnTheField> way3 = analyzer.getWay(startPoint3, finishPoint3);
+        ArrayList<PointOnTheField> way3 = WayAnalyzer.getWay(startPoint3, finishPoint3);
 
-        assertTrue(way3 == null);
+        assertTrue(way3.isEmpty());
+        assertEquals(way3.size(),0);
 
         PointOnTheField startPoint4 = new PointOnTheField(1,1);
         PointOnTheField finishPoint4 = new PointOnTheField(1,5);
 
-        ArrayList<PointOnTheField> way4 = analyzer.getWay(startPoint4, finishPoint4);
+        ArrayList<PointOnTheField> way4 = WayAnalyzer.getWay(startPoint4, finishPoint4);
 
-        assertTrue(way4 == null);
+        assertTrue(way4.isEmpty());
+        assertEquals(way4.size(),0);
 
         PointOnTheField startPoint5 = new PointOnTheField(5,5);
         PointOnTheField finishPoint5 = new PointOnTheField(3,3);
 
-        ArrayList<PointOnTheField> way5 = analyzer.getWay(startPoint5, finishPoint5);
+        ArrayList<PointOnTheField> way5 = WayAnalyzer.getWay(startPoint5, finishPoint5);
 
-        assertTrue(way5 == null);
+        assertTrue(way5.isEmpty());
+        assertEquals(way5.size(),0);
     }
 
 }
