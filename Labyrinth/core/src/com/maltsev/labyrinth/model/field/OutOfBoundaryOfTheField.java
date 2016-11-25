@@ -31,7 +31,8 @@ public class OutOfBoundaryOfTheField extends Exception{
      * @param valueOfParam значение параметра, которое привело к исключению
      * @param maximumAllowableValueOfParam максимально допустимое значение параметра
      */
-    public OutOfBoundaryOfTheField(String infoAboutPlaceFromThrowingException,String nameOfParam, int valueOfParam, int maximumAllowableValueOfParam) {
+    public OutOfBoundaryOfTheField(final String infoAboutPlaceFromThrowingException,final String nameOfParam,
+                                   final int valueOfParam, final int maximumAllowableValueOfParam) {
 
         super("\n\n" + infoAboutPlaceFromThrowingException + " :" +
                 "\nНеправильно задан " + nameOfParam + " : " + valueOfParam +

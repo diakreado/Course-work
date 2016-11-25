@@ -21,7 +21,7 @@ public class PointOnTheField {
      * @param x координата по оси X
      * @param y координата по оси Y
      */
-    public PointOnTheField(int x, int y) {
+    public PointOnTheField(final int x, final int y) {
 
         this.x = x;
         this.y = y;
@@ -31,7 +31,7 @@ public class PointOnTheField {
      *  Конструктор копирования
      * @param point - объект, который копируют
      */
-    public PointOnTheField(PointOnTheField point) {
+    public PointOnTheField(final PointOnTheField point) {
 
         this.x = point.getX();
         this.y = point.getY();
@@ -54,7 +54,7 @@ public class PointOnTheField {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
 
         if (obj == this) {
 
@@ -85,10 +85,9 @@ public class PointOnTheField {
      * @param y координата точки по оси Y
      * @return одинаковые ли точки
      */
-    public boolean equals(int x, int y) {
+    public boolean equals(final int x, int y) {
 
-        if (this.x == x && this.y == y) return true;
-        else return false;
+        return this.x == x && this.y == y;
     }
 
     @Override

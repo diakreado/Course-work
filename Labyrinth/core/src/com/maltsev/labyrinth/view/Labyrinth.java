@@ -2,12 +2,11 @@ package com.maltsev.labyrinth.view;
 
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-
 /**
- * В данном случае главным классом из пакета view является Labyrinth
+ * Главный класс из пакета view
+ *
  * Представление, как правило, реализуется в Activity,
  * которая содержит ссылку на презентер.
  * Единственное, что делает представление,
@@ -15,22 +14,30 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  */
 public class Labyrinth extends Game {
 
-    SpriteBatch batch;
-    BitmapFont font;
+    public static final int V_WIDTH = 800;
+    public static final int V_HEIGHT = 480;
 
+    public SpriteBatch spriteBatch;
+
+    @Override
     public void create() {
-        batch = new SpriteBatch();
-        // libGDX по умолчанию использует Arial шрифт.
-        font = new BitmapFont();
-        this.setScreen(new MainMenuScreen(this));
+
+        spriteBatch = new SpriteBatch();
+
+        this.setScreen(new com.maltsev.labyrinth.view.screens.MainMenuScreen(this));
     }
 
+    @Override
     public void render() {
-        super.render(); // важно!
+
+        super.render();
     }
 
+    @Override
     public void dispose() {
-        batch.dispose();
-        font.dispose();
+
+        spriteBatch.dispose();
+
+        super.dispose();
     }
 }
