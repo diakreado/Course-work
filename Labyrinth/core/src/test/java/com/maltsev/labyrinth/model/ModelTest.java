@@ -1,6 +1,6 @@
 package com.maltsev.labyrinth.model;
 
-import com.maltsev.labyrinth.model.field.OutOfBoundaryOfTheField;
+import com.maltsev.labyrinth.model.analyzer.gameover.GameOverListener;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
 import org.junit.Test;
 
@@ -10,6 +10,22 @@ import static org.junit.Assert.*;
 
 
 public class ModelTest {
+
+    class TestListener implements GameOverListener {
+
+        private boolean testOfGameOverSuccess = false;
+
+        boolean isTestOfGameOverSuccess() {
+
+            return testOfGameOverSuccess;
+        }
+
+        @Override
+        public void gameIsOver() {
+
+            testOfGameOverSuccess = true;
+        }
+    }
 
     @Test
     public void testingOfModel() throws Exception {
@@ -22,12 +38,13 @@ public class ModelTest {
 
         model.setGameField(newField);
 
+        TestListener listener = new TestListener();
+        model.addListenerOfGameOver(listener);
+
         assertTrue(new PointOnTheField(0,1).equals(model.getLocationOfProtagonist()));
 
         assertEquals(3, model.getSizeOfFieldX());
         assertEquals(6, model.getSizeOfFieldY());
-
-        assertFalse(model.isGameEnded());
 
         ArrayList<PointOnTheField> arrayOfPoint = new ArrayList<PointOnTheField>(model.getPassableCells());
 
@@ -41,15 +58,14 @@ public class ModelTest {
         assertTrue(model.isItPassableCells(1,1));
         assertTrue(model.isItPassableCells(2,5));
 
+        assertFalse(listener.isTestOfGameOverSuccess());                   // Так как мы ещё не на финише
 
         model.movesOfProtagonist(1,1);
         assertTrue(new PointOnTheField(1,1).equals(model.getLocationOfProtagonist()));
 
-        assertTrue(model.movesOfProtagonist(0,5).isEmpty());
+        assertTrue(model.movesOfProtagonist(0,5) == null);
 
         assertTrue(new PointOnTheField(1,1).equals(model.getLocationOfProtagonist()));
-
-        assertFalse(model.isGameEnded());
 
         ArrayList<PointOnTheField> way = model.movesOfProtagonist(1,5);
         assertTrue(way.get(0).equals(1,1));
@@ -57,13 +73,13 @@ public class ModelTest {
         assertTrue(way.get(2).equals(1,3));
         assertTrue(way.get(3).equals(1,4));
         assertTrue(way.get(4).equals(1,5));
-        assertTrue(new PointOnTheField(1,5).equals(model.getLocationOfProtagonist()));
+        assertTrue(new PointOnTheField(1,5).equals(model.getLocationOfProtagonist()));    // Переход на финишную точку
 
-        assertTrue(model.isGameEnded());
+        assertTrue(listener.isTestOfGameOverSuccess());  // Финиш
 
         model.movesOfProtagonist(2,5);
         assertTrue(new PointOnTheField(2,5).equals(model.getLocationOfProtagonist()));
-        assertTrue(model.movesOfProtagonist(0,0).isEmpty());
+        assertTrue(model.movesOfProtagonist(0,0) == null);
 
     }
 }

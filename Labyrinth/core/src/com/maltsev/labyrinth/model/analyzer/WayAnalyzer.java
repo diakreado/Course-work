@@ -11,46 +11,143 @@ import java.util.ArrayList;
  */
 public class WayAnalyzer {
 
+    private Model model;
+
+    private int[][] fieldForWave;
+
+    private final int DEFAULT_RANGE = 5;                // По факту эти поля вынесены сюда, чтобы было удобнее делигировать
+                                                       //  выолнение различных частей алгоритма другим методам
+    private int range;
+    private PointOnTheField startPoint;
+    private PointOnTheField finishPoint;
+
+    private int sizeOfFieldX;
+    private int sizeOfFieldY;
+
+    /**
+     * Может быть это кому-то интересно
+     * @return дефолтная длина шага
+     */
+    public int getDEFAULT_RANGE() {
+
+        return DEFAULT_RANGE;
+    }
+
+    /**
+     * Метод по умолчанию, вызывает метод поиска пути с дефолтной длинной шага
+     */
+    @org.jetbrains.annotations.Nullable
+    public ArrayList<PointOnTheField> getWay(final PointOnTheField startPoint, final PointOnTheField finishPoint) {
+
+        return getWay(startPoint, finishPoint, DEFAULT_RANGE);
+    }
+
     /**
      * Построение пути из одной точки поля в другую
      * @param startPoint стартовая точка пути
      * @param finishPoint финишная точка пути
-     * @return возвращяет либо путь в виде массива точек, либо пустой массив, если путь содержит более 5 шагов или он невозможен
+     * @return возвращяет либо путь в виде массива точек, либо ноль, если путь содержит более range шагов или он невозможен
      */
-    static public ArrayList<PointOnTheField> getWay(PointOnTheField startPoint, PointOnTheField finishPoint) {
+    @org.jetbrains.annotations.Nullable
+    public ArrayList<PointOnTheField> getWay(final PointOnTheField startPoint, final PointOnTheField finishPoint, int range) {
 
-        Model model = Model.getInstance();
+        model = Model.getInstance();
 
-        int finishPointX = finishPoint.getX();
-        int finishPointY = finishPoint.getY();
+        if (!model.isItPassableCells(startPoint) || !model.isItPassableCells(finishPoint))
+            return null;                            // Проверка на правильность задания начальной и конечной точки
 
-        if (finishPointX >= model.getSizeOfFieldX() || finishPointX < 0
-                || finishPointY >= model.getSizeOfFieldY() || finishPointY < 0
-                || !model.isItPassableCells(finishPoint)
-                || startPoint.getX() >= model.getSizeOfFieldX() || startPoint.getX() < 0
-                || startPoint.getY() >= model.getSizeOfFieldY() || startPoint.getY() < 0
-                || !model.isItPassableCells(startPoint))
-            return new ArrayList<PointOnTheField>();      // Проверка на правильность начальной и конечной точки
+        this.startPoint = startPoint;
+        this.finishPoint = finishPoint;              // Записываем введённые параметры
+        this.range = range;
 
-        int sizeOfFieldX = model.getSizeOfFieldX();
-        int sizeOfFieldY = model.getSizeOfFieldY();
+        sizeOfFieldX = model.getSizeOfFieldX();      // Выписываем из модели значения размера поля
+        sizeOfFieldY = model.getSizeOfFieldY();
 
-        int fieldForWave[][] = new int[sizeOfFieldX][sizeOfFieldY];
+        fieldForWave = new int[sizeOfFieldX][sizeOfFieldY];
 
-        for (int i = 0; i < fieldForWave.length; i++) {
+        putMaximumValueInEveryCell();
 
-            for (int j = 0; j < fieldForWave[i].length; j++) {
+        if(!motionOfWave()) return null;
 
-                fieldForWave[i][j] = Integer.MAX_VALUE;
+        ArrayList<PointOnTheField> wayBack = returnWave();
+
+        if (wayBack == null) return null;
+
+        ArrayList<PointOnTheField> way = new ArrayList<PointOnTheField>();
+
+        for (int i = wayBack.size() - 1; i >=0 ; i--) {
+
+            way.add(wayBack.get(i));
+        }  // переворачиваем
+
+        return way;
+    }
+
+    /**
+     * Возвращение волны
+     * @return либо путь возвращения в виде коллекции точек, либо null
+     */
+    @org.jetbrains.annotations.Nullable
+    private ArrayList<PointOnTheField> returnWave() {
+
+        ArrayList<PointOnTheField> wayBack = new ArrayList<PointOnTheField>();
+
+        PointOnTheField bufferPoint = new PointOnTheField(finishPoint);
+
+        wayBack.add(bufferPoint);
+
+        int weightOfTheWave;
+        int noMoreThanFewStrokes = 0;
+
+        while (!bufferPoint.equals(startPoint)) {
+
+            int bufferPointX = bufferPoint.getX();
+            int bufferPointY = bufferPoint.getY();
+            weightOfTheWave = fieldForWave[bufferPointX][bufferPointY];
+
+            if (bufferPointX + 1 < sizeOfFieldX && fieldForWave[bufferPointX + 1][bufferPointY] == weightOfTheWave - 1) {
+
+                bufferPoint = new PointOnTheField(bufferPointX + 1, bufferPointY);
+                wayBack.add(bufferPoint);
+            } else
+            if (bufferPointY + 1 < sizeOfFieldY && fieldForWave[bufferPointX][bufferPointY + 1] == weightOfTheWave - 1) {
+
+                bufferPoint = new PointOnTheField(bufferPointX, bufferPointY + 1);
+                wayBack.add(bufferPoint);
+            } else
+            if (bufferPointX - 1 >= 0 && fieldForWave[bufferPointX - 1][bufferPointY] == weightOfTheWave - 1) {
+
+                bufferPoint = new PointOnTheField(bufferPointX - 1, bufferPointY);
+                wayBack.add(bufferPoint);
+            } else
+            if (bufferPointY - 1 >= 0 && fieldForWave[bufferPointX][bufferPointY - 1] == weightOfTheWave - 1) {
+
+                bufferPoint = new PointOnTheField(bufferPointX, bufferPointY - 1);
+                wayBack.add(bufferPoint);
             }
-        }   // Заполнение поля максимальными значениями
+
+            noMoreThanFewStrokes++;
+
+            if (noMoreThanFewStrokes > range)  return null;
+
+        } // проходим от конца к началу, запоминая путь
+
+        return wayBack;
+    }
+
+    /**
+     * Распространение волны: в цикле из начальной точки выходит волна и заполняет всё поле
+     */
+    private boolean motionOfWave() {
 
         fieldForWave[startPoint.getX()][startPoint.getY()] = 0;    // стартовая точка волны
-        fieldForWave[finishPointX][finishPointY] = Integer.MAX_VALUE;  // конечная точка волны
+        fieldForWave[finishPoint.getX()][finishPoint.getY()] = Integer.MAX_VALUE;  // конечная точка волны
 
         int weightOfTheWave = 0;
 
-        while (fieldForWave[finishPointX][finishPointY] == Integer.MAX_VALUE) {
+        int noMoreThanFewStrokes = 0;
+
+        while (fieldForWave[finishPoint.getX()][finishPoint.getY()] == Integer.MAX_VALUE) {
 
             for (int i = 0; i < fieldForWave.length; i++) {
 
@@ -79,55 +176,25 @@ public class WayAnalyzer {
             }
 
             weightOfTheWave++;
-        }   // в цикле из начальной точки выходит волна и заполняет всё поле
 
-        PointOnTheField bufferPoint = new PointOnTheField(finishPoint);
+            noMoreThanFewStrokes++;
+            if (noMoreThanFewStrokes > range)  return false;
+        }
 
-        ArrayList<PointOnTheField> wayBack = new ArrayList<PointOnTheField>();
-        wayBack.add(bufferPoint);
+        return true;
+    }
 
-        int noMoreThanFiveStrokes = 0;
+    /**
+     * Заполнение поля максимальными значениями
+     */
+    private void putMaximumValueInEveryCell() {
 
-        while (!bufferPoint.equals(startPoint) && noMoreThanFiveStrokes <= 5) {
+        for (int i = 0; i < fieldForWave.length; i++) {
 
-            int bufferPointX = bufferPoint.getX();
-            int bufferPointY = bufferPoint.getY();
-            weightOfTheWave = fieldForWave[bufferPointX][bufferPointY];
+            for (int j = 0; j < fieldForWave[i].length; j++) {
 
-            if (bufferPointX + 1 < sizeOfFieldX && fieldForWave[bufferPointX + 1][bufferPointY] == weightOfTheWave - 1) {
-
-                bufferPoint = new PointOnTheField(bufferPointX + 1, bufferPointY);
-                wayBack.add(bufferPoint);
-            } else
-            if (bufferPointY + 1 < sizeOfFieldY && fieldForWave[bufferPointX][bufferPointY + 1] == weightOfTheWave - 1) {
-
-                bufferPoint = new PointOnTheField(bufferPointX, bufferPointY + 1);
-                wayBack.add(bufferPoint);
-            } else
-            if (bufferPointX - 1 >= 0 && fieldForWave[bufferPointX - 1][bufferPointY] == weightOfTheWave - 1) {
-
-                bufferPoint = new PointOnTheField(bufferPointX - 1, bufferPointY);
-                wayBack.add(bufferPoint);
-            } else
-            if (bufferPointY - 1 >= 0 && fieldForWave[bufferPointX][bufferPointY - 1] == weightOfTheWave - 1) {
-
-                bufferPoint = new PointOnTheField(bufferPointX, bufferPointY - 1);
-                wayBack.add(bufferPoint);
+                fieldForWave[i][j] = Integer.MAX_VALUE;
             }
-
-            noMoreThanFiveStrokes++;
-
-            if (noMoreThanFiveStrokes > 5)  return new ArrayList<PointOnTheField>();
-
-        } // проходим от конца к началу, запоминая путь
-
-        ArrayList<PointOnTheField> way = new ArrayList<PointOnTheField>();
-
-        for (int i = wayBack.size() - 1; i >=0 ; i--) {
-
-            way.add(wayBack.get(i));
-        }  // переворачиваем
-
-        return way;
+        }
     }
 }

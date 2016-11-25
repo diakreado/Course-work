@@ -6,14 +6,14 @@ import com.badlogic.gdx.files.FileHandle;
 /**
  *  Обработка данных из файла
  */
-public class FileReader {
+class FileReader {
 
     /**
      * Чтение из файла
      * @param fileName имя файла
      * @return полученная информация из файла, в виде одной строки
      */
-    public static String read(String fileName) {
+    static String read(String fileName) {
 
         FileHandle file = Gdx.files.internal(fileName);
 

@@ -14,7 +14,7 @@ class CellOfField {
     /**
      * @return проходима ли клетка
      */
-    public boolean getInfoAboutPatencyOfCell() {
+    boolean getInfoAboutPatencyOfCell() {
 
         return isThisCellPossibleForMove;
     }
@@ -22,7 +22,7 @@ class CellOfField {
     /**
      * @param isThisCellPossibleForMove является ли эта ячейка проходимой
      */
-    CellOfField(boolean isThisCellPossibleForMove) {
+    CellOfField(final boolean isThisCellPossibleForMove) {
 
         this.isThisCellPossibleForMove = isThisCellPossibleForMove;
     }

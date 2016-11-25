@@ -18,7 +18,7 @@ public class Protagonist {
      *  Перемещения протагониста на новую позицию
      * @param newPoint - точка - новая позиция расположения героя
      */
-    public void movesOfProtagonist(PointOnTheField newPoint) {
+    public void movesOfProtagonist(final PointOnTheField newPoint) {
 
         locationOfProtagonist = new PointOnTheField(newPoint);
     }
@@ -28,7 +28,7 @@ public class Protagonist {
      * @param x координата точки по оси X, в которую нужно переместить протагониста
      * @param y координата точки по оси Y, в которую нужно переместить протагониста
      */
-    public void movesOfProtagonist(int x, int y) {
+    public void movesOfProtagonist(final int x, final  int y) {
 
         locationOfProtagonist = new PointOnTheField(x,y);
     }
@@ -37,7 +37,7 @@ public class Protagonist {
      * Конструктор, с установкой начального положения героя
      * @param startPoint точка - начальное положение героя
      */
-    public Protagonist(PointOnTheField startPoint) {
+    public Protagonist(final PointOnTheField startPoint) {
 
         locationOfProtagonist = new PointOnTheField(startPoint);
     }
@@ -47,7 +47,7 @@ public class Protagonist {
      * @param x координата точки по оси X
      * @param y координата точки по оси Y
      */
-    public Protagonist(int x, int y) {
+    public Protagonist(final int x, final  int y) {
 
         locationOfProtagonist = new PointOnTheField(x, y);
     }
