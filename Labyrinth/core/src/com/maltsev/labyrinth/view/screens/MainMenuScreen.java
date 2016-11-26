@@ -25,6 +25,7 @@ public class MainMenuScreen implements Screen{
     private Stage stage;
     private ImageTextButton play;
     private Labyrinth game;
+    private BitmapFont font;
 
 
     public MainMenuScreen(final Labyrinth game) {
@@ -41,7 +42,10 @@ public class MainMenuScreen implements Screen{
 
         buttonStyle.up = skin.getDrawable("blue_button04");
         buttonStyle.down = skin.getDrawable("blue_button04_down");
-        buttonStyle.font = new BitmapFont();
+        font = new BitmapFont();
+        buttonStyle.font = font;
+
+        final MainMenuScreen i = this;
 
         play = new ImageTextButton("Start", buttonStyle);
         play.addListener(new ClickListener() {
@@ -49,8 +53,7 @@ public class MainMenuScreen implements Screen{
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
-                game.setScreen(new GameScreen(game));
-                dispose();
+                game.setScreen(new GameScreen(game, i));
             }
         });    // На кнопку "Start" запускаем игру
 
@@ -77,7 +80,23 @@ public class MainMenuScreen implements Screen{
     }
 
     @Override
+    public void dispose() {
+
+        stage.dispose();
+        atlasUi.dispose();
+        skin.dispose();
+        font.dispose();
+    }
+
+    public void turnOn() {
+
+        game.startAgain();
+        dispose();
+    }
+
+    @Override
     public void show() {
+
 
     }
 
@@ -99,11 +118,5 @@ public class MainMenuScreen implements Screen{
     @Override
     public void hide() {
 
-    }
-
-    @Override
-    public void dispose() {
-
-        stage.dispose();
     }
 }

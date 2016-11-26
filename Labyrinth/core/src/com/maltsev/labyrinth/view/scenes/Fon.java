@@ -18,16 +18,27 @@ public class Fon {
     private Viewport viewport;
 
     private Image img;
+    private Texture fon;
 
     public Fon(SpriteBatch spriteBatch) {
 
         viewport = new ScreenViewport(new OrthographicCamera());
         stage = new Stage(viewport, spriteBatch);
 
-        img = new Image(new Texture("fon/grass.png"));
+        fon = new Texture("fon/grass.png");
+        img = new Image(fon);
 
         img.setPosition(0,0);
 
         stage.addActor(img);
+    }
+
+    /**
+     * Использовать при окончание работы с объектом
+     */
+    public void dispose() {
+
+        fon.dispose();
+        stage.dispose();
     }
 }

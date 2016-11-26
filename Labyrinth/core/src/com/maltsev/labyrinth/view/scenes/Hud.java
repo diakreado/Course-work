@@ -29,12 +29,14 @@ public class Hud {    //TODO много бесполезного надо поч
     Label levelLabel;
     Label worldLabel;
     Label labyrinthLabel;
+    Integer info1 = 0;
 
     public Hud(SpriteBatch spriteBatch) {
 
         worldTimer = 0;
         timeCount = 0;
         score = 0;
+
 
         viewport = new ScreenViewport(new OrthographicCamera());
         stage = new Stage(viewport, spriteBatch);
@@ -43,12 +45,12 @@ public class Hud {    //TODO много бесполезного надо поч
         table.top();
         table.setFillParent(true);
 
-        countdownLabel = new Label(String.format("%04d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        timeLabel = new Label("Time", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        countdownLabel = new Label(info1.toString() , new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        scoreLabel = new Label("write here", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        timeLabel = new Label("How many touch", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         levelLabel = new Label("demo", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         worldLabel = new Label("World", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        labyrinthLabel = new Label("Way", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        labyrinthLabel = new Label("What i should ", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
         table.add(labyrinthLabel).expandX().padTop(10);
         table.add(worldLabel).expandX().padTop(10);
@@ -61,4 +63,16 @@ public class Hud {    //TODO много бесполезного надо поч
         stage.addActor(table);
     }
 
+    public void setInfo(int info) {
+
+        info1 = info;
+    }
+
+    /**
+     * Использовать при окончание работы с объектом
+     */
+    public void dispose() {
+
+        stage.dispose();
+    }
 }

@@ -62,7 +62,7 @@ public class Model implements ModelAPI {
     @org.jetbrains.annotations.Nullable
     public ArrayList<PointOnTheField> movesOfProtagonist(final int x, final  int y) {
 
-        ArrayList<PointOnTheField> way = analyzerOfWay.getWay(getLocationOfProtagonist(), new PointOnTheField(x,y));
+        ArrayList<PointOnTheField> way = analyzerOfWay.getWay(getPositionOfProtagonist(), new PointOnTheField(x,y));
 
         if (way == null) return null;
 
@@ -124,20 +124,26 @@ public class Model implements ModelAPI {
     }
 
     @Override
-    public PointOnTheField getLocationOfProtagonist() {
+    public PointOnTheField getPositionOfProtagonist() {
 
         return protagonist.getLocationOfProtagonist();
     }
 
     @Override
-    public PointOnTheField getStartingPositionOnTheField() {
+    public PointOnTheField getStartingPositionOfField() {
 
         return gameField.getStartingPoint();
     }
 
     @Override
-    public PointOnTheField getFinishingPositionOnTheField() {
+    public PointOnTheField getFinishingPositionOfField() {
 
         return gameField.getFinishingPoint();
+    }
+
+    @Override
+    public void setValueOfRangeOfStep(int valueOfRangeOfStep) {
+
+        analyzerOfWay.setDefaultRange(valueOfRangeOfStep);
     }
 }

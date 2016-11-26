@@ -68,15 +68,21 @@ public interface ModelAPI {                  //TODO Бесполезный ин�
     /**
      * @return Точка, местоположение героя
      */
-    PointOnTheField getLocationOfProtagonist();
+    PointOnTheField getPositionOfProtagonist();
 
     /**
      * @return начальная точка поля
      */
-    PointOnTheField getStartingPositionOnTheField();
+    PointOnTheField getStartingPositionOfField();
 
     /**
      * @return конечная точка поля
      */
-    PointOnTheField getFinishingPositionOnTheField();
+    PointOnTheField getFinishingPositionOfField();
+
+    /**
+     * Установить значение дальности шага протагониста
+     * @param valueOfRangeOfStep дальность шага
+     */
+    void setValueOfRangeOfStep(int valueOfRangeOfStep);
 }

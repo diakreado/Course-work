@@ -1,6 +1,7 @@
 package com.maltsev.labyrinth.presenter;
 
 
+import com.maltsev.labyrinth.presenter.tempdata.PointOnTheScreen;
 import com.maltsev.labyrinth.presenter.tempdata.SizeOfTexture;
 
 /**
@@ -15,8 +16,34 @@ public interface View {
 
     /**
      * Отрисовка блока текстуры
-     * @param x координата по оси Х, позиции в которой следует отрисовать блок
-     * @param y координата по оси Y, позиции в которой следует отрисовать блок
+     * @param point точка, в которой следует отрисовать блок
      */
-    void drawBlock(float x, float y);
+    void drawBlock(PointOnTheScreen point);
+
+    /**
+     * Отрисовка финишной клетки
+     * Если финишная клетка не нужна, то можно ничего не делать
+     * @param point точка, в которой следует отрисовать финишную клетку
+     */
+    void drawExit(PointOnTheScreen point);
+
+    /**
+     * Запрет на ввод
+     */
+    void lockInput();
+
+    /**
+     * Отключить запрет на ввод
+     */
+    void unlockInput();
+
+    /**
+     * Окончание игры
+     */
+    void close();
+
+    /**
+     * Сообщение об окончание игры
+     */
+    void messageOfGameOver();
 }

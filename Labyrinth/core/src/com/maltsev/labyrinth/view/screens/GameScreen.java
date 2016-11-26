@@ -6,9 +6,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.maltsev.labyrinth.presenter.Presenter;
 import com.maltsev.labyrinth.presenter.View;
+import com.maltsev.labyrinth.presenter.tempdata.PointOnTheScreen;
 import com.maltsev.labyrinth.view.Labyrinth;
 import com.maltsev.labyrinth.view.scenes.Fon;
 import com.maltsev.labyrinth.view.scenes.Hud;
@@ -24,18 +26,34 @@ public class GameScreen implements Screen, View {
     private Presenter presenter;
     private Hud hud;
     private Fon fon;
-    private Vector3 touchPos;
+
     private SpriteBatch batch;
-    private Texture block;
-    private SizeOfTexture sizeOfBlock;
     private OrthographicCamera camera;
 
+    private Texture block;
+    private SizeOfTexture sizeOfBlock;
+    private Texture exit;
+    private Texture protagonist;
+    private Texture infoGameEnd;
 
-    GameScreen(final Labyrinth game) {
+    private Vector3 touchPos;
+    private Vector3 positionOfProtagonist;
+
+    private boolean lockInput = false;
+    private boolean isGameEnd = false;
+
+    private MainMenuScreen mainMenuScreen;
+
+    private int secondClick = 0;
+
+
+    private int howManyTouch = 0;
+
+
+    public GameScreen(final Labyrinth game, MainMenuScreen mainMenuScreen) {
 
         this.game = game;
-
-        presenter = new Presenter(this);
+        this.mainMenuScreen = mainMenuScreen;
 
         batch = game.spriteBatch;
 
@@ -47,8 +65,23 @@ public class GameScreen implements Screen, View {
 
         touchPos = new Vector3();
 
-        block = new Texture("block.png");
+        positionOfProtagonist = new Vector3();
+
+        block = new Texture("game_ui/block.png");
         sizeOfBlock = new SizeOfTexture(block.getWidth(), block.getHeight());
+
+        exit = new Texture("game_ui/exit.png");
+
+        protagonist = new Texture("game_ui/protagonist.png");
+
+        infoGameEnd = new Texture("game_ui/grey_panel.png");
+
+        presenter = new Presenter(this);
+
+        fixPositionOfProtagonist();
+
+        camera.position.set(positionOfProtagonist);
+        camera.update();
     }
 
     @Override
@@ -57,51 +90,129 @@ public class GameScreen implements Screen, View {
         return sizeOfBlock;
     }
 
+    @Override
+    public void lockInput() {
+
+        lockInput = true;
+    }
+
+    @Override
+    public void unlockInput() {
+
+        lockInput = false;
+    }
+
+    private void fixPositionOfProtagonist() {
+
+        PointOnTheScreen pointOfPositionOfProtagonist = presenter.getPositionOfProtagonist();
+        positionOfProtagonist.x = pointOfPositionOfProtagonist.getX();
+        positionOfProtagonist.y = pointOfPositionOfProtagonist.getY();
+    }
+
     private void handelInput(float delta) {
 
-        if (Gdx.input.justTouched()) {
+        if (Gdx.input.justTouched() && !lockInput) {
 
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 
             camera.unproject(touchPos);
 
-            camera.position.set(touchPos);
-        }
+            presenter.moveProtagonist(touchPos.x, touchPos.y);
+            fixPositionOfProtagonist();
 
+            camera.position.set(positionOfProtagonist);
+            camera.update();
+
+            howManyTouch++;
+            hud.setInfo(howManyTouch);
+        }
     }
 
     private void update(float delta) {
 
         handelInput(delta);
+    }
 
-        camera.update();
+    /**
+     * Здесь происходит вся отрисовка
+     */
+    private void draw(float delta) {
+
+        presenter.drawField();
+        batch.draw(protagonist, positionOfProtagonist.x, positionOfProtagonist.y);
+        update(delta);
+
+        if(isGameEnd) {
+
+            batch.draw(infoGameEnd, positionOfProtagonist.x - infoGameEnd.getWidth()/2,
+                    positionOfProtagonist.y - infoGameEnd.getHeight()/2);
+
+            waitingAction();
+        }
+    }
+
+    private void waitingAction() {
+
+
+
+        if (Gdx.input.justTouched()) {
+
+            secondClick++;
+
+            if (secondClick == 2)
+                this.close();
+        }
     }
 
     @Override
     public void render (float delta) {
 
-        update(delta);
-
         fon.stage.draw();
 
         batch.setProjectionMatrix(camera.combined);
 
+        // Следует вызывать методы отрисовки этого экрана только в пределах begin~end
         batch.begin();
-        presenter.drawPassableCells();
+        draw(delta);
         batch.end();
 
         hud.stage.draw();
     }
 
     @Override
-    public void drawBlock(float x, float y) {
+    public void drawBlock(PointOnTheScreen point) {
 
-        batch.draw(block, x, y);
+        batch.draw(block, point.getX(), point.getY());
+    }
+
+    @Override
+    public void drawExit(PointOnTheScreen point) {
+
+        batch.draw(exit, point.getX(), point.getY());
+    }
+
+    @Override
+    public void close() {
+
+        dispose();
+        mainMenuScreen.turnOn();
+    }
+
+    @Override
+    public void messageOfGameOver() {
+
+        isGameEnd = true;
     }
 
     @Override
     public void dispose () {
 
+        hud.dispose();
+        fon.dispose();
+        block.dispose();
+        exit.dispose();
+        protagonist.dispose();
+        infoGameEnd.dispose();
     }
 
     @Override

@@ -1,7 +1,9 @@
 package com.maltsev.labyrinth.presenter;
 
+import com.maltsev.labyrinth.model.analyzer.gameover.GameOverListener;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
 import com.maltsev.labyrinth.model.Model;
+import com.maltsev.labyrinth.presenter.tempdata.PointOnTheScreen;
 import com.maltsev.labyrinth.presenter.tempdata.SizeOfTexture;
 
 import java.util.ArrayList;
@@ -11,12 +13,20 @@ import java.util.ArrayList;
  * Он извлекает данные из модели и передает их во View. Также решает,
  * что нужно делать, когда вы взаимодействуете с View.
  */
-public class Presenter {
+public class Presenter implements GameOverListener {
 
     private Model model;
     private View view;
 
+    private SizeOfTexture sizeOfBlock;
+    private ArrayList<PointOnTheField> passableCells;
 
+    private final int RANGE_OF_STEP = 6;
+
+    /**
+     * Следует вызвать последним, так как он интересуется полями View (может оказаться, что поля ещё не инициализированы)
+     * @param view отрисовщик ui, с которым будет работать presenter
+     */
     public Presenter(View view) {
 
         this.view = view;
@@ -26,82 +36,73 @@ public class Presenter {
         String newField = FileReader.read("gameField.txt");
 
         model.setGameField(newField);
+        model.addListenerOfGameOver(this);
+        model.setValueOfRangeOfStep(RANGE_OF_STEP);
+
+        sizeOfBlock = new SizeOfTexture(view.getSizeOfBlock());
+        passableCells = new ArrayList<PointOnTheField>(model.getPassableCells());
     }
 
+    /**
+     * Отрисовывает проходимые клетки и клетку, являющуюся финишной
+     * Вызывает метод drawBlock() у View
+     */
+    public void drawField() {
+
+        drawPassableCells();
+        drawExit();
+    }
+
+    /**
+     * Отрисовка клеток, по которым можно передвигаться протагонисту
+     * Вызывает метод drawBlock() у View
+     */
     public void drawPassableCells() {
-
-        ArrayList<PointOnTheField> passableCells = new ArrayList<PointOnTheField>(model.getPassableCells());
-
-        SizeOfTexture sizeOfBlock = new SizeOfTexture(view.getSizeOfBlock());
 
         for (PointOnTheField point : passableCells) {
 
-            view.drawBlock(point.getX() * sizeOfBlock.getWidth(), point.getY() * sizeOfBlock.getHeight());
+            view.drawBlock(translatePointFieldToScreen(point));
         }
     }
 
+    /**
+     * Отрисовывает финишную клетку
+     * Вызывает метод drawBlock() у View
+     */
+    public void drawExit() {
 
-//    public boolean isItPossibleWay(int x, int y) {
-//
-//        return model.isItPassableCells(x,y);
-//    }
-//
-//    public int getSizeOfFieldX() {
-//
-//        return model.getSizeOfFieldX() - 1;          // т.к. отчёт с нуля
-//    }
-//
-//    public int getSizeOfFieldY() {
-//
-//        return model.getSizeOfFieldY() - 1;          // т.к. отчёт с нуля
-//    }
+        view.drawExit(translatePointFieldToScreen(model.getFinishingPositionOfField()));
+    }
 
+    public void moveProtagonist(float screenX, float screenY) {
 
-//
-//    public PointOnTheField getPositionOfProtagonist() {
-//
-//        PointOnTheField positionOfProtagonist = new PointOnTheField(
-//                model.getLocationOfProtagonist().getX() * view.getBlockWigth(),
-//                model.getLocationOfProtagonist().getY() * view.getBlockHight());
-//
-//        return  positionOfProtagonist;
-//    }
-//
-//    public void moveProtagonist(Vector3 touchPos, Rectangle protagonistPosition) {
-//
-//        float protagonistPositionStartX = protagonistPosition.x;
-//        float protagonistPositionStartY = protagonistPosition.y;
-//
-//        Rectangle newProtagonistPosition = new Rectangle();
-//
-//        newProtagonistPosition.x = ((int)touchPos.x / view.getBlockWigth()) * view.getBlockWigth();
-//        newProtagonistPosition.y = ((int)touchPos.y / view.getBlockHight()) * view.getBlockHight();
-//
-//        if (newProtagonistPosition.x < 0) newProtagonistPosition.x = 0;
-//        if (newProtagonistPosition.x > getSizeOfFieldX() * view.getBlockWigth()) newProtagonistPosition.x = getSizeOfFieldX() * view.getBlockWigth();
-//        if (newProtagonistPosition.y < 0) newProtagonistPosition.y = 0;
-//        if (newProtagonistPosition.y > getSizeOfFieldY() * view.getBlockHight()) newProtagonistPosition.y = getSizeOfFieldY() * view.getBlockHight();
-//
-//        int x = (int)(newProtagonistPosition.x / view.getBlockWigth());
-//        int y = (int)(newProtagonistPosition.y / view.getBlockHight());
-//
-//        if( !(isItPossibleWay(x, y))) {
-//
-//            newProtagonistPosition.x = protagonistPositionStartX;
-//            newProtagonistPosition.y = protagonistPositionStartY;
-//        }
-//
-//        model.movesOfProtagonist(x,y);
-//
-//        if (model.isGameEnded()) {
-//
-//            view.drawFinishingBlock(model.getFinishingPositionOnTheField().getX() * view.getBlockWigth(),
-//                    model.getFinishingPositionOnTheField().getY() * view.getBlockHight());
-//
-//            System.out.println("  Игра окончилась!!!");
-//        }
-//
-//        protagonistPosition.x = newProtagonistPosition.x;
-//        protagonistPosition.y = newProtagonistPosition.y;
-//    }
+        int x = (int) screenX / sizeOfBlock.getWidth();
+        int y = (int) screenY / sizeOfBlock.getHeight();
+
+        model.movesOfProtagonist(x, y);
+    }
+
+    /**
+     * @return позиция протагониста, в координатах экрана
+     */
+    public PointOnTheScreen getPositionOfProtagonist() {
+
+        return  translatePointFieldToScreen(model.getPositionOfProtagonist());
+    }
+
+    private PointOnTheScreen translatePointFieldToScreen(PointOnTheField pointOnTheField) {
+
+        return new PointOnTheScreen(pointOnTheField.getX() * sizeOfBlock.getWidth(),
+                pointOnTheField.getY() * sizeOfBlock.getHeight());
+    }
+
+    @Override
+    public void gameIsOver() {
+
+        view.lockInput();
+
+        view.messageOfGameOver();
+
+        //view.close();
+    }
 }

@@ -37,11 +37,12 @@ public class ModelTest {
                           "110001";
 
         model.setGameField(newField);
+        model.setValueOfRangeOfStep(5);
 
         TestListener listener = new TestListener();
         model.addListenerOfGameOver(listener);
 
-        assertTrue(new PointOnTheField(0,1).equals(model.getLocationOfProtagonist()));
+        assertTrue(new PointOnTheField(0,1).equals(model.getPositionOfProtagonist()));
 
         assertEquals(3, model.getSizeOfFieldX());
         assertEquals(6, model.getSizeOfFieldY());
@@ -61,11 +62,13 @@ public class ModelTest {
         assertFalse(listener.isTestOfGameOverSuccess());                   // Так как мы ещё не на финише
 
         model.movesOfProtagonist(1,1);
-        assertTrue(new PointOnTheField(1,1).equals(model.getLocationOfProtagonist()));
+        assertTrue(new PointOnTheField(1,1).equals(model.getPositionOfProtagonist()));
 
         assertTrue(model.movesOfProtagonist(0,5) == null);
 
-        assertTrue(new PointOnTheField(1,1).equals(model.getLocationOfProtagonist()));
+        assertTrue(new PointOnTheField(1,1).equals(model.getPositionOfProtagonist()));
+
+        assertFalse(listener.isTestOfGameOverSuccess());
 
         ArrayList<PointOnTheField> way = model.movesOfProtagonist(1,5);
         assertTrue(way.get(0).equals(1,1));
@@ -73,12 +76,12 @@ public class ModelTest {
         assertTrue(way.get(2).equals(1,3));
         assertTrue(way.get(3).equals(1,4));
         assertTrue(way.get(4).equals(1,5));
-        assertTrue(new PointOnTheField(1,5).equals(model.getLocationOfProtagonist()));    // Переход на финишную точку
+        assertTrue(new PointOnTheField(1,5).equals(model.getPositionOfProtagonist()));    // Переход на финишную точку
 
         assertTrue(listener.isTestOfGameOverSuccess());  // Финиш
 
         model.movesOfProtagonist(2,5);
-        assertTrue(new PointOnTheField(2,5).equals(model.getLocationOfProtagonist()));
+        assertTrue(new PointOnTheField(2,5).equals(model.getPositionOfProtagonist()));
         assertTrue(model.movesOfProtagonist(0,0) == null);
 
     }

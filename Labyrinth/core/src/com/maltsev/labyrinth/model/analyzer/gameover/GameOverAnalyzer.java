@@ -20,7 +20,7 @@ public class GameOverAnalyzer {
     public GameOverAnalyzer() {
 
         model = Model.getInstance();
-        finishPoint = new PointOnTheField(model.getFinishingPositionOnTheField());
+        finishPoint = new PointOnTheField(model.getFinishingPositionOfField());
 
         queue = new PriorityQueue<GameOverListener>(DELAULT_SIZE_OF_QUEUE);
     }
@@ -39,7 +39,7 @@ public class GameOverAnalyzer {
      */
     public void messageAboutChangingSystem() {
 
-        if (finishPoint.equals(model.getFinishingPositionOnTheField())) {
+        if (finishPoint.equals(model.getPositionOfProtagonist())) {
 
             alertListener();
         }

@@ -15,22 +15,32 @@ public class WayAnalyzer {
 
     private int[][] fieldForWave;
 
-    private final int DEFAULT_RANGE = 5;                // По факту эти поля вынесены сюда, чтобы было удобнее делигировать
-                                                       //  выолнение различных частей алгоритма другим методам
+    private int defaultRange = 5;
+
     private int range;
-    private PointOnTheField startPoint;
-    private PointOnTheField finishPoint;
+
+    private PointOnTheField startPoint;              // По факту эти поля вынесены сюда, чтобы было удобнее делигировать
+    private PointOnTheField finishPoint;            //  выолнение различных частей алгоритма другим методам
 
     private int sizeOfFieldX;
     private int sizeOfFieldY;
 
     /**
+     * Установить значение для длины шага
+     * @param defaultRange значение, которое вы хотели бы устновить
+     */
+    public void setDefaultRange(int defaultRange) {
+
+        this.defaultRange = defaultRange;
+    }
+
+    /**
      * Может быть это кому-то интересно
      * @return дефолтная длина шага
      */
-    public int getDEFAULT_RANGE() {
+    public int getDefaultRange() {
 
-        return DEFAULT_RANGE;
+        return defaultRange;
     }
 
     /**
@@ -39,7 +49,7 @@ public class WayAnalyzer {
     @org.jetbrains.annotations.Nullable
     public ArrayList<PointOnTheField> getWay(final PointOnTheField startPoint, final PointOnTheField finishPoint) {
 
-        return getWay(startPoint, finishPoint, DEFAULT_RANGE);
+        return getWay(startPoint, finishPoint, defaultRange);
     }
 
     /**
