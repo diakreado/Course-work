@@ -23,13 +23,14 @@ public class Hud {    //TODO много бесполезного надо поч
     private float timeCount;
     private Integer score;
 
+    private BitmapFont font;
+
     Label countdownLabel;
     Label scoreLabel;
     Label timeLabel;
     Label levelLabel;
     Label worldLabel;
     Label labyrinthLabel;
-    Integer info1 = 0;
 
     public Hud(SpriteBatch spriteBatch) {
 
@@ -45,12 +46,14 @@ public class Hud {    //TODO много бесполезного надо поч
         table.top();
         table.setFillParent(true);
 
-        countdownLabel = new Label(info1.toString() , new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        scoreLabel = new Label("write here", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        timeLabel = new Label("How many touch", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        levelLabel = new Label("demo", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        worldLabel = new Label("World", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        labyrinthLabel = new Label("What i should ", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        font = new BitmapFont();
+
+        countdownLabel = new Label("info" , new Label.LabelStyle(font, Color.WHITE));
+        scoreLabel = new Label("write here", new Label.LabelStyle(font, Color.WHITE));
+        timeLabel = new Label("How many touch", new Label.LabelStyle(font, Color.WHITE));
+        levelLabel = new Label("demo", new Label.LabelStyle(font, Color.WHITE));
+        worldLabel = new Label("World", new Label.LabelStyle(font, Color.WHITE));
+        labyrinthLabel = new Label("What i should ", new Label.LabelStyle(font, Color.WHITE));
 
         table.add(labyrinthLabel).expandX().padTop(10);
         table.add(worldLabel).expandX().padTop(10);
@@ -63,16 +66,12 @@ public class Hud {    //TODO много бесполезного надо поч
         stage.addActor(table);
     }
 
-    public void setInfo(int info) {
-
-        info1 = info;
-    }
-
     /**
      * Использовать при окончание работы с объектом
      */
     public void dispose() {
 
+        font.dispose();
         stage.dispose();
     }
 }

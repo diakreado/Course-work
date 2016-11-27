@@ -102,7 +102,5 @@ public class Presenter implements GameOverListener {
         view.lockInput();
 
         view.messageOfGameOver();
-
-        //view.close();
     }
 }

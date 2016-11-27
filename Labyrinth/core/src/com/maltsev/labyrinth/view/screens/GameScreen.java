@@ -46,10 +46,6 @@ public class GameScreen implements Screen, View {
 
     private int secondClick = 0;
 
-
-    private int howManyTouch = 0;
-
-
     public GameScreen(final Labyrinth game, MainMenuScreen mainMenuScreen) {
 
         this.game = game;
@@ -122,9 +118,6 @@ public class GameScreen implements Screen, View {
 
             camera.position.set(positionOfProtagonist);
             camera.update();
-
-            howManyTouch++;
-            hud.setInfo(howManyTouch);
         }
     }
 
@@ -191,8 +184,7 @@ public class GameScreen implements Screen, View {
         batch.draw(exit, point.getX(), point.getY());
     }
 
-    @Override
-    public void close() {
+    private void close() {
 
         dispose();
         mainMenuScreen.turnOn();

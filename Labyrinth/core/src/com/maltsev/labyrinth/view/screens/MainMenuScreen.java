@@ -26,6 +26,7 @@ public class MainMenuScreen implements Screen{
     private ImageTextButton play;
     private Labyrinth game;
     private BitmapFont font;
+    private Texture fon;
 
 
     public MainMenuScreen(final Labyrinth game) {
@@ -33,6 +34,8 @@ public class MainMenuScreen implements Screen{
         this.game = game;
 
         stage = new Stage(new ScreenViewport());
+
+        fon = new Texture("menu_ui/fon.jpg");
 
         atlasUi = new TextureAtlas("menu_ui/menu.pack");
 
@@ -71,7 +74,7 @@ public class MainMenuScreen implements Screen{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.spriteBatch.begin();
-        game.spriteBatch.draw(new Texture("menu_ui/fon.jpg"),0,0);
+        game.spriteBatch.draw(fon, 0, 0);
         game.spriteBatch.end();
 
         // Рисуем сцену

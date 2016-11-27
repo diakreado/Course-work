@@ -38,11 +38,6 @@ public interface View {
     void unlockInput();
 
     /**
-     * Окончание игры
-     */
-    void close();
-
-    /**
      * Сообщение об окончание игры
      */
     void messageOfGameOver();
