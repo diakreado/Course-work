@@ -8,6 +8,7 @@ import com.maltsev.labyrinth.model.field.OutOfBoundaryOfTheField;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
 import com.maltsev.labyrinth.model.protagonist.Protagonist;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 
 
@@ -60,9 +61,9 @@ public class Model implements ModelAPI {
 
     @Override
     @org.jetbrains.annotations.Nullable
-    public ArrayList<PointOnTheField> movesOfProtagonist(final int x, final  int y) {
+    public ArrayDeque<PointOnTheField> movesOfProtagonist(final int x, final  int y) {
 
-        ArrayList<PointOnTheField> way = analyzerOfWay.getWay(getPositionOfProtagonist(), new PointOnTheField(x,y));
+        ArrayDeque<PointOnTheField> way = analyzerOfWay.getWay(getPositionOfProtagonist(), new PointOnTheField(x,y));
 
         if (way == null) return null;
 

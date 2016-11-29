@@ -1,10 +1,12 @@
 package com.maltsev.labyrinth.view.scenes;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -24,6 +26,7 @@ public class Hud {    //TODO много бесполезного надо поч
     private Integer score;
 
     private BitmapFont font;
+    private Label.LabelStyle labelStyle;
 
     Label countdownLabel;
     Label scoreLabel;
@@ -46,22 +49,22 @@ public class Hud {    //TODO много бесполезного надо поч
         table.top();
         table.setFillParent(true);
 
-        font = new BitmapFont();
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/abc.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 60;
+        font = generator.generateFont(parameter);
+        generator.dispose();
 
-        countdownLabel = new Label("info" , new Label.LabelStyle(font, Color.WHITE));
-        scoreLabel = new Label("write here", new Label.LabelStyle(font, Color.WHITE));
-        timeLabel = new Label("How many touch", new Label.LabelStyle(font, Color.WHITE));
-        levelLabel = new Label("demo", new Label.LabelStyle(font, Color.WHITE));
-        worldLabel = new Label("World", new Label.LabelStyle(font, Color.WHITE));
-        labyrinthLabel = new Label("What i should ", new Label.LabelStyle(font, Color.WHITE));
+        labelStyle = new Label.LabelStyle(font, Color.WHITE);
+
+
+        timeLabel = new Label("some info", labelStyle);
+        worldLabel = new Label("write here", labelStyle);
+        labyrinthLabel = new Label("I can", labelStyle);
 
         table.add(labyrinthLabel).expandX().padTop(10);
         table.add(worldLabel).expandX().padTop(10);
         table.add(timeLabel).expandX().padTop(10);
-        table.row();
-        table.add(scoreLabel).expandX();
-        table.add(levelLabel).expandX();
-        table.add(countdownLabel).expandX();
 
         stage.addActor(table);
     }

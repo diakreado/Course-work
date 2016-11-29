@@ -5,15 +5,15 @@ filter: Nearest,Nearest
 repeat: none
 blue_button04
   rotate: false
-  xy: 1, 1
-  size: 190, 49
-  orig: 190, 49
+  xy: 1, 150
+  size: 570, 147
+  orig: 570, 147
   offset: 0, 0
   index: -1
 blue_button04_down
   rotate: false
-  xy: 193, 1
-  size: 190, 49
-  orig: 190, 49
+  xy: 1, 1
+  size: 570, 147
+  orig: 570, 147
   offset: 0, 0
   index: -1

@@ -4,7 +4,9 @@ package com.maltsev.labyrinth.model.analyzer;
 import com.maltsev.labyrinth.model.Model;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 
 /**
  * Класс, главная задача которого проведение маршрута из одной точки в другую
@@ -47,7 +49,7 @@ public class WayAnalyzer {
      * Метод по умолчанию, вызывает метод поиска пути с дефолтной длинной шага
      */
     @org.jetbrains.annotations.Nullable
-    public ArrayList<PointOnTheField> getWay(final PointOnTheField startPoint, final PointOnTheField finishPoint) {
+    public ArrayDeque<PointOnTheField> getWay(final PointOnTheField startPoint, final PointOnTheField finishPoint) {
 
         return getWay(startPoint, finishPoint, defaultRange);
     }
@@ -59,7 +61,7 @@ public class WayAnalyzer {
      * @return возвращяет либо путь в виде массива точек, либо ноль, если путь содержит более range шагов или он невозможен
      */
     @org.jetbrains.annotations.Nullable
-    public ArrayList<PointOnTheField> getWay(final PointOnTheField startPoint, final PointOnTheField finishPoint, int range) {
+    public ArrayDeque<PointOnTheField> getWay(final PointOnTheField startPoint, final PointOnTheField finishPoint, int range) {
 
         model = Model.getInstance();
 
@@ -79,16 +81,11 @@ public class WayAnalyzer {
 
         if(!motionOfWave()) return null;
 
-        ArrayList<PointOnTheField> wayBack = returnWave();
+        //ArrayList<PointOnTheField> wayBack = returningWave();
 
-        if (wayBack == null) return null;
+        ArrayDeque<PointOnTheField> way = returningWave();
 
-        ArrayList<PointOnTheField> way = new ArrayList<PointOnTheField>();
-
-        for (int i = wayBack.size() - 1; i >=0 ; i--) {
-
-            way.add(wayBack.get(i));
-        }  // переворачиваем
+        if (way == null) return null;
 
         return way;
     }
@@ -98,13 +95,13 @@ public class WayAnalyzer {
      * @return либо путь возвращения в виде коллекции точек, либо null
      */
     @org.jetbrains.annotations.Nullable
-    private ArrayList<PointOnTheField> returnWave() {
+    private ArrayDeque<PointOnTheField> returningWave() {
 
-        ArrayList<PointOnTheField> wayBack = new ArrayList<PointOnTheField>();
+        ArrayDeque<PointOnTheField> way = new ArrayDeque<PointOnTheField>();
 
         PointOnTheField bufferPoint = new PointOnTheField(finishPoint);
 
-        wayBack.add(bufferPoint);
+        way.addFirst(bufferPoint);
 
         int weightOfTheWave;
         int noMoreThanFewStrokes = 0;
@@ -118,22 +115,22 @@ public class WayAnalyzer {
             if (bufferPointX + 1 < sizeOfFieldX && fieldForWave[bufferPointX + 1][bufferPointY] == weightOfTheWave - 1) {
 
                 bufferPoint = new PointOnTheField(bufferPointX + 1, bufferPointY);
-                wayBack.add(bufferPoint);
+                way.addFirst(bufferPoint);
             } else
             if (bufferPointY + 1 < sizeOfFieldY && fieldForWave[bufferPointX][bufferPointY + 1] == weightOfTheWave - 1) {
 
                 bufferPoint = new PointOnTheField(bufferPointX, bufferPointY + 1);
-                wayBack.add(bufferPoint);
+                way.addFirst(bufferPoint);
             } else
             if (bufferPointX - 1 >= 0 && fieldForWave[bufferPointX - 1][bufferPointY] == weightOfTheWave - 1) {
 
                 bufferPoint = new PointOnTheField(bufferPointX - 1, bufferPointY);
-                wayBack.add(bufferPoint);
+                way.addFirst(bufferPoint);
             } else
             if (bufferPointY - 1 >= 0 && fieldForWave[bufferPointX][bufferPointY - 1] == weightOfTheWave - 1) {
 
                 bufferPoint = new PointOnTheField(bufferPointX, bufferPointY - 1);
-                wayBack.add(bufferPoint);
+                way.addFirst(bufferPoint);
             }
 
             noMoreThanFewStrokes++;
@@ -142,7 +139,7 @@ public class WayAnalyzer {
 
         } // проходим от конца к началу, запоминая путь
 
-        return wayBack;
+        return way;
     }
 
     /**

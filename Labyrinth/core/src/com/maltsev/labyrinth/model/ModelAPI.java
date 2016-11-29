@@ -5,6 +5,7 @@ import com.maltsev.labyrinth.model.analyzer.gameover.GameOverListener;
 import com.maltsev.labyrinth.model.field.OutOfBoundaryOfTheField;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 
 /**
@@ -57,7 +58,7 @@ public interface ModelAPI {                  //TODO Бесполезный ин�
      * @return маршрут(массив точек) перемещения из одной точки в другую, если он возможен, иначе null
      */
     @org.jetbrains.annotations.Nullable
-    ArrayList<PointOnTheField> movesOfProtagonist(final int x, final int y) throws OutOfBoundaryOfTheField;
+    ArrayDeque<PointOnTheField> movesOfProtagonist(final int x, final int y) throws OutOfBoundaryOfTheField;
 
     /**
      * Добавляет слушателя на событие окончание игры

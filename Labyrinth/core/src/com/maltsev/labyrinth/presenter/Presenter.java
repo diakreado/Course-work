@@ -6,6 +6,7 @@ import com.maltsev.labyrinth.model.Model;
 import com.maltsev.labyrinth.presenter.tempdata.PointOnTheScreen;
 import com.maltsev.labyrinth.presenter.tempdata.SizeOfTexture;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 
 /**
@@ -21,7 +22,16 @@ public class Presenter implements GameOverListener {
     private SizeOfTexture sizeOfBlock;
     private ArrayList<PointOnTheField> passableCells;
 
-    private final int RANGE_OF_STEP = 6;
+    private ArrayDeque<PointOnTheField> way;
+
+    private PointOnTheScreen pointBeforeMovement;
+    private PointOnTheScreen pointOfMovement;
+    private double timer = 0;
+    private double rateOfProtagonist = 0.2;
+
+    private int rangeOfStep = 5;
+
+    private boolean isGameOver = false;
 
     /**
      * Следует вызвать последним, так как он интересуется полями View (может оказаться, что поля ещё не инициализированы)
@@ -37,10 +47,12 @@ public class Presenter implements GameOverListener {
 
         model.setGameField(newField);
         model.addListenerOfGameOver(this);
-        model.setValueOfRangeOfStep(RANGE_OF_STEP);
+        model.setValueOfRangeOfStep(rangeOfStep);
 
         sizeOfBlock = new SizeOfTexture(view.getSizeOfBlock());
         passableCells = new ArrayList<PointOnTheField>(model.getPassableCells());
+
+        pointBeforeMovement = getPositionOfProtagonist();
     }
 
     /**
@@ -79,7 +91,59 @@ public class Presenter implements GameOverListener {
         int x = (int) screenX / sizeOfBlock.getWidth();
         int y = (int) screenY / sizeOfBlock.getHeight();
 
-        model.movesOfProtagonist(x, y);
+        way = model.movesOfProtagonist(x, y);
+
+        if (way != null)
+            startMovement();
+    }
+
+    private void startMovement() {
+
+        view.lockInput();
+        view.startMovement();
+        timer = 0;
+        pointOfMovement = pointBeforeMovement;
+    }
+
+    private void finishMovement() {
+
+        view.unlockInput();
+        view.finishMovement();
+        timer = 0;
+        pointBeforeMovement = getPositionOfProtagonist();
+
+        if (isGameOver) {
+
+            view.lockInput();
+            view.messageOfGameOver();
+        }
+    }
+
+    private void movementOfProtagonist(float deltaTime) {
+
+        timer += deltaTime;
+
+        if(timer > rateOfProtagonist) {
+
+            timer = 0;
+            pointOfMovement = translatePointFieldToScreen(way.poll());
+        }
+
+
+        if(way.isEmpty())
+            finishMovement();
+    }
+
+    /**
+     * Вызывается, чтобы узнать где находится протагонист во время передвижения
+     * @param deltaTime промежуток времени между кадрами
+     * @return Точка, в которой находится двигающийся протагонист в данный момент
+     */
+    public PointOnTheScreen getPositionOfMovingProtagonist(float deltaTime) {
+
+        movementOfProtagonist(deltaTime);
+
+        return pointOfMovement;
     }
 
     /**
@@ -99,8 +163,6 @@ public class Presenter implements GameOverListener {
     @Override
     public void gameIsOver() {
 
-        view.lockInput();
-
-        view.messageOfGameOver();
+        isGameOver = true;
     }
 }

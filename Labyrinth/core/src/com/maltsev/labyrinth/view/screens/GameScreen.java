@@ -6,7 +6,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.maltsev.labyrinth.presenter.Presenter;
 import com.maltsev.labyrinth.presenter.View;
@@ -44,7 +43,7 @@ public class GameScreen implements Screen, View {
 
     private MainMenuScreen mainMenuScreen;
 
-    private int secondClick = 0;
+    private boolean isInMotion = false;
 
     public GameScreen(final Labyrinth game, MainMenuScreen mainMenuScreen) {
 
@@ -74,7 +73,7 @@ public class GameScreen implements Screen, View {
 
         presenter = new Presenter(this);
 
-        fixPositionOfProtagonist();
+        changePositionOfProtagonist(presenter.getPositionOfProtagonist());
 
         camera.position.set(positionOfProtagonist);
         camera.update();
@@ -98,11 +97,22 @@ public class GameScreen implements Screen, View {
         lockInput = false;
     }
 
-    private void fixPositionOfProtagonist() {
+    @Override
+    public void startMovement() {
 
-        PointOnTheScreen pointOfPositionOfProtagonist = presenter.getPositionOfProtagonist();
-        positionOfProtagonist.x = pointOfPositionOfProtagonist.getX();
-        positionOfProtagonist.y = pointOfPositionOfProtagonist.getY();
+        isInMotion = true;
+    }
+
+    @Override
+    public void finishMovement() {
+
+        isInMotion = false;
+    }
+
+    private void changePositionOfProtagonist(PointOnTheScreen pointOfNewLocationOfProtagonist) {
+
+        positionOfProtagonist.x = pointOfNewLocationOfProtagonist.getX();
+        positionOfProtagonist.y = pointOfNewLocationOfProtagonist.getY();
     }
 
     private void handelInput(float delta) {
@@ -114,16 +124,15 @@ public class GameScreen implements Screen, View {
             camera.unproject(touchPos);
 
             presenter.moveProtagonist(touchPos.x, touchPos.y);
-            fixPositionOfProtagonist();
-
-            camera.position.set(positionOfProtagonist);
-            camera.update();
         }
     }
 
     private void update(float delta) {
 
         handelInput(delta);
+
+        if (isInMotion)
+            changePositionOfProtagonist(presenter.getPositionOfMovingProtagonist(delta));
     }
 
     /**
@@ -142,18 +151,16 @@ public class GameScreen implements Screen, View {
 
             waitingAction();
         }
+
+        camera.position.set(positionOfProtagonist);
+        camera.update();
     }
 
     private void waitingAction() {
 
-
-
         if (Gdx.input.justTouched()) {
 
-            secondClick++;
-
-            if (secondClick == 2)
-                this.close();
+            this.close();
         }
     }
 

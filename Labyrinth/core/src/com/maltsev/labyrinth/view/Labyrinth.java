@@ -15,8 +15,8 @@ import com.maltsev.labyrinth.view.screens.MainMenuScreen;
  */
 public class Labyrinth extends Game {
 
-    public static final int V_WIDTH = 800;
-    public static final int V_HEIGHT = 480;
+    public static final int V_WIDTH = 1920;
+    public static final int V_HEIGHT = 1080;
 
     public SpriteBatch spriteBatch;
 

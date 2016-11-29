@@ -11,10 +11,11 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
 		config.title = "Labyrinth";
-		config.width = 800;
-		config.height = 480;
+		config.width = 1920;
+		config.height = 1080;
+		//config.fullscreen = true;
 
-		config.resizable = false;
+		//config.resizable = false;
 
 		new LwjglApplication(new Labyrinth(), config);
 	}

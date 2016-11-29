@@ -38,6 +38,16 @@ public interface View {
     void unlockInput();
 
     /**
+     * Начать движение
+     */
+    void startMovement();
+
+    /**
+     * Закончить движение
+     */
+    void finishMovement();
+
+    /**
      * Сообщение об окончание игры
      */
     void messageOfGameOver();

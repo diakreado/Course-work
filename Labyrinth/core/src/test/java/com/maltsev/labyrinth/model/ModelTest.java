@@ -4,6 +4,7 @@ import com.maltsev.labyrinth.model.analyzer.gameover.GameOverListener;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
 import org.junit.Test;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -70,12 +71,12 @@ public class ModelTest {
 
         assertFalse(listener.isTestOfGameOverSuccess());
 
-        ArrayList<PointOnTheField> way = model.movesOfProtagonist(1,5);
-        assertTrue(way.get(0).equals(1,1));
-        assertTrue(way.get(1).equals(1,2));
-        assertTrue(way.get(2).equals(1,3));
-        assertTrue(way.get(3).equals(1,4));
-        assertTrue(way.get(4).equals(1,5));
+        ArrayDeque<PointOnTheField> way = model.movesOfProtagonist(1,5);
+        assertTrue(way.poll().equals(1,1));
+        assertTrue(way.poll().equals(1,2));
+        assertTrue(way.poll().equals(1,3));
+        assertTrue(way.poll().equals(1,4));
+        assertTrue(way.poll().equals(1,5));
         assertTrue(new PointOnTheField(1,5).equals(model.getPositionOfProtagonist()));    // Переход на финишную точку
 
         assertTrue(listener.isTestOfGameOverSuccess());  // Финиш

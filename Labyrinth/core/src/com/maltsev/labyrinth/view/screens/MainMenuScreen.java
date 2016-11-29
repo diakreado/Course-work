@@ -7,11 +7,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.freetype.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.maltsev.labyrinth.view.Labyrinth;
 
 /**
@@ -33,7 +34,7 @@ public class MainMenuScreen implements Screen{
 
         this.game = game;
 
-        stage = new Stage(new ScreenViewport());
+        stage = new Stage(new StretchViewport(Labyrinth.V_WIDTH, Labyrinth.V_HEIGHT));
 
         fon = new Texture("menu_ui/fon.jpg");
 
@@ -45,7 +46,13 @@ public class MainMenuScreen implements Screen{
 
         buttonStyle.up = skin.getDrawable("blue_button04");
         buttonStyle.down = skin.getDrawable("blue_button04_down");
-        font = new BitmapFont();
+
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/some_font.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 65;
+        font = generator.generateFont(parameter);
+        generator.dispose();
+
         buttonStyle.font = font;
 
         final MainMenuScreen i = this;
