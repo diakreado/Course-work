@@ -10,8 +10,10 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.StringBuilder;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.maltsev.labyrinth.view.Labyrinth;
 
 /**
  * Класс, который отвечает за отрисовку обёртки(вывод информирующих лейлбов поверх игрового экрана)
@@ -22,7 +24,7 @@ public class Hud {    //TODO много бесполезного надо поч
     private Viewport viewport;
 
     private Integer worldTimer;
-    private float timeCount;
+    private double timeCount =0;
     private Integer score;
 
     private BitmapFont font;
@@ -35,10 +37,11 @@ public class Hud {    //TODO много бесполезного надо поч
     Label worldLabel;
     Label labyrinthLabel;
 
+    Label timer;
+
     public Hud(SpriteBatch spriteBatch) {
 
         worldTimer = 0;
-        timeCount = 0;
         score = 0;
 
 
@@ -58,15 +61,24 @@ public class Hud {    //TODO много бесполезного надо поч
         labelStyle = new Label.LabelStyle(font, Color.WHITE);
 
 
-        timeLabel = new Label("some info", labelStyle);
+        timeLabel = new Label("Time", labelStyle);
         worldLabel = new Label("write here", labelStyle);
-        labyrinthLabel = new Label("I can", labelStyle);
+        labyrinthLabel = new Label("Time", labelStyle);
 
-        table.add(labyrinthLabel).expandX().padTop(10);
-        table.add(worldLabel).expandX().padTop(10);
-        table.add(timeLabel).expandX().padTop(10);
+        timer  = new Label("0000000",labelStyle);
+
+        table.add(timer);
+
+
 
         stage.addActor(table);
+    }
+
+    public void setTime(float delta) {
+
+        timeCount += delta;
+
+        timer.setText(String.format("%.0f%n", timeCount));
     }
 
     /**

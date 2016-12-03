@@ -24,7 +24,6 @@ public class Presenter implements GameOverListener {
 
     private ArrayDeque<PointOnTheField> way;
 
-    private PointOnTheScreen pointBeforeMovement;
     private PointOnTheScreen pointOfMovement;
     private double timer = 0;
     private double rateOfProtagonist = 0.2;
@@ -51,8 +50,6 @@ public class Presenter implements GameOverListener {
 
         sizeOfBlock = new SizeOfTexture(view.getSizeOfBlock());
         passableCells = new ArrayList<PointOnTheField>(model.getPassableCells());
-
-        pointBeforeMovement = getPositionOfProtagonist();
     }
 
     /**
@@ -102,7 +99,7 @@ public class Presenter implements GameOverListener {
         view.lockInput();
         view.startMovement();
         timer = 0;
-        pointOfMovement = pointBeforeMovement;
+        pointOfMovement = translatePointFieldToScreen(way.poll());
     }
 
     private void finishMovement() {
@@ -110,7 +107,6 @@ public class Presenter implements GameOverListener {
         view.unlockInput();
         view.finishMovement();
         timer = 0;
-        pointBeforeMovement = getPositionOfProtagonist();
 
         if (isGameOver) {
 

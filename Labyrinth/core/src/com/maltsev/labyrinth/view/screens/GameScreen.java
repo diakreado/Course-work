@@ -41,14 +41,11 @@ public class GameScreen implements Screen, View {
     private boolean lockInput = false;
     private boolean isGameEnd = false;
 
-    private MainMenuScreen mainMenuScreen;
-
     private boolean isInMotion = false;
 
-    public GameScreen(final Labyrinth game, MainMenuScreen mainMenuScreen) {
+    public GameScreen(final Labyrinth game) {
 
         this.game = game;
-        this.mainMenuScreen = mainMenuScreen;
 
         batch = game.spriteBatch;
 
@@ -133,6 +130,8 @@ public class GameScreen implements Screen, View {
 
         if (isInMotion)
             changePositionOfProtagonist(presenter.getPositionOfMovingProtagonist(delta));
+
+        hud.setTime(delta);
     }
 
     /**
@@ -194,7 +193,7 @@ public class GameScreen implements Screen, View {
     private void close() {
 
         dispose();
-        mainMenuScreen.turnOn();
+        game.setMainMenuScreen();
     }
 
     @Override

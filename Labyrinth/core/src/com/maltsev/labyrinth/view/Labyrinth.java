@@ -3,6 +3,7 @@ package com.maltsev.labyrinth.view;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.maltsev.labyrinth.view.screens.GameScreen;
 import com.maltsev.labyrinth.view.screens.MainMenuScreen;
 
 /**
@@ -18,6 +19,9 @@ public class Labyrinth extends Game {
     public static final int V_WIDTH = 1920;
     public static final int V_HEIGHT = 1080;
 
+    MainMenuScreen mainMenuScreen;
+    GameScreen gameScreen;
+
     public SpriteBatch spriteBatch;
 
     @Override
@@ -25,12 +29,20 @@ public class Labyrinth extends Game {
 
         spriteBatch = new SpriteBatch();
 
-        this.setScreen(new MainMenuScreen(this));
+        setMainMenuScreen();
     }
 
-    public void startAgain() {
+    public void setGameScreen() {
 
-        this.setScreen(new MainMenuScreen(this));
+        gameScreen = new GameScreen(this);
+        this.setScreen(gameScreen);
+
+    }
+
+    public void setMainMenuScreen() {
+
+        mainMenuScreen = new MainMenuScreen(this);
+        this.setScreen(mainMenuScreen);
     }
 
     @Override

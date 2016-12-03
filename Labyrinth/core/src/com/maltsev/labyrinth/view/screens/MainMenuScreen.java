@@ -63,15 +63,16 @@ public class MainMenuScreen implements Screen{
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
-                game.setScreen(new GameScreen(game, i));
+                game.setGameScreen();
+                dispose();
             }
-        });    // На кнопку "Start" запускаем игру
+        });
 
         stage.addActor(play);
         play.setPosition((float)0.625 * Labyrinth.V_WIDTH, (float)0.4375 * Labyrinth.V_HEIGHT);
 
-        Gdx.input.setInputProcessor(stage);  // Устанавливаем нашу сцену основным процессором для ввода (нажатия, касания, клавиатура etc.)
-        Gdx.input.setCatchBackKey(true); // Это нужно для того, чтобы пользователь возвращался назад, в случае нажатия на кнопку Назад на своем устройстве
+        Gdx.input.setInputProcessor(stage);
+        Gdx.input.setCatchBackKey(true);
     }
 
     @Override
@@ -84,7 +85,6 @@ public class MainMenuScreen implements Screen{
         game.spriteBatch.draw(fon, 0, 0);
         game.spriteBatch.end();
 
-        // Рисуем сцену
         stage.act(delta);
         stage.draw();
     }
@@ -96,12 +96,6 @@ public class MainMenuScreen implements Screen{
         atlasUi.dispose();
         skin.dispose();
         font.dispose();
-    }
-
-    public void turnOn() {
-
-        game.startAgain();
-        dispose();
     }
 
     @Override
