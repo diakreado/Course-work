@@ -28,6 +28,7 @@ public class Protagonist {
      * @param x координата точки по оси X, в которую нужно переместить протагониста
      * @param y координата точки по оси Y, в которую нужно переместить протагониста
      */
+    // уж если создал класс, представляющий позицию на поле, то его только и используй. Так что этот метод мне кажется лишним
     public void movesOfProtagonist(final int x, final  int y) {
 
         locationOfProtagonist = new PointOnTheField(x,y);
@@ -47,6 +48,7 @@ public class Protagonist {
      * @param x координата точки по оси X
      * @param y координата точки по оси Y
      */
+    Этот тоже лишний
     public Protagonist(final int x, final  int y) {
 
         locationOfProtagonist = new PointOnTheField(x, y);

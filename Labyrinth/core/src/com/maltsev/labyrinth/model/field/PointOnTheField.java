@@ -33,7 +33,7 @@ public class PointOnTheField {
      */
     public PointOnTheField(final PointOnTheField point) {
 
-        this.x = point.getX();
+        this.x = point.getX(); //внутри класса ты имеешь доступ к рrivate полям, так что можно this.x = point.x;
         this.y = point.getY();
     }
 

@@ -10,7 +10,7 @@ public class GameField {
     /**
      *  Матрица ячеек, т.е. само поле
      */
-    private ArrayList< ArrayList< CellOfField>> field;
+    private ArrayList< ArrayList< CellOfField>> field; //можно вместо ArrayList<ArrayList< CellOfField>> - ArrayList<BitSet>
 
     /**
      *  Массив координат ячеек, которые являются проходимыми
@@ -46,6 +46,8 @@ public class GameField {
     public GameField(final String newField) {
                                                             //TODO Возможно метод излишне длинный, но как укоротить идей нет.
         passableCells = new ArrayList<PointOnTheField>();
+
+        //как то не очень что у тебя два разных field
         field = new ArrayList<ArrayList<CellOfField>>();
 
         String[] field = newField.split("\\n");   // делим полученую строчку на части
@@ -70,7 +72,7 @@ public class GameField {
 
         for(int x = 0; x < lengthX; x++) {
 
-            ArrayList< CellOfField> arrayOfCell = new ArrayList<CellOfField>();
+            ArrayList< CellOfField> arrayOfCell = new ArrayList<CellOfField>(); //Если использовать BitSet, то это вообще не понадобиться, будет экономнее использоваться память
 
             for(int y = 0; y < lengthY; y++) {
 
@@ -115,6 +117,7 @@ public class GameField {
     /**
      *  Фиксирование размеров поля
      */
+    // Излишне Длинное название метода. setSize - достаточно
     private void setTheValuesOfSizeOfField() {
 
         sizeOfFieldX = field.size();
@@ -164,6 +167,7 @@ public class GameField {
     /**
      * @return размер поля по оси X (начиная отсчёт с нуля)
      */
+    // Класс и без того называется GameField, поэтому getWidth или getSizeX будет вполне достаточно
     public int getSizeOfFieldX() {
 
         return sizeOfFieldX;
@@ -172,6 +176,7 @@ public class GameField {
     /**
      * @return размер поля по оси Y (начиная отсчёт с нуля)
      */
+    // getSizeY
     public int getSizeOfFieldY() {
 
         return sizeOfFieldY;
