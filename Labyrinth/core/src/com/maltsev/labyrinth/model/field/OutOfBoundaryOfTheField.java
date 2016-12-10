@@ -27,6 +27,7 @@ public class OutOfBoundaryOfTheField extends Exception{
 
     /**
      * Конструктор, в который передаётся информация об ошибке
+     * @param infoAboutPlaceFromThrowingException имя класса, который бросил исключение
      * @param nameOfParam имя параметра, который не соответствует норме
      * @param valueOfParam значение параметра, которое привело к исключению
      * @param maximumAllowableValueOfParam максимально допустимое значение параметра
@@ -68,6 +69,9 @@ public class OutOfBoundaryOfTheField extends Exception{
         return maximumAllowableValueOfParam;
     }
 
+    /**
+     * @return откуда исключение прилетело
+     */
     public String getInfoAboutPlaceFromThrowingException() {
 
         return infoAboutPlaceFromThrowingException;

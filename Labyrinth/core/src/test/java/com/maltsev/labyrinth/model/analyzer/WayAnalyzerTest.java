@@ -1,11 +1,11 @@
 package com.maltsev.labyrinth.model.analyzer;
 
+import com.maltsev.labyrinth.model.ModelOfLabyrinth;
 import com.maltsev.labyrinth.model.Model;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
 import org.junit.Test;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -15,7 +15,7 @@ public class WayAnalyzerTest {
     @Test
     public void motionInStraightLine() throws Exception {
 
-        Model model = Model.getInstance();
+        Model model = new ModelOfLabyrinth();
 
         String gameField = "11111\n" +
                            "11s11\n" +
@@ -25,7 +25,7 @@ public class WayAnalyzerTest {
 
         model.setGameField(gameField);
 
-        WayAnalyzer analyzer = new WayAnalyzer();
+        WayAnalyzer analyzer = new WayAnalyzer(model);
         analyzer.setDefaultRange(5);
 
         PointOnTheField startPoint1 = new PointOnTheField(0,0);

@@ -1,8 +1,10 @@
 package com.maltsev.labyrinth.presenter;
 
+import com.maltsev.labyrinth.model.Model;
+import com.maltsev.labyrinth.model.ModelOfLabyrinth;
 import com.maltsev.labyrinth.model.analyzer.gameover.GameOverListener;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
-import com.maltsev.labyrinth.model.Model;
+import com.maltsev.labyrinth.presenter.interfaces.View;
 import com.maltsev.labyrinth.presenter.tempdata.PointOnTheScreen;
 import com.maltsev.labyrinth.presenter.tempdata.SizeOfTexture;
 
@@ -10,7 +12,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 
 /**
- * Presenter выступает в качестве посредника между View и Model.
+ * Presenter выступает в качестве посредника между View и ModelOfLabyrinth.
  * Он извлекает данные из модели и передает их во View. Также решает,
  * что нужно делать, когда вы взаимодействуете с View.
  */
@@ -40,7 +42,7 @@ public class Presenter implements GameOverListener {
 
         this.view = view;
 
-        model = Model.getInstance();
+        model = new ModelOfLabyrinth();
 
         String newField = FileReader.read("gameField.txt");
 

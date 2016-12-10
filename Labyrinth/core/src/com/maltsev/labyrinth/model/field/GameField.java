@@ -1,6 +1,7 @@
 package com.maltsev.labyrinth.model.field;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *  Игровое поле
@@ -11,11 +12,11 @@ public class GameField {
      *  Матрица ячеек, т.е. само поле
      */
     private ArrayList< ArrayList< CellOfField>> field; //можно вместо ArrayList<ArrayList< CellOfField>> - ArrayList<BitSet>
-
+                                                        //TODO не получится, если в планах оставить Cell
     /**
      *  Массив координат ячеек, которые являются проходимыми
      */
-    private ArrayList<PointOnTheField> passableCells;
+    private List<PointOnTheField> passableCells;
 
     /**
      *  Размер поля по оси X
@@ -44,26 +45,22 @@ public class GameField {
      *                 s - начальная точка поля, f - конечная, а новая строчка задаётся \n
      */
     public GameField(final String newField) {
-                                                            //TODO Возможно метод излишне длинный, но как укоротить идей нет.
+
         passableCells = new ArrayList<PointOnTheField>();
 
-        //как то не очень что у тебя два разных field
         field = new ArrayList<ArrayList<CellOfField>>();
 
-        String[] field = newField.split("\\n");   // делим полученую строчку на части
+        String[] fieldFromString = newField.split("\\n");   // делим полученую строчку на части
 
-        int lengthX = field.length;
-        int lengthY = field[field.length - 1].length();
+        int lengthX = fieldFromString.length;
+        int lengthY = fieldFromString[fieldFromString.length - 1].length();
 
 
-        for(int x = 0; x < lengthX; x++) {                  // Проверка на то, чтобы матрица была прямоугольной,
-                                                           // если это не так, то шириной берётся минимальное значение
-            if (lengthY != field[x].length()) {           // остальное отбрасывается
+        for(int x = 0; x < lengthX; x++) {                        // Проверка на то, чтобы матрица была прямоугольной,
+                                                                 // если это не так, то шириной берётся минимальное значение
+            if (lengthY > fieldFromString[x].length()) {        // остальное отбрасывается
 
-                if (lengthY > field[x].length()) {
-
-                    lengthY = field[x].length();
-                }
+                lengthY = fieldFromString[x].length();
             }
         }
 
@@ -77,7 +74,7 @@ public class GameField {
             for(int y = 0; y < lengthY; y++) {
 
                 boolean isItPossibleWay = false;
-                if (field[x].charAt(y) != '0') {            // Установка проходимости
+                if (fieldFromString[x].charAt(y) != '0') {            // Установка проходимости
 
                     isItPossibleWay = true;
 
@@ -86,12 +83,12 @@ public class GameField {
 
                 arrayOfCell.add(new CellOfField(isItPossibleWay));
 
-                if (field[x].charAt(y) == 's' || field[x].charAt(y) == 'S') {        // Установка стартовой и финишной точек
+                if (fieldFromString[x].charAt(y) == 's' || fieldFromString[x].charAt(y) == 'S') {        // Установка стартовой и финишной точек
 
                     if (!metBeginning) startingPoint = new PointOnTheField(x,y);
                     metBeginning = true;
                 }
-                else if (field[x].charAt(y) == 'f' || field[x].charAt(y) == 'F') {
+                else if (fieldFromString[x].charAt(y) == 'f' || fieldFromString[x].charAt(y) == 'F') {
 
                     if (!metEnd) finishingPoint = new PointOnTheField(x,y);
                     metEnd = true;
@@ -100,7 +97,7 @@ public class GameField {
             this.field.add(arrayOfCell);
         }
 
-        setTheValuesOfSizeOfField();
+        setSize();
 
         if (!metBeginning) {                                             // Если точки начала и конца не обнаружены, то
                                                                         //  они выбираются, из проходимых ячеек,
@@ -117,8 +114,7 @@ public class GameField {
     /**
      *  Фиксирование размеров поля
      */
-    // Излишне Длинное название метода. setSize - достаточно
-    private void setTheValuesOfSizeOfField() {
+    private void setSize() {
 
         sizeOfFieldX = field.size();
         sizeOfFieldY = field.get(0).size();
@@ -167,8 +163,7 @@ public class GameField {
     /**
      * @return размер поля по оси X (начиная отсчёт с нуля)
      */
-    // Класс и без того называется GameField, поэтому getWidth или getSizeX будет вполне достаточно
-    public int getSizeOfFieldX() {
+    public int getSizeX() {
 
         return sizeOfFieldX;
     }
@@ -176,8 +171,7 @@ public class GameField {
     /**
      * @return размер поля по оси Y (начиная отсчёт с нуля)
      */
-    // getSizeY
-    public int getSizeOfFieldY() {
+    public int getSizeY() {
 
         return sizeOfFieldY;
     }
@@ -201,7 +195,7 @@ public class GameField {
     /**
      * @return Массив координат проходимых ячеек
      */
-    public ArrayList<PointOnTheField> getPassableCells() {
+    public List<PointOnTheField> getPassableCells() {
 
         return passableCells;
     }

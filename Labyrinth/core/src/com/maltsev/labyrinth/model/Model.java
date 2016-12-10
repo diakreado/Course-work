@@ -1,150 +1,90 @@
 package com.maltsev.labyrinth.model;
 
-import com.maltsev.labyrinth.model.analyzer.WayAnalyzer;
-import com.maltsev.labyrinth.model.analyzer.gameover.GameOverAnalyzer;
+
 import com.maltsev.labyrinth.model.analyzer.gameover.GameOverListener;
-import com.maltsev.labyrinth.model.field.GameField;
 import com.maltsev.labyrinth.model.field.OutOfBoundaryOfTheField;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
-import com.maltsev.labyrinth.model.protagonist.Protagonist;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-
+import java.util.List;
 
 /**
- *  Model реализует шаблон Singleton
+ * ModelOfLabyrinth рассматривается в качестве поставщика данных,
+ * которые будут отображаться во View.
  */
-public class Model implements ModelAPI {
-
-    private static Model ourInstance = new Model();
+public interface Model {
 
     /**
-     * @return единственный экземпляр класса
+     * Возможно ли поместить протигониста в определённую ячейку
+     * @param x координата ячейки по оси Х
+     * @param y координата ячейки по оси Y
+     * @return возвращяет значение логического типа, если true, то протагонист может находится в этой ячейке, иначе false
      */
-    public static Model getInstance() {
-
-        return ourInstance;
-    }
-
-    private Model() {}
+    boolean isItPassableCells(final int x, final int y);
 
     /**
-     * Главный герой
+     * Возможно ли поместить протигониста в определённую ячейку
+     * @param point точка указывающая на ячейку
+     * @return возвращяет значение логического типа, если true, то протагонист может находится в этой ячейке, иначе false
      */
-    private Protagonist protagonist;
+    boolean isItPassableCells(final PointOnTheField point);
 
     /**
-     * Игровое поле
+     * @return Размер поля по оси Х
      */
-    private GameField gameField;
+    int getSizeOfFieldX();
 
     /**
-     *  Анализатор конца игры
+     * @return Размер поля по оси Y
      */
-    private GameOverAnalyzer analyzerOfGameOver;
+    int getSizeOfFieldY();
 
     /**
-     * Анализатор пути
+     * @return Массив объектов Точка на плоскости, который содержит номера ячеек, которые являются проходимыми
      */
-    private WayAnalyzer analyzerOfWay;
+    List<PointOnTheField> getPassableCells();
 
+    /**
+     * Установка игрового поля
+     * @param newField игровое поле, строка-матрица, где 1,s,f - проходимые элементы, а 0 - нет, s - начальная точка поля, f - конечная, а новая строчка задаётся \n
+     */
+    void setGameField(final String newField);
 
-    @Override
-    public void setGameField(final String newField) {
-
-        this.gameField = new GameField(newField);
-        protagonist = new Protagonist(gameField.getStartingPoint());
-        analyzerOfGameOver = new GameOverAnalyzer();
-        analyzerOfWay = new WayAnalyzer();
-    }
-
-    @Override
+    /**
+     * Перемещаяет протагониста в определённыю точку пространства, если это возможно, иначе оставляет на прежнем месте.
+     * Работает только если конечная точка пути находитсся не дальше 5 клеток от начальной
+     * @param x координата ячейки по оси Х
+     * @param y координата ячейки по оси Y
+     * @return маршрут(массив точек) перемещения из одной точки в другую, если он возможен, иначе null
+     */
     @org.jetbrains.annotations.Nullable
-    public ArrayDeque<PointOnTheField> movesOfProtagonist(final int x, final  int y) {
+    ArrayDeque<PointOnTheField> movesOfProtagonist(final int x, final int y);
 
-        ArrayDeque<PointOnTheField> way = analyzerOfWay.getWay(getPositionOfProtagonist(), new PointOnTheField(x,y));
+    /**
+     * Добавляет слушателя на событие окончание игры
+     * @param listener объект-слушатель
+     */
+    void addListenerOfGameOver(GameOverListener listener);
 
-        if (way == null) return null;
+    /**
+     * @return Точка, местоположение героя
+     */
+    PointOnTheField getPositionOfProtagonist();
 
-        protagonist.movesOfProtagonist(x,y);
+    /**
+     * @return начальная точка поля
+     */
+    PointOnTheField getStartingPositionOfField();
 
-        analyzerOfGameOver.messageAboutChangingSystem();
+    /**
+     * @return конечная точка поля
+     */
+    PointOnTheField getFinishingPositionOfField();
 
-        return way;
-    }
-
-    @Override
-    public boolean isItPassableCells(final int x, final int y) {
-
-        try {
-
-            return gameField.isItPassableCell(x,y);
-
-        }catch (OutOfBoundaryOfTheField ex) {
-
-            return false;
-        }
-    }
-
-    @Override
-    public boolean isItPassableCells(final PointOnTheField point) {
-
-        try {
-
-            return gameField.isItPassableCell(point);
-
-        }catch (OutOfBoundaryOfTheField ex) {
-
-            return false;
-        }
-    }
-
-    @Override
-    public void addListenerOfGameOver(GameOverListener listener) {
-
-        analyzerOfGameOver.addListener(listener);
-    }
-
-    @Override
-    public int getSizeOfFieldX() {
-
-        return gameField.getSizeOfFieldX();
-    }
-
-    @Override
-    public int getSizeOfFieldY() {
-
-        return gameField.getSizeOfFieldY();
-    }
-
-    @Override
-    public ArrayList<PointOnTheField> getPassableCells() {
-
-        return gameField.getPassableCells();
-    }
-
-    @Override
-    public PointOnTheField getPositionOfProtagonist() {
-
-        return protagonist.getLocationOfProtagonist();
-    }
-
-    @Override
-    public PointOnTheField getStartingPositionOfField() {
-
-        return gameField.getStartingPoint();
-    }
-
-    @Override
-    public PointOnTheField getFinishingPositionOfField() {
-
-        return gameField.getFinishingPoint();
-    }
-
-    @Override
-    public void setValueOfRangeOfStep(int valueOfRangeOfStep) {
-
-        analyzerOfWay.setDefaultRange(valueOfRangeOfStep);
-    }
+    /**
+     * Установить значение дальности шага протагониста
+     * @param valueOfRangeOfStep дальность шага
+     */
+    void setValueOfRangeOfStep(int valueOfRangeOfStep);
 }

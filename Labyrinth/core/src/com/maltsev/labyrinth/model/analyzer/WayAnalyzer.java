@@ -5,8 +5,6 @@ import com.maltsev.labyrinth.model.Model;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
 
 /**
  * Класс, главная задача которого проведение маршрута из одной точки в другую
@@ -26,6 +24,11 @@ public class WayAnalyzer {
 
     private int sizeOfFieldX;
     private int sizeOfFieldY;
+
+    public WayAnalyzer(Model model) {
+
+        this.model = model;
+    }
 
     /**
      * Установить значение для длины шага
@@ -62,8 +65,6 @@ public class WayAnalyzer {
      */
     @org.jetbrains.annotations.Nullable
     public ArrayDeque<PointOnTheField> getWay(final PointOnTheField startPoint, final PointOnTheField finishPoint, int range) {
-
-        model = Model.getInstance();
 
         if (!model.isItPassableCells(startPoint) || !model.isItPassableCells(finishPoint))
             return null;                            // Проверка на правильность задания начальной и конечной точки

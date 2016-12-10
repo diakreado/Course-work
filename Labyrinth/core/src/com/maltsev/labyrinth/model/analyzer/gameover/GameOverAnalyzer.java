@@ -1,6 +1,7 @@
 package com.maltsev.labyrinth.model.analyzer.gameover;
 
-//Мне кажется довольно странным, что GameOverAnalyzer содержит поле Model, а Model содержит поле GameOverAnalyzer
+//Мне кажется довольно странным, что GameOverAnalyzer содержит поле ModelOfLabyrinth, а ModelOfLabyrinth содержит поле GameOverAnalyzer
+//todo это вполне нормально, ведь GameOverAnalyzer должен получать информацию про игровое поле и ему не сильно интересно, что там внутри, следовательно ему удобнее работать с  ModelOfLabyrinth
 
 import com.maltsev.labyrinth.model.Model;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
@@ -18,9 +19,10 @@ public class GameOverAnalyzer {
     private PointOnTheField finishPoint;
 
 
-    public GameOverAnalyzer() {
+    public GameOverAnalyzer(Model model) {
 
-        model = Model.getInstance();
+        this.model = model;
+
         finishPoint = new PointOnTheField(model.getFinishingPositionOfField());
 
         queue = new PriorityQueue<GameOverListener>(DELAULT_SIZE_OF_QUEUE);

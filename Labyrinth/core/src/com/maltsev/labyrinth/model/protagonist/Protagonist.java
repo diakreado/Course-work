@@ -29,6 +29,7 @@ public class Protagonist {
      * @param y координата точки по оси Y, в которую нужно переместить протагониста
      */
     // уж если создал класс, представляющий позицию на поле, то его только и используй. Так что этот метод мне кажется лишним
+    //TODO иногда удобнее одно, иногда другое, по смыслу и то, и то допустимо
     public void movesOfProtagonist(final int x, final  int y) {
 
         locationOfProtagonist = new PointOnTheField(x,y);
@@ -48,7 +49,8 @@ public class Protagonist {
      * @param x координата точки по оси X
      * @param y координата точки по оси Y
      */
-    Этот тоже лишний
+    //Этот тоже лишний
+    //TODO мне не сложно написать два варианта, они вполне допустимы, ты можешь сказать о позиции двумя параметрами или точкой, там где это используется улушчается понятность
     public Protagonist(final int x, final  int y) {
 
         locationOfProtagonist = new PointOnTheField(x, y);

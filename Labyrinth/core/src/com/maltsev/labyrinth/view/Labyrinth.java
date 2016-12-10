@@ -19,8 +19,8 @@ public class Labyrinth extends Game {
     public static final int V_WIDTH = 1920;
     public static final int V_HEIGHT = 1080;
 
-    MainMenuScreen mainMenuScreen;
-    GameScreen gameScreen;
+    private MainMenuScreen mainMenuScreen;
+    private GameScreen gameScreen;
 
     public SpriteBatch spriteBatch;
 

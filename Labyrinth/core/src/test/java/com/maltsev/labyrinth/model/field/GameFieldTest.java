@@ -28,8 +28,8 @@ public class GameFieldTest {
         assertFalse(gameField.isItPassableCell(2,4));
         assertFalse(gameField.isItPassableCell(0,3));
 
-        assertEquals(5, gameField.getSizeOfFieldX());
-        assertEquals(5, gameField.getSizeOfFieldY());
+        assertEquals(5, gameField.getSizeX());
+        assertEquals(5, gameField.getSizeY());
 
         assertTrue(gameField.getStartingPoint().equals(0,4));
         assertTrue(gameField.getFinishingPoint().equals(4,2));

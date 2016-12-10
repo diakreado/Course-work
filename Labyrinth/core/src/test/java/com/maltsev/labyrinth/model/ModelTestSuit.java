@@ -14,7 +14,7 @@ import org.junit.runners.Suite;
         FieldTestSuit.class,
         ProtagonistTest.class,
         WayAnalyzerTest.class,
-        ModelTest.class})
+        ModelOfLabyrinthTest.class})
 
 /**
  * Тестирование всего пакета model

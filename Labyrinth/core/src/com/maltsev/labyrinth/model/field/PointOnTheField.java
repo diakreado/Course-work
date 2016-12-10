@@ -33,8 +33,8 @@ public class PointOnTheField {
      */
     public PointOnTheField(final PointOnTheField point) {
 
-        this.x = point.getX(); //внутри класса ты имеешь доступ к рrivate полям, так что можно this.x = point.x;
-        this.y = point.getY();
+        this.x = point.x;
+        this.y = point.y;
     }
 
     /**
@@ -68,10 +68,12 @@ public class PointOnTheField {
 
         PointOnTheField comparePoint = (PointOnTheField) obj;
 
-        if (this.x == comparePoint.x && this.y == comparePoint.y) return true;
-        else return false;
+        return this.x == comparePoint.x && this.y == comparePoint.y;
     }
 
+    /**
+     * Сгенерировала IDEA
+     */
     @Override
     public int hashCode() {
 
@@ -90,6 +92,9 @@ public class PointOnTheField {
         return this.x == x && this.y == y;
     }
 
+    /**
+     * Сгенерировала IDEA
+     */
     @Override
     public String toString() {
 

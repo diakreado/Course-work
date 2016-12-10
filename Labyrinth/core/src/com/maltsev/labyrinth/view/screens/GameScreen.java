@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.maltsev.labyrinth.presenter.Presenter;
-import com.maltsev.labyrinth.presenter.View;
+import com.maltsev.labyrinth.presenter.interfaces.View;
 import com.maltsev.labyrinth.presenter.tempdata.PointOnTheScreen;
 import com.maltsev.labyrinth.view.Labyrinth;
 import com.maltsev.labyrinth.view.scenes.Fon;
