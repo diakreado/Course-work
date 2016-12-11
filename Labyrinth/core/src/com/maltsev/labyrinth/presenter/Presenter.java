@@ -2,7 +2,8 @@ package com.maltsev.labyrinth.presenter;
 
 import com.maltsev.labyrinth.model.Model;
 import com.maltsev.labyrinth.model.ModelOfLabyrinth;
-import com.maltsev.labyrinth.model.analyzer.gameover.GameOverListener;
+import com.maltsev.labyrinth.model.analyzer.event.gameover.GameOverListener;
+import com.maltsev.labyrinth.model.field.FieldIsEmptyException;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
 import com.maltsev.labyrinth.presenter.interfaces.View;
 import com.maltsev.labyrinth.presenter.tempdata.PointOnTheScreen;
@@ -46,7 +47,25 @@ public class Presenter implements GameOverListener {
 
         String newField = FileReader.read("gameField.txt");
 
-        model.setGameField(newField);
+        try {
+
+            model.setGameField(newField);
+        }
+        catch (FieldIsEmptyException ex){
+
+            System.out.println(ex);
+
+            String defaultField = "11111\n11111";
+
+            try {
+                model.setGameField(defaultField);
+            }
+            catch (FieldIsEmptyException error) {
+
+                throw new Error("Всё очень плохо");
+            }
+        }
+
         model.addListenerOfGameOver(this);
         model.setValueOfRangeOfStep(rangeOfStep);
 
@@ -82,7 +101,7 @@ public class Presenter implements GameOverListener {
      */
     public void drawExit() {
 
-        view.drawExit(translatePointFieldToScreen(model.getFinishingPositionOfField()));
+        view.drawExit(translatePointFieldToScreen(model.getFinishPosition()));
     }
 
     public void moveProtagonist(float screenX, float screenY) {

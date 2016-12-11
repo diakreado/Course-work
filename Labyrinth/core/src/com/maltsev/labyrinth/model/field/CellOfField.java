@@ -14,11 +14,24 @@ class CellOfField {
     private boolean isThisCellPossibleForMove;
 
     /**
+     * Есть ли дверь в клетке
+     */
+    private boolean isDoor = false;
+
+    /**
+     * Открыта ли дверь
+     */
+    private boolean doorIsOpen = false;
+
+    /**
      * @return проходима ли клетка
      */
     boolean getInfoAboutPatencyOfCell() {
 
-        return isThisCellPossibleForMove;
+        if(!isDoor)
+            return isThisCellPossibleForMove;
+        else
+            return doorIsOpen;
     }
 
     /**
@@ -27,5 +40,23 @@ class CellOfField {
     CellOfField(final boolean isThisCellPossibleForMove) {
 
         this.isThisCellPossibleForMove = isThisCellPossibleForMove;
+    }
+
+    /**
+     * Установить дверь в клетку
+     */
+    void createDoor() {
+
+        if(isThisCellPossibleForMove)
+            isDoor = true;
+    }
+
+    /**
+     * Открытие двери
+     */
+    void openDoor() {
+
+        if(isDoor)
+            doorIsOpen = true;
     }
 }

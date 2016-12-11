@@ -1,12 +1,11 @@
 package com.maltsev.labyrinth.model;
 
 
-import com.maltsev.labyrinth.model.analyzer.gameover.GameOverListener;
-import com.maltsev.labyrinth.model.field.OutOfBoundaryOfTheField;
+import com.maltsev.labyrinth.model.analyzer.event.gameover.GameOverListener;
+import com.maltsev.labyrinth.model.field.FieldIsEmptyException;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,8 +47,9 @@ public interface Model {
     /**
      * Установка игрового поля
      * @param newField игровое поле, строка-матрица, где 1,s,f - проходимые элементы, а 0 - нет, s - начальная точка поля, f - конечная, а новая строчка задаётся \n
+     * @throws FieldIsEmptyException выбрасывается, когда поле задано лишь 0, т.е. ходить некуда
      */
-    void setGameField(final String newField);
+    void setGameField(final String newField)  throws FieldIsEmptyException;
 
     /**
      * Перемещаяет протагониста в определённыю точку пространства, если это возможно, иначе оставляет на прежнем месте.
@@ -75,16 +75,26 @@ public interface Model {
     /**
      * @return начальная точка поля
      */
-    PointOnTheField getStartingPositionOfField();
+    PointOnTheField getStartPosition();
 
     /**
      * @return конечная точка поля
      */
-    PointOnTheField getFinishingPositionOfField();
+    PointOnTheField getFinishPosition();
 
     /**
      * Установить значение дальности шага протагониста
      * @param valueOfRangeOfStep дальность шага
      */
     void setValueOfRangeOfStep(int valueOfRangeOfStep);
+
+    /**
+     * @return Массив с координатами дверей
+     */
+    List<PointOnTheField> getDoors();
+
+    /**
+     * @return Массив с координатами ключей
+     */
+    List<PointOnTheField> getKeys();
 }

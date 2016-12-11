@@ -1,18 +1,42 @@
 package com.maltsev.labyrinth.model.protagonist;
 
 
+import com.maltsev.labyrinth.model.analyzer.event.keysanddoors.keys.FoundKeyListener;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
 
 /**
  *  Главный герой
  */
-public class Protagonist {
+public class Protagonist implements FoundKeyListener {
 
     /**
      *  Позиция главного героя на карте
      */
     private PointOnTheField locationOfProtagonist;
 
+    /**
+     * Количество ключей, которые имеются у протагониста
+     */
+    private int numberOfKeys = 0;
+
+    @Override
+    public void keyIsFound() {
+
+        numberOfKeys++;
+    }
+
+    public void useKey() {
+
+        numberOfKeys--;
+    }
+
+    /**
+     * @return количество ключей на данный момент
+     */
+    public int getNumberOfKeys() {
+
+        return numberOfKeys;
+    }
 
     /**
      *  Перемещения протагониста на новую позицию

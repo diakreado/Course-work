@@ -1,6 +1,6 @@
 package com.maltsev.labyrinth.model;
 
-import com.maltsev.labyrinth.model.analyzer.gameover.GameOverListener;
+import com.maltsev.labyrinth.model.analyzer.event.gameover.GameOverListener;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
 import org.junit.Test;
 

@@ -3,7 +3,7 @@ package com.maltsev.labyrinth.model.field;
 /**
  *  Выход за границу поля - исключение
  */
-public class OutOfBoundaryOfTheField extends Exception{
+public class OutOfBoundaryOfTheFieldException extends Exception{
 
     /**
      *  Имя параметра, который не соответствует норме
@@ -23,26 +23,26 @@ public class OutOfBoundaryOfTheField extends Exception{
     /**
      * Имя класса, который бросил исключение
      */
-    private String infoAboutPlaceFromThrowingException;
+    private String infoAboutException;
 
     /**
      * Конструктор, в который передаётся информация об ошибке
-     * @param infoAboutPlaceFromThrowingException имя класса, который бросил исключение
+     * @param infoAboutException информация, о брошенном исклчюение
      * @param nameOfParam имя параметра, который не соответствует норме
      * @param valueOfParam значение параметра, которое привело к исключению
      * @param maximumAllowableValueOfParam максимально допустимое значение параметра
      */
-    public OutOfBoundaryOfTheField(final String infoAboutPlaceFromThrowingException,final String nameOfParam,
-                                   final int valueOfParam, final int maximumAllowableValueOfParam) {
+    public OutOfBoundaryOfTheFieldException(final String infoAboutException, final String nameOfParam,
+                                            final int valueOfParam, final int maximumAllowableValueOfParam) {
 
-        super("\n\n" + infoAboutPlaceFromThrowingException + " :" +
+        super("\n\n" + infoAboutException + " :" +
                 "\nНеправильно задан " + nameOfParam + " : " + valueOfParam +
                 "\nДопустимое значение : [0;" + maximumAllowableValueOfParam + "]");
 
         this.nameOfParam = nameOfParam;
         this.valueOfParam = valueOfParam;
         this.maximumAllowableValueOfParam = maximumAllowableValueOfParam;
-        this.infoAboutPlaceFromThrowingException = infoAboutPlaceFromThrowingException;
+        this.infoAboutException = infoAboutException;
     }
 
     /**
@@ -72,8 +72,8 @@ public class OutOfBoundaryOfTheField extends Exception{
     /**
      * @return откуда исключение прилетело
      */
-    public String getInfoAboutPlaceFromThrowingException() {
+    public String getInfoAboutException() {
 
-        return infoAboutPlaceFromThrowingException;
+        return infoAboutException;
     }
 }

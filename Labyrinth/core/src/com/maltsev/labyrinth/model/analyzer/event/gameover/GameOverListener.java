@@ -1,4 +1,4 @@
-package com.maltsev.labyrinth.model.analyzer.gameover;
+package com.maltsev.labyrinth.model.analyzer.event.gameover;
 
 
 /**

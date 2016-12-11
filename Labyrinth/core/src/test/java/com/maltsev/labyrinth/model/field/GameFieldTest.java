@@ -3,6 +3,7 @@ package com.maltsev.labyrinth.model.field;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -74,9 +75,9 @@ public class GameFieldTest {
 
             gameField.isItPassableCell(2,8);
         }
-        catch (com.maltsev.labyrinth.model.field.OutOfBoundaryOfTheField ex) {
+        catch (OutOfBoundaryOfTheFieldException ex) {
 
-            assertEquals("Illegal request of possible way",ex.getInfoAboutPlaceFromThrowingException());
+            assertEquals("Illegal request of possible way",ex.getInfoAboutException());
             assertEquals(6 ,ex.getMaximumAllowableValueOfParam());
             assertEquals("y" ,ex.getNameOfParam());
             assertEquals(8 ,ex.getValueOfParam());
@@ -86,9 +87,9 @@ public class GameFieldTest {
 
             gameField.isItPassableCell(5,1);
         }
-        catch (com.maltsev.labyrinth.model.field.OutOfBoundaryOfTheField ex) {
+        catch (OutOfBoundaryOfTheFieldException ex) {
 
-            assertEquals("Illegal request of possible way",ex.getInfoAboutPlaceFromThrowingException());
+            assertEquals("Illegal request of possible way",ex.getInfoAboutException());
             assertEquals(4 ,ex.getMaximumAllowableValueOfParam());
             assertEquals("x" ,ex.getNameOfParam());
             assertEquals(5 ,ex.getValueOfParam());
@@ -98,12 +99,80 @@ public class GameFieldTest {
 
             gameField.isItPassableCell(2,7);         // тот самый лишний 0
         }
-        catch (com.maltsev.labyrinth.model.field.OutOfBoundaryOfTheField ex) {
+        catch (OutOfBoundaryOfTheFieldException ex) {
 
-            assertEquals("Illegal request of possible way",ex.getInfoAboutPlaceFromThrowingException());
+            assertEquals("Illegal request of possible way",ex.getInfoAboutException());
             assertEquals(6 ,ex.getMaximumAllowableValueOfParam());
             assertEquals("y" ,ex.getNameOfParam());
             assertEquals(7 ,ex.getValueOfParam());
         }
+
+        String emptyField1 = "0000000\n" +
+                          "000000\n" +
+                "0000000\n" +
+                "0000000\n" +
+                "0000000";
+
+        try {
+
+            GameField emptyGameField1 = new GameField(emptyField1);
+        }
+        catch (FieldIsEmptyException ex) {
+
+            assertEquals(ex.getMessage(), "This field is empty dude");
+        }
+
+        String emptyField2 = "0000000\n" +
+                                "000000\n" +
+                                "000100\n" +
+                                "0000000\n" +
+                                "0000000";
+
+        try {
+
+            GameField emptyGameField2 = new GameField(emptyField2);
+        }
+        catch (FieldIsEmptyException ex) {
+
+            assertEquals(ex.getMessage(), "This field is empty dude");
+        }
+    }
+
+    @Test
+    public void doorCheck() throws Exception {
+
+        String field = "110D11\n" +
+                       "010010\n" +
+                       "ddd11k";
+
+        GameField gameField = new GameField(field);
+
+        List<PointOnTheField> doors = gameField.getDoors();
+
+        assertEquals(doors.size(), 4);
+
+        assertTrue(doors.get(0).equals(0,3));
+        assertTrue(doors.get(1).equals(2,0));
+        assertTrue(doors.get(2).equals(2,1));
+        assertTrue(doors.get(3).equals(2,2));
+    }
+
+    @Test
+    public void doorKeys() throws Exception {
+
+        String field = "110k11\n" +
+                "010010\n" +
+                "kKk11d";
+
+        GameField gameField = new GameField(field);
+
+        List<PointOnTheField> keys = gameField.getKeys();
+
+        assertEquals(keys.size(), 4);
+
+        assertTrue(keys.get(0).equals(0,3));
+        assertTrue(keys.get(1).equals(2,0));
+        assertTrue(keys.get(2).equals(2,1));
+        assertTrue(keys.get(3).equals(2,2));
     }
 }

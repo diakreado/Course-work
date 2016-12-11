@@ -1,31 +1,30 @@
-package com.maltsev.labyrinth.model.analyzer.gameover;
+package com.maltsev.labyrinth.model.analyzer.event.gameover;
 
 //Мне кажется довольно странным, что GameOverAnalyzer содержит поле ModelOfLabyrinth, а ModelOfLabyrinth содержит поле GameOverAnalyzer
 //todo это вполне нормально, ведь GameOverAnalyzer должен получать информацию про игровое поле и ему не сильно интересно, что там внутри, следовательно ему удобнее работать с  ModelOfLabyrinth
 
 import com.maltsev.labyrinth.model.Model;
+import com.maltsev.labyrinth.model.analyzer.event.EventAnalyzer;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
 
 import java.util.PriorityQueue;
+import java.util.Queue;
 
-public class GameOverAnalyzer {
-
-    private PriorityQueue<GameOverListener> queue;
-
-    private Model model;
-
-    private final int DELAULT_SIZE_OF_QUEUE = 16;
+public class GameOverAnalyzer extends EventAnalyzer {
 
     private PointOnTheField finishPoint;
+
+    private Queue<GameOverListener> queue;
+
 
 
     public GameOverAnalyzer(Model model) {
 
-        this.model = model;
+        super(model);
 
-        finishPoint = new PointOnTheField(model.getFinishingPositionOfField());
+        queue = new PriorityQueue<GameOverListener>(DEFAULT_SIZE_OF_QUEUE);
 
-        queue = new PriorityQueue<GameOverListener>(DELAULT_SIZE_OF_QUEUE);
+        finishPoint = new PointOnTheField(model.getFinishPosition());
     }
 
     /**
@@ -37,9 +36,7 @@ public class GameOverAnalyzer {
         queue.add(listener);
     }
 
-    /**
-     * Проверка на окончание игры
-     */
+
     public void messageAboutChangingSystem() {
 
         if (finishPoint.equals(model.getPositionOfProtagonist())) {

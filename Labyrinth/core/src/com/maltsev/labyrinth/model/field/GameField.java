@@ -11,12 +11,22 @@ public class GameField {
     /**
      *  Матрица ячеек, т.е. само поле
      */
-    private ArrayList< ArrayList< CellOfField>> field; //можно вместо ArrayList<ArrayList< CellOfField>> - ArrayList<BitSet>
-                                                        //TODO не получится, если в планах оставить Cell
+    private CellOfField[][] field;
+
     /**
      *  Массив координат ячеек, которые являются проходимыми
      */
     private List<PointOnTheField> passableCells;
+
+    /**
+     *  Массив координат ячеек, в которых находятся двери
+     */
+    private List<PointOnTheField> doors;
+
+    /**
+     *  Массив координат ячеек, в которых находятся ключи
+     */
+    private List<PointOnTheField> keys;
 
     /**
      *  Размер поля по оси X
@@ -44,11 +54,11 @@ public class GameField {
      * @param newField строка-матрица, где 1,s,f - проходимые элементы, а 0 - нет,
      *                 s - начальная точка поля, f - конечная, а новая строчка задаётся \n
      */
-    public GameField(final String newField) {
+    public GameField(final String newField) throws FieldIsEmptyException {
 
         passableCells = new ArrayList<PointOnTheField>();
-
-        field = new ArrayList<ArrayList<CellOfField>>();
+        doors = new ArrayList<PointOnTheField>();
+        keys = new ArrayList<PointOnTheField>();
 
         String[] fieldFromString = newField.split("\\n");   // делим полученую строчку на части
 
@@ -64,16 +74,17 @@ public class GameField {
             }
         }
 
+        field = new CellOfField[lengthX][lengthY];
+
         boolean metBeginning = false;
         boolean metEnd = false;
 
         for(int x = 0; x < lengthX; x++) {
 
-            ArrayList< CellOfField> arrayOfCell = new ArrayList<CellOfField>(); //Если использовать BitSet, то это вообще не понадобиться, будет экономнее использоваться память
-
             for(int y = 0; y < lengthY; y++) {
 
                 boolean isItPossibleWay = false;
+
                 if (fieldFromString[x].charAt(y) != '0') {            // Установка проходимости
 
                     isItPossibleWay = true;
@@ -81,23 +92,47 @@ public class GameField {
                     passableCells.add(new PointOnTheField(x,y));
                 }
 
-                arrayOfCell.add(new CellOfField(isItPossibleWay));
+                field[x][y] = new CellOfField(isItPossibleWay);
 
-                if (fieldFromString[x].charAt(y) == 's' || fieldFromString[x].charAt(y) == 'S') {        // Установка стартовой и финишной точек
+                switch (fieldFromString[x].charAt(y)) {
 
-                    if (!metBeginning) startingPoint = new PointOnTheField(x,y);
-                    metBeginning = true;
+                    case 's':           // Установка стартовой и финишной точек
+                    case 'S': {
+
+                        if (!metBeginning) startingPoint = new PointOnTheField(x,y);
+                        metBeginning = true;
+                        break;
+                    }
+                    case 'f':
+                    case 'F': {
+
+                        if (!metEnd) finishingPoint = new PointOnTheField(x,y);
+                        metEnd = true;
+                        break;
+                    }
+
+                    case 'd':           // Устновка дверей и ключей
+                    case 'D': {
+
+                        doors.add(new PointOnTheField(x,y));
+                        field[x][y].createDoor();
+                        break;
+                    }
+                    case 'k':
+                    case 'K': {
+
+                        keys.add(new PointOnTheField(x,y));
+                        break;
+                    }
                 }
-                else if (fieldFromString[x].charAt(y) == 'f' || fieldFromString[x].charAt(y) == 'F') {
 
-                    if (!metEnd) finishingPoint = new PointOnTheField(x,y);
-                    metEnd = true;
-                }
             }
-            this.field.add(arrayOfCell);
         }
 
         setSize();
+
+        if(passableCells.size() < 2)
+            throw new FieldIsEmptyException("This field is empty dude");
 
         if (!metBeginning) {                                             // Если точки начала и конца не обнаружены, то
                                                                         //  они выбираются, из проходимых ячеек,
@@ -116,48 +151,48 @@ public class GameField {
      */
     private void setSize() {
 
-        sizeOfFieldX = field.size();
-        sizeOfFieldY = field.get(0).size();
+        sizeOfFieldX = field.length;
+        sizeOfFieldY = field[0].length;
     }
 
     /**
      * @param x - координата точки по оси X
      * @param y - координата точки по оси Y
      * @return является ли эта ячейка проходимой
-     * @throws OutOfBoundaryOfTheField - воход за граниуц поля
+     * @throws OutOfBoundaryOfTheFieldException - воход за граниуц поля
      */
-    public boolean isItPassableCell(final int x, final int y) throws OutOfBoundaryOfTheField {
+    public boolean isItPassableCell(final int x, final int y) throws OutOfBoundaryOfTheFieldException {
 
         if (x < 0 || x >= sizeOfFieldX)
-            throw new OutOfBoundaryOfTheField("Illegal request of possible way",
+            throw new OutOfBoundaryOfTheFieldException("Illegal request of possible way",
                     "x", x, sizeOfFieldX - 1);
 
         if (y < 0 || y >= sizeOfFieldY)
-            throw new OutOfBoundaryOfTheField("Illegal request of possible way",
+            throw new OutOfBoundaryOfTheFieldException("Illegal request of possible way",
                     "y", y, sizeOfFieldY - 1);
 
-        return field.get(x).get(y).getInfoAboutPatencyOfCell();
+        return field[x][y].getInfoAboutPatencyOfCell();
     }
 
     /**
      * @param point точка на поле указывающая на ячейку
      * @return является ли эта ячейка проходимой
-     * @throws OutOfBoundaryOfTheField - воход за граниуц поля
+     * @throws OutOfBoundaryOfTheFieldException - воход за граниуц поля
      */
-    public boolean isItPassableCell(final PointOnTheField point) throws OutOfBoundaryOfTheField {
+    public boolean isItPassableCell(final PointOnTheField point) throws OutOfBoundaryOfTheFieldException {
 
         int x = point.getX();
         int y = point.getY();
 
         if (x < 0 || x >= sizeOfFieldX)
-            throw new OutOfBoundaryOfTheField("Illegal request of possible way",
+            throw new OutOfBoundaryOfTheFieldException("Illegal request of possible way",
                     "x", x, sizeOfFieldX - 1);
 
         if (y < 0 || y >= sizeOfFieldY)
-            throw new OutOfBoundaryOfTheField("Illegal request of possible way",
+            throw new OutOfBoundaryOfTheFieldException("Illegal request of possible way",
                     "y", y, sizeOfFieldY - 1);
 
-        return field.get(x).get(y).getInfoAboutPatencyOfCell();
+        return field[x][y].getInfoAboutPatencyOfCell();
     }
 
     /**
@@ -197,6 +232,32 @@ public class GameField {
      */
     public List<PointOnTheField> getPassableCells() {
 
-        return passableCells;
+        return new ArrayList<PointOnTheField>(passableCells);
+    }
+
+    /**
+     * @return Массив координат расположения дверей
+     */
+    public List<PointOnTheField> getDoors() {
+
+        return new ArrayList<PointOnTheField>(doors);
+    }
+
+    /**
+     * @return Массив координат расположения ключей
+     */
+    public List<PointOnTheField> getKeys() {
+
+        return new ArrayList<PointOnTheField>(keys);
+    }
+
+    /**
+     * Открыть дверь
+     * @param x координата по оси Х
+     * @param y координата по оси Y
+     */
+    public void openDoor(int x, int y) {
+
+        field[x][y].openDoor();
     }
 }
