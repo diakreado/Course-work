@@ -3,6 +3,8 @@ package com.maltsev.labyrinth.presenter;
 import com.maltsev.labyrinth.model.Model;
 import com.maltsev.labyrinth.model.ModelOfLabyrinth;
 import com.maltsev.labyrinth.model.analyzer.event.gameover.GameOverListener;
+import com.maltsev.labyrinth.model.analyzer.event.keysanddoors.doors.OpenDoorListener;
+import com.maltsev.labyrinth.model.analyzer.event.keysanddoors.keys.FoundKeyListener;
 import com.maltsev.labyrinth.model.field.FieldIsEmptyException;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
 import com.maltsev.labyrinth.presenter.interfaces.View;
@@ -17,7 +19,7 @@ import java.util.ArrayList;
  * Он извлекает данные из модели и передает их во View. Также решает,
  * что нужно делать, когда вы взаимодействуете с View.
  */
-public class Presenter implements GameOverListener {
+public class Presenter implements GameOverListener, FoundKeyListener, OpenDoorListener {
 
     private Model model;
     private View view;
@@ -181,5 +183,15 @@ public class Presenter implements GameOverListener {
     public void gameIsOver() {
 
         isGameOver = true;
+    }
+
+    @Override
+    public void keyIsFound() {
+
+    }
+
+    @Override
+    public void doorIsOpen() {
+
     }
 }

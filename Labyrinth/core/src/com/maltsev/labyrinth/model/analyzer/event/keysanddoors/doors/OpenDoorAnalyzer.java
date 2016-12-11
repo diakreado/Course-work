@@ -5,10 +5,11 @@ import com.maltsev.labyrinth.model.Model;
 import com.maltsev.labyrinth.model.analyzer.event.EventAnalyzer;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
 
-import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
 
+/**
+ * Извещает интересующихся об открытие двери
+ */
 public class OpenDoorAnalyzer extends EventAnalyzer{
 
     private Queue<OpenDoorListener> queue;
@@ -16,13 +17,11 @@ public class OpenDoorAnalyzer extends EventAnalyzer{
     List<PointOnTheField> doors;
 
 
-
-
     public OpenDoorAnalyzer(Model model) {
 
         super(model);
 
-        queue = new PriorityQueue<OpenDoorListener>(DEFAULT_SIZE_OF_QUEUE);
+        queue = new LinkedList<OpenDoorListener>();
 
         doors = model.getDoors();
     }
@@ -38,15 +37,17 @@ public class OpenDoorAnalyzer extends EventAnalyzer{
 
     /**
      * Используется, чтобы отписаться от рассылки
-     * @param listener
+     * @param listener - кого удалить
      */
-    public void deleteListener(OpenDoorListener listener) {
+    public void removeListener(OpenDoorListener listener) {
 
         if (queue.contains(listener))
             queue.remove(listener);
     }
 
-
+    /**
+     * Вызывается при открытие двери, чтобы оповестить об этом слушателей
+     */
     public void doorIsOpen() {
 
         alertListener();

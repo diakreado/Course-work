@@ -5,24 +5,27 @@ import com.maltsev.labyrinth.model.Model;
 import com.maltsev.labyrinth.model.analyzer.event.EventAnalyzer;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
 
+import java.util.LinkedList;
 import java.util.List;
-import java.util.PriorityQueue;
 import java.util.Queue;
 
+/**
+ * Класс, который следит за получением ключей
+ */
 public class FoundKeyAnalyzer extends EventAnalyzer {
 
     private Queue<FoundKeyListener> queue;
 
-    List<PointOnTheField> keys;
+    private List<PointOnTheField> keys;
 
 
     public FoundKeyAnalyzer(Model model) {
 
         super(model);
 
-        keys = model.getKeys();
+        queue = new LinkedList<FoundKeyListener>();
 
-        queue = new PriorityQueue<FoundKeyListener>(DEFAULT_SIZE_OF_QUEUE);
+        keys = model.getKeys();
     }
 
     /**
@@ -38,13 +41,16 @@ public class FoundKeyAnalyzer extends EventAnalyzer {
      * Используется, чтобы отписаться от рассылки
      * @param listener - кого удалить
      */
-    public void deleteListener(FoundKeyListener listener) {
+    public void removeListener(FoundKeyListener listener) {
 
         if (queue.contains(listener))
             queue.remove(listener);
     }
 
-
+    /**
+     * Сообщение о том, что состояние системы изменилось и возможно
+     * настал момент истины (тот момент, ради которго создан класс)
+     */
     public void messageAboutChangingSystem() {
 
         if(keys.contains(model.getPositionOfProtagonist()))

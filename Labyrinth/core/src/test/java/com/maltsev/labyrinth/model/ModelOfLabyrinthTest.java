@@ -1,6 +1,8 @@
 package com.maltsev.labyrinth.model;
 
 import com.maltsev.labyrinth.model.analyzer.event.gameover.GameOverListener;
+import com.maltsev.labyrinth.model.analyzer.event.keysanddoors.doors.OpenDoorListener;
+import com.maltsev.labyrinth.model.analyzer.event.keysanddoors.keys.FoundKeyListener;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
 import org.junit.Test;
 
@@ -12,7 +14,7 @@ import static org.junit.Assert.*;
 
 public class ModelOfLabyrinthTest {
 
-    class TestListener implements GameOverListener {
+    private class GameEndListener implements GameOverListener {
 
         private boolean testOfGameOverSuccess = false;
 
@@ -40,7 +42,7 @@ public class ModelOfLabyrinthTest {
         model.setGameField(newField);
         model.setValueOfRangeOfStep(5);
 
-        TestListener listener = new TestListener();
+        GameEndListener listener = new GameEndListener();
         model.addListenerOfGameOver(listener);
 
         assertTrue(new PointOnTheField(0,1).equals(model.getPositionOfProtagonist()));
@@ -84,6 +86,76 @@ public class ModelOfLabyrinthTest {
         model.movesOfProtagonist(2,5);
         assertTrue(new PointOnTheField(2,5).equals(model.getPositionOfProtagonist()));
         assertTrue(model.movesOfProtagonist(0,0) == null);
+    }
 
+
+    private class KeysListener implements FoundKeyListener {
+
+        private boolean isTestSuccess = false;
+
+        boolean isTestSuccess() {
+            return isTestSuccess;
+        }
+
+        @Override
+        public void keyIsFound() {
+            isTestSuccess = true;
+        }
+    }
+
+    private class DoorsListener implements OpenDoorListener {
+
+        private boolean isTestSuccess = false;
+
+        boolean isTestSuccess() {
+            return isTestSuccess;
+        }
+
+        @Override
+        public void doorIsOpen() {
+            isTestSuccess = true;
+        }
+    }
+
+
+    @Test
+    public void testOfKeysAndDoors() throws Exception {
+
+        Model model = new ModelOfLabyrinth();
+        DoorsListener doorsListener = new DoorsListener();
+        KeysListener keysListener = new KeysListener();
+
+        String newField =   "s11d11\n" +
+                            "100001\n" +
+                            "k00001";
+
+        model.setGameField(newField);
+        model.setValueOfRangeOfStep(20);    // Не важно насколько делако будем ходить, тут интереснее, что через дверь мы не пройдём
+
+        model.addListenerOfOpenDoor(doorsListener);
+        model.addListenerOfFoundKey(keysListener);
+
+        assertFalse(doorsListener.isTestSuccess());
+        assertFalse(keysListener.isTestSuccess());
+
+        assertTrue(model.getPositionOfProtagonist().equals(0,0));
+
+        model.movesOfProtagonist(0,2);
+        assertTrue(model.getPositionOfProtagonist().equals(0,2));
+
+        model.movesOfProtagonist(0,3);
+        assertFalse(model.getPositionOfProtagonist().equals(0,3));
+
+        model.movesOfProtagonist(0,4);
+        assertFalse(model.getPositionOfProtagonist().equals(0,4));
+
+        assertFalse(doorsListener.isTestSuccess());
+        assertFalse(keysListener.isTestSuccess());
+        model.movesOfProtagonist(2,0);
+        assertTrue(keysListener.isTestSuccess());
+
+        model.movesOfProtagonist(0,3);
+        assertTrue(doorsListener.isTestSuccess());
+        assertTrue(model.getPositionOfProtagonist().equals(0,3));
     }
 }

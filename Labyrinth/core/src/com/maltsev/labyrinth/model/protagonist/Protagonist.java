@@ -25,6 +25,9 @@ public class Protagonist implements FoundKeyListener {
         numberOfKeys++;
     }
 
+    /**
+     * Ключ используется, следовательно количество ключей умменьшается
+     */
     public void useKey() {
 
         numberOfKeys--;

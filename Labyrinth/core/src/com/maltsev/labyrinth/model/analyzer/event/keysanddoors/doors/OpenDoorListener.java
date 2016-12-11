@@ -7,7 +7,7 @@ package com.maltsev.labyrinth.model.analyzer.event.keysanddoors.doors;
 public interface OpenDoorListener {
 
     /**
-     * метод, который вызывется у всех слушателей, после открытия двери
+     * Метод, который вызывется у всех слушателей, после открытия двери
      */
     void doorIsOpen();
 }

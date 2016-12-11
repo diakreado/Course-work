@@ -2,6 +2,8 @@ package com.maltsev.labyrinth.model;
 
 
 import com.maltsev.labyrinth.model.analyzer.event.gameover.GameOverListener;
+import com.maltsev.labyrinth.model.analyzer.event.keysanddoors.doors.OpenDoorListener;
+import com.maltsev.labyrinth.model.analyzer.event.keysanddoors.keys.FoundKeyListener;
 import com.maltsev.labyrinth.model.field.FieldIsEmptyException;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
 
@@ -68,33 +70,73 @@ public interface Model {
     void addListenerOfGameOver(GameOverListener listener);
 
     /**
+     * Отписка слушателя от раассылки на Конец игры
+     * @param listener объект-слушатель
+     */
+    void removeListenerOfGameOver(GameOverListener listener);
+
+    /**
+     * Добавляет слушателя на событие Найден ключ
+     * @param listener объект-слушатель
+     */
+    void addListenerOfFoundKey(FoundKeyListener listener);
+
+    /**
+     * Отписка слушателя от раассылки на Найден ключ
+     * @param listener объект-слушатель
+     */
+    void removeListenerOfFoundKey(FoundKeyListener listener);
+
+    /**
+     * Добавляет слушателя на событие Открытие двери
+     * @param listener объект-слушатель
+     */
+    void addListenerOfOpenDoor(OpenDoorListener listener);
+
+    /**
+     * Отписка слушателя от раассылки на Открытие двери
+     * @param listener объект-слушатель
+     */
+    void removeListenerOfOpenDoor(OpenDoorListener listener);
+
+    /**
      * @return Точка, местоположение героя
      */
     PointOnTheField getPositionOfProtagonist();
 
     /**
      * @return начальная точка поля
+     *
+     * Та точка, куда помещается протагонист, с самого начала игры
      */
     PointOnTheField getStartPosition();
 
     /**
      * @return конечная точка поля
+     *
+     * Точка, куда нужно пройти протагонисту, чтобы окончить игру
      */
     PointOnTheField getFinishPosition();
 
     /**
      * Установить значение дальности шага протагониста
+     *
+     * В общем, шаги были введены, чтобы игрок не мог пройти
+     * от начала карты до конца в один клик
      * @param valueOfRangeOfStep дальность шага
      */
     void setValueOfRangeOfStep(int valueOfRangeOfStep);
 
     /**
      * @return Массив с координатами дверей
+     * Изначально двери закрыты, но если есть ключ, то дверь откроется, а
+     * количество ключей уменьшится на 1
      */
     List<PointOnTheField> getDoors();
 
     /**
      * @return Массив с координатами ключей
+     * Ключи нужны чтобы открывать двери
      */
     List<PointOnTheField> getKeys();
 }
