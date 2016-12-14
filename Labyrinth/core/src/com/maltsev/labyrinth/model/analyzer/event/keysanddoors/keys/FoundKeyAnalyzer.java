@@ -18,6 +18,8 @@ public class FoundKeyAnalyzer extends EventAnalyzer {
 
     private List<PointOnTheField> keys;
 
+    private PointOnTheField keyPosition;
+
 
     public FoundKeyAnalyzer(Model model) {
 
@@ -53,7 +55,9 @@ public class FoundKeyAnalyzer extends EventAnalyzer {
      */
     public void messageAboutChangingSystem() {
 
-        if(keys.contains(model.getPositionOfProtagonist()))
+        keyPosition = model.getPositionOfProtagonist();    //Не всегда на этой позиции есть ключь, но мы его там ожидаем
+
+        if(keys.contains(keyPosition))
             alertListener();
     }
 
@@ -67,9 +71,11 @@ public class FoundKeyAnalyzer extends EventAnalyzer {
         for (int i = 0; i < queue.size(); i++) {
 
             item = queue.poll();
-            item.keyIsFound();
+            item.keyIsFound(keyPosition);        // Здесь keyPosition уже всегда позиция ключа на карте
             queue.add(item);
         }
+
+        keys = model.getKeys();
     }
 
 }

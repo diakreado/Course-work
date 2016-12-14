@@ -139,4 +139,9 @@ public interface Model {
      * Ключи нужны чтобы открывать двери
      */
     List<PointOnTheField> getKeys();
+
+    /**
+     * @return Число ключей, собраных игроком
+     */
+    int getNumberOfKeys();
 }

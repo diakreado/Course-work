@@ -21,55 +21,33 @@ import com.maltsev.labyrinth.view.Labyrinth;
 public class Hud {    //TODO много бесполезного надо почистить и решить, что вообще туда нужно выводить
 
     public Stage stage;
-    private Viewport viewport;
-
-    private Integer worldTimer;
-    private double timeCount =0;
-    private Integer score;
-
     private BitmapFont font;
-    private Label.LabelStyle labelStyle;
 
-    Label countdownLabel;
-    Label scoreLabel;
-    Label timeLabel;
-    Label levelLabel;
-    Label worldLabel;
-    Label labyrinthLabel;
+    private double timeCount =0;
 
-    Label timer;
+    private Label keys;
+    private Label timer;
+
 
     public Hud(SpriteBatch spriteBatch) {
 
-        worldTimer = 0;
-        score = 0;
+        generateFont();
 
-
-        viewport = new ScreenViewport(new OrthographicCamera());
+        Viewport viewport = new ScreenViewport(new OrthographicCamera());
         stage = new Stage(viewport, spriteBatch);
+
+        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);
+
+        timer  = new Label("",labelStyle);
+        keys = new Label("", labelStyle);
+
 
         Table table = new Table();
         table.top();
         table.setFillParent(true);
 
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/abc.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 60;
-        font = generator.generateFont(parameter);
-        generator.dispose();
-
-        labelStyle = new Label.LabelStyle(font, Color.WHITE);
-
-
-        timeLabel = new Label("Time", labelStyle);
-        worldLabel = new Label("write here", labelStyle);
-        labyrinthLabel = new Label("Time", labelStyle);
-
-        timer  = new Label("0000000",labelStyle);
-
-        table.add(timer);
-
-
+        table.add(timer).width(100).expandX().top();
+        table.add(keys).expandX().top();
 
         stage.addActor(table);
     }
@@ -78,7 +56,21 @@ public class Hud {    //TODO много бесполезного надо поч
 
         timeCount += delta;
 
-        timer.setText(String.format("%.0f%n", timeCount));
+        timer.setText("time: " + String.format("%.0f%n", timeCount));
+    }
+
+    public void setKeys(int numberOfKeys) {
+
+        keys.setText("keys: " + numberOfKeys);
+    }
+
+    private void generateFont() {
+
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/abc.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 60;
+        font = generator.generateFont(parameter);
+        generator.dispose();
     }
 
     /**

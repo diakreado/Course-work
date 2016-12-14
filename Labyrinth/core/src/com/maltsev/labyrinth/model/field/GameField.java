@@ -1,12 +1,14 @@
 package com.maltsev.labyrinth.model.field;
 
+import com.maltsev.labyrinth.model.analyzer.event.keysanddoors.keys.FoundKeyListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  *  Игровое поле
  */
-public class GameField {
+public class GameField implements FoundKeyListener{
 
     /**
      *  Матрица ячеек, т.е. само поле
@@ -54,7 +56,7 @@ public class GameField {
      * @param newField строка-матрица, где 1,s,f - проходимые элементы, а 0 - нет,
      *                 s - начальная точка поля, f - конечная, а новая строчка задаётся \n
      */
-    public GameField(final String newField) throws FieldIsEmptyException {
+    public GameField(final String newField) throws FieldIsEmptyException{
 
         passableCells = new ArrayList<PointOnTheField>();
         doors = new ArrayList<PointOnTheField>();
@@ -259,5 +261,11 @@ public class GameField {
     public void openDoor(int x, int y) {
 
         field[x][y].openDoor();
+    }
+
+    @Override
+    public void keyIsFound(PointOnTheField keyPosition) {
+
+        keys.remove(keyPosition);
     }
 }

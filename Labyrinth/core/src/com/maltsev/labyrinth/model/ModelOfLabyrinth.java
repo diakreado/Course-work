@@ -76,6 +76,7 @@ public class ModelOfLabyrinth implements Model {
         doors = gameField.getDoors();
 
         analyzerOfFoundKey.addListener(protagonist);
+        analyzerOfFoundKey.addListener(gameField);
     }
 
     /**
@@ -88,7 +89,7 @@ public class ModelOfLabyrinth implements Model {
 
             protagonist.useKey();
             gameField.openDoor(point.getX(), point.getY());
-            analyzerOfOpenDoor.doorIsOpen();
+            analyzerOfOpenDoor.doorIsOpen(point);
         }
     }
 
@@ -234,5 +235,11 @@ public class ModelOfLabyrinth implements Model {
     public void removeListenerOfOpenDoor(OpenDoorListener listener) {
 
         analyzerOfOpenDoor.removeListener(listener);
+    }
+
+    @Override
+    public int getNumberOfKeys() {
+
+        return protagonist.getNumberOfKeys();
     }
 }

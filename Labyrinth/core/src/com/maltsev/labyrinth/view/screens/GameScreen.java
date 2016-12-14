@@ -32,6 +32,9 @@ public class GameScreen implements Screen, View {
     private Texture block;
     private SizeOfTexture sizeOfBlock;
     private Texture exit;
+    private Texture doorClose;
+    private Texture doorOpen;
+    private Texture key;
     private Texture protagonist;
     private Texture infoGameEnd;
 
@@ -63,9 +66,10 @@ public class GameScreen implements Screen, View {
         sizeOfBlock = new SizeOfTexture(block.getWidth(), block.getHeight());
 
         exit = new Texture("game_ui/exit.png");
-
+        doorClose = new Texture("game_ui/232224.jpg");
+        doorOpen = new Texture("game_ui/666.png");
+        key = new Texture("game_ui/cropped-sup_4546-192x192.png");
         protagonist = new Texture("game_ui/protagonist.png");
-
         infoGameEnd = new Texture("game_ui/grey_panel.png");
 
         presenter = new Presenter(this);
@@ -132,6 +136,8 @@ public class GameScreen implements Screen, View {
             changePositionOfProtagonist(presenter.getPositionOfMovingProtagonist(delta));
 
         hud.setTime(delta);
+
+        hud.setKeys(presenter.getNumberOfKeys());
     }
 
     /**
@@ -188,6 +194,24 @@ public class GameScreen implements Screen, View {
     public void drawExit(PointOnTheScreen point) {
 
         batch.draw(exit, point.getX(), point.getY());
+    }
+
+    @Override
+    public void drawKey(PointOnTheScreen point) {
+
+        batch.draw(key, point.getX(), point.getY());
+    }
+
+    @Override
+    public void drawCloseDoor(PointOnTheScreen point) {
+
+        batch.draw(doorClose, point.getX(), point.getY());
+    }
+
+    @Override
+    public void drawOpenDoor(PointOnTheScreen point) {
+
+        batch.draw(doorOpen, point.getX(), point.getY());
     }
 
     private void close() {

@@ -48,22 +48,22 @@ public class OpenDoorAnalyzer extends EventAnalyzer{
     /**
      * Вызывается при открытие двери, чтобы оповестить об этом слушателей
      */
-    public void doorIsOpen() {
+    public void doorIsOpen(PointOnTheField doorPosition) {
 
-        alertListener();
+        alertListener(doorPosition);
     }
 
     /**
      * Оповещание слушателей об окончание игры
      */
-    private void alertListener() {
+    private void alertListener(PointOnTheField doorPosition) {
 
         OpenDoorListener item;
 
         for (int i = 0; i < queue.size(); i++) {
 
             item = queue.poll();
-            item.doorIsOpen();
+            item.doorIsOpen(doorPosition);
             queue.add(item);
         }
     }

@@ -20,7 +20,7 @@ public class Protagonist implements FoundKeyListener {
     private int numberOfKeys = 0;
 
     @Override
-    public void keyIsFound() {
+    public void keyIsFound(PointOnTheField positionOfKey) {
 
         numberOfKeys++;
     }

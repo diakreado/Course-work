@@ -98,7 +98,7 @@ public class ModelOfLabyrinthTest {
         }
 
         @Override
-        public void keyIsFound() {
+        public void keyIsFound(PointOnTheField positionOfkey) {
             isTestSuccess = true;
         }
     }
@@ -112,7 +112,7 @@ public class ModelOfLabyrinthTest {
         }
 
         @Override
-        public void doorIsOpen() {
+        public void doorIsOpen(PointOnTheField doorPosition) {
             isTestSuccess = true;
         }
     }

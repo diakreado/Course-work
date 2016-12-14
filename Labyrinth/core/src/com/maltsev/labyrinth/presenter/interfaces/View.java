@@ -22,10 +22,27 @@ public interface View {
 
     /**
      * Отрисовка финишной клетки
-     * Если финишная клетка не нужна, то можно ничего не делать
      * @param point точка, в которой следует отрисовать финишную клетку
      */
     void drawExit(PointOnTheScreen point);
+
+    /**
+     * Отрисовка ключа
+     * @param point точка, в которой следует отрисовать ключ
+     */
+    void drawKey(PointOnTheScreen point);
+
+    /**
+     * Отрисовка закрытой двери
+     * @param point точка, в которой следует отрисовать дверь
+     */
+    void drawCloseDoor(PointOnTheScreen point);
+
+    /**
+     * Отрисовка открытой двери
+     * @param point точка, в которой следует отрисовать дверь
+     */
+    void drawOpenDoor(PointOnTheScreen point);
 
     /**
      * Запрет на ввод
