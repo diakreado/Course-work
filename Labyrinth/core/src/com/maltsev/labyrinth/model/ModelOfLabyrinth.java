@@ -94,7 +94,6 @@ public class ModelOfLabyrinth implements Model {
     }
 
     @Override
-    @org.jetbrains.annotations.Nullable
     public ArrayDeque<PointOnTheField> movesOfProtagonist(final int x, final  int y) {
 
         checkDoors(new PointOnTheField(x,y));

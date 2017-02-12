@@ -60,7 +60,6 @@ public interface Model {
      * @param y координата ячейки по оси Y
      * @return маршрут(массив точек) перемещения из одной точки в другую, если он возможен, иначе null
      */
-    @org.jetbrains.annotations.Nullable
     ArrayDeque<PointOnTheField> movesOfProtagonist(final int x, final int y);
 
     /**

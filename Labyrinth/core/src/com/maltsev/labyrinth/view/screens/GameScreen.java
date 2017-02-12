@@ -24,7 +24,7 @@ public class GameScreen implements Screen, View {
     private Labyrinth game;
     private Presenter presenter;
     private Hud hud;
-    private Fon fon;
+    private Fon fonGameScreen;
 
     private SpriteBatch batch;
     private OrthographicCamera camera;
@@ -37,7 +37,6 @@ public class GameScreen implements Screen, View {
     private Texture key;
     private Texture protagonist;
     private Texture infoGameEnd;
-
     private Vector3 touchPos;
     private Vector3 positionOfProtagonist;
 
@@ -46,7 +45,7 @@ public class GameScreen implements Screen, View {
 
     private boolean isInMotion = false;
 
-    public GameScreen(final Labyrinth game) {
+    public GameScreen(final Labyrinth game, int numberOfGameField) {
 
         this.game = game;
 
@@ -55,8 +54,8 @@ public class GameScreen implements Screen, View {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Labyrinth.V_WIDTH, Labyrinth.V_HEIGHT);
 
-        hud = new Hud(batch);
-        fon = new Fon(batch);
+        hud = new Hud(batch, this);
+        fonGameScreen = new Fon(batch);
 
         touchPos = new Vector3();
 
@@ -66,15 +65,17 @@ public class GameScreen implements Screen, View {
         sizeOfBlock = new SizeOfTexture(block.getWidth(), block.getHeight());
 
         exit = new Texture("game_ui/exit.png");
-        doorClose = new Texture("game_ui/232224.jpg");
-        doorOpen = new Texture("game_ui/666.png");
-        key = new Texture("game_ui/cropped-sup_4546-192x192.png");
+        doorClose = new Texture("game_ui/doorClose.png");
+        doorOpen = new Texture("game_ui/doorOpen.png");
+        key = new Texture("game_ui/key.png");
         protagonist = new Texture("game_ui/protagonist.png");
         infoGameEnd = new Texture("game_ui/grey_panel.png");
 
-        presenter = new Presenter(this);
+        presenter = new Presenter(this, 1);
 
         changePositionOfProtagonist(presenter.getPositionOfProtagonist());
+
+        Gdx.input.setInputProcessor(hud.stage);
 
         camera.position.set(positionOfProtagonist);
         camera.update();
@@ -172,7 +173,7 @@ public class GameScreen implements Screen, View {
     @Override
     public void render (float delta) {
 
-        fon.stage.draw();
+        fonGameScreen.stage.draw();
 
         batch.setProjectionMatrix(camera.combined);
 
@@ -214,7 +215,7 @@ public class GameScreen implements Screen, View {
         batch.draw(doorOpen, point.getX(), point.getY());
     }
 
-    private void close() {
+    public void close() {
 
         dispose();
         game.setMainMenuScreen();
@@ -230,7 +231,7 @@ public class GameScreen implements Screen, View {
     public void dispose () {
 
         hud.dispose();
-        fon.dispose();
+        fonGameScreen.dispose();
         block.dispose();
         exit.dispose();
         protagonist.dispose();

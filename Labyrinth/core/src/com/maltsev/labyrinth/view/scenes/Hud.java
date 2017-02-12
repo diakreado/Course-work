@@ -4,21 +4,23 @@ package com.maltsev.labyrinth.view.scenes;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.StringBuilder;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.maltsev.labyrinth.view.Labyrinth;
+import com.maltsev.labyrinth.view.screens.GameScreen;
 
 /**
  * Класс, который отвечает за отрисовку обёртки(вывод информирующих лейлбов поверх игрового экрана)
  */
-public class Hud {    //TODO много бесполезного надо почистить и решить, что вообще туда нужно выводить
+public class Hud {
 
     public Stage stage;
     private BitmapFont font;
@@ -28,8 +30,22 @@ public class Hud {    //TODO много бесполезного надо поч
     private Label keys;
     private Label timer;
 
+    private Table tableTop;
 
-    public Hud(SpriteBatch spriteBatch) {
+    private ImageButton pauseButton;
+    private TextureAtlas atlasUi;
+    private Skin skin;
+
+    private ClickListener pauseListener;
+
+    private Texture fon;
+
+    private GameScreen gameScreen;
+
+
+    public Hud(SpriteBatch spriteBatch, GameScreen gameScreen) {
+
+        this.gameScreen = gameScreen;
 
         generateFont();
 
@@ -41,21 +57,43 @@ public class Hud {    //TODO много бесполезного надо поч
         timer  = new Label("",labelStyle);
         keys = new Label("", labelStyle);
 
+        fon = new Texture("hud_gui/fon.png");
+        final Image img = new Image(fon);
 
-        Table table = new Table();
-        table.top();
-        table.setFillParent(true);
+        atlasUi = new TextureAtlas("hud_gui/hud_ui.pack");
+        skin = new Skin(atlasUi);
+        pauseButton = new ImageButton(skin.getDrawable("yellow_button09"), skin.getDrawable("yellow_button090"));
 
-        table.add(timer).width(100).expandX().top();
-        table.add(keys).expandX().top();
+        registeredListenerAgain();
 
-        stage.addActor(table);
+        tableTop = new Table();
+        tableTop.top();
+        tableTop.setFillParent(true);
+
+        tableTop.add(timer).width(100).expandX().top();
+        tableTop.add(keys).expandX().top();
+        tableTop.add(pauseButton).expandX();
+
+
+        stage.addActor(tableTop);
+    }
+
+    private void registeredListenerAgain(){
+        pauseListener = new ClickListener() {
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
+                gameScreen.close();
+                registeredListenerAgain();
+            }
+        };
+        pauseButton.addListener(pauseListener);
     }
 
     public void setTime(float delta) {
 
         timeCount += delta;
-
         timer.setText("time: " + String.format("%.0f%n", timeCount));
     }
 
@@ -78,7 +116,10 @@ public class Hud {    //TODO много бесполезного надо поч
      */
     public void dispose() {
 
+        skin.dispose();
+        atlasUi.dispose();
         font.dispose();
         stage.dispose();
+        fon.dispose();
     }
 }

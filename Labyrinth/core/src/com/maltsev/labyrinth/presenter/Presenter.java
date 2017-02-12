@@ -10,6 +10,7 @@ import com.maltsev.labyrinth.model.field.PointOnTheField;
 import com.maltsev.labyrinth.presenter.interfaces.View;
 import com.maltsev.labyrinth.presenter.tempdata.PointOnTheScreen;
 import com.maltsev.labyrinth.presenter.tempdata.SizeOfTexture;
+import static com.maltsev.labyrinth.presenter.ParsingFile.getFieldOnTheNumber;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class Presenter implements GameOverListener, FoundKeyListener, OpenDoorLi
     private double timer = 0;
     private double rateOfProtagonist = 0.2;
 
-    private int rangeOfStep = 5;
+    private int rangeOfStep = 7;
 
     /**
      * Аналогично isKeyFound, создано чтобы отрисовка поля происходила после того, как протагонист закончит движение
@@ -54,13 +55,14 @@ public class Presenter implements GameOverListener, FoundKeyListener, OpenDoorLi
      * Следует вызвать последним, так как он интересуется полями View (может оказаться, что поля ещё не инициализированы)
      * @param view отрисовщик ui, с которым будет работать presenter
      */
-    public Presenter(View view) {
+    public Presenter(View view, int numberOfTheField) {
 
         this.view = view;
 
         model = new ModelOfLabyrinth();
 
-        String newField = FileReader.read("gameField.txt");
+
+        String newField = getFieldOnTheNumber(numberOfTheField);
 
         try {
 

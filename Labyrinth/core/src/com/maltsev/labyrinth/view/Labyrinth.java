@@ -32,9 +32,9 @@ public class Labyrinth extends Game {
         setMainMenuScreen();
     }
 
-    public void setGameScreen() {
+    public void setGameScreen(int numberOfgameField) {
 
-        gameScreen = new GameScreen(this);
+        gameScreen = new GameScreen(this, numberOfgameField);
         this.setScreen(gameScreen);
 
     }
@@ -54,7 +54,7 @@ public class Labyrinth extends Game {
     @Override
     public void dispose() {
 
-        spriteBatch.dispose();
+        spriteBatch.dispose();   //TODO нужно ли удалять экраны????
 
         super.dispose();
     }
