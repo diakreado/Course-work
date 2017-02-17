@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.maltsev.labyrinth.view.screens.GameScreen;
@@ -20,7 +21,7 @@ import com.maltsev.labyrinth.view.screens.GameScreen;
 /**
  * Класс, который отвечает за отрисовку обёртки(вывод информирующих лейлбов поверх игрового экрана)
  */
-public class Hud {
+public class Hud implements Disposable {
 
     public Stage stage;
     private BitmapFont font;
@@ -114,12 +115,13 @@ public class Hud {
     /**
      * Использовать при окончание работы с объектом
      */
+    @Override
     public void dispose() {
 
         skin.dispose();
         atlasUi.dispose();
-        font.dispose();
         stage.dispose();
         fon.dispose();
+        font.dispose();
     }
 }

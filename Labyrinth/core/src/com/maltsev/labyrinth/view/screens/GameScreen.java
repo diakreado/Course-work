@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.maltsev.labyrinth.presenter.Presenter;
 import com.maltsev.labyrinth.presenter.interfaces.View;
 import com.maltsev.labyrinth.presenter.tempdata.PointOnTheScreen;
@@ -45,6 +46,8 @@ public class GameScreen implements Screen, View {
 
     private boolean isInMotion = false;
 
+    private ExtendViewport viewport;
+
     public GameScreen(final Labyrinth game, int numberOfGameField) {
 
         this.game = game;
@@ -53,6 +56,9 @@ public class GameScreen implements Screen, View {
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Labyrinth.V_WIDTH, Labyrinth.V_HEIGHT);
+
+        viewport = new ExtendViewport(Labyrinth.V_WIDTH, Labyrinth.V_HEIGHT, camera);
+
 
         hud = new Hud(batch, this);
         fonGameScreen = new Fon(batch);
@@ -246,6 +252,7 @@ public class GameScreen implements Screen, View {
     @Override
     public void resize(int width, int height) {
 
+        //viewport.update(width, height);
     }
 
     @Override

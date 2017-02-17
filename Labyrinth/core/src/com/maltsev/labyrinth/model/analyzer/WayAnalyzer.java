@@ -51,7 +51,6 @@ public class WayAnalyzer {
     /**
      * Метод по умолчанию, вызывает метод поиска пути с дефолтной длинной шага
      */
-    @org.jetbrains.annotations.Nullable
     public ArrayDeque<PointOnTheField> getWay(final PointOnTheField startPoint, final PointOnTheField finishPoint) {
 
         return getWay(startPoint, finishPoint, defaultRange);
@@ -63,7 +62,6 @@ public class WayAnalyzer {
      * @param finishPoint финишная точка пути
      * @return возвращяет либо путь в виде массива точек, либо ноль, если путь содержит более range шагов или он невозможен
      */
-    @org.jetbrains.annotations.Nullable
     public ArrayDeque<PointOnTheField> getWay(final PointOnTheField startPoint, final PointOnTheField finishPoint, int range) {
 
         if (!model.isItPassableCells(startPoint) || !model.isItPassableCells(finishPoint))
@@ -95,7 +93,6 @@ public class WayAnalyzer {
      * Возвращение волны
      * @return либо путь возвращения в виде коллекции точек, либо null
      */
-    @org.jetbrains.annotations.Nullable
     private ArrayDeque<PointOnTheField> returningWave() {
 
         ArrayDeque<PointOnTheField> way = new ArrayDeque<PointOnTheField>();

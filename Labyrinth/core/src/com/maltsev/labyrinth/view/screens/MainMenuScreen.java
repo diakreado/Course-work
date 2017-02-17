@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.maltsev.labyrinth.view.Labyrinth;
 
@@ -34,16 +35,18 @@ public class MainMenuScreen implements Screen{
     private Table table;
     private ScrollPane scrollPane;
     private List list;
-    private int numberOfgameField;
-
+    private int numberOfGameField;
 
     public MainMenuScreen(final Labyrinth game) {
 
         this.game = game;
 
-        numberOfgameField = 1;
+        numberOfGameField = 1;
 
-        stage = new Stage(new StretchViewport(Labyrinth.V_WIDTH, Labyrinth.V_HEIGHT));
+        stage = new Stage(new ExtendViewport(Labyrinth.V_WIDTH, Labyrinth.V_HEIGHT));
+        // ExtendViewport - сохраняет соотношение сторон
+        // Сначала масштабируется мир по размеру окна просмотра,
+        // затем короткий размер удлиняется до заполнения окна просмотра.
 
         table = new Table();
 
@@ -72,7 +75,7 @@ public class MainMenuScreen implements Screen{
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
-                game.setGameScreen(numberOfgameField);    //TODO Подумать о том, что бы не удалять главный экран
+                game.setGameScreen(numberOfGameField);    //TODO Подумать о том, что бы не удалять главный экран
                 dispose();
             }
         });
@@ -163,6 +166,7 @@ public class MainMenuScreen implements Screen{
         //table.add(scrollPane);
         table.add(play);
 
+        //stage.addActor(new Image(fon));
         stage.addActor(table);
 
         Gdx.input.setInputProcessor(stage);
@@ -172,7 +176,7 @@ public class MainMenuScreen implements Screen{
     @Override
     public void render(float delta) {
 
-        Gdx.gl.glClearColor(0.4f, 0.439f, 1f, 1);
+        Gdx.gl.glClearColor(1f, 1f, 1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.spriteBatch.begin();
@@ -188,21 +192,25 @@ public class MainMenuScreen implements Screen{
     @Override
     public void dispose() {
 
-        stage.dispose();
-        atlasUiForButton.dispose();              //TODO  что за дублирование???
         skinForButton.dispose();
+        stage.dispose();
         fon.dispose();
         font.dispose();
+        atlasUiForButton.dispose();
+
+        System.out.println();    //Временная бесполезная строка, созданая чтобы Idea не говорила о дублирование кода
+                                // Просто аналогичным образом освобождаются ресурсы для Hud
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
+        stage.getViewport().update(width, height, true);
     }
 
     @Override
     public void show() {
 
-
-    }
-
-    @Override
-    public void resize(int width, int height) {
 
     }
 
