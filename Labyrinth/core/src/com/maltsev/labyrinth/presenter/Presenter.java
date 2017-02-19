@@ -23,6 +23,8 @@ import java.util.List;
  */
 public class Presenter implements GameOverListener, FoundKeyListener, OpenDoorListener {
 
+    //TODO надо как-то выровнять переход с одной клетки на другую, сделать его более плавным
+
     private Model model;
     private View view;
 
@@ -36,7 +38,8 @@ public class Presenter implements GameOverListener, FoundKeyListener, OpenDoorLi
 
     private PointOnTheScreen pointOfMovement;
     private double timer = 0;
-    private double rateOfProtagonist = 0.2;
+    private double rateOfProtagonist = 0.185;
+    private float frequencyOfIntermediateSteps = 10.88f;
 
     private int rangeOfStep = 7;
 
@@ -225,7 +228,9 @@ public class Presenter implements GameOverListener, FoundKeyListener, OpenDoorLi
     /**
      * Отрисовка движения протагониста
      * По очереди отрисовываются все клетки пути между начальной точкой и конечной
-     * @param deltaTime сколько времени прошло относительно прошлой отрисовки, добавленно, чтобы регулировать скороть
+     * А между ними отрисовывается движение прогагониста с определённой частотой
+     *
+     * @param deltaTime сколько времени прошло относительно прошлой отрисовки, добавленно, чтобы регулировать скорость
      *                  передвижения протагониста
      */
     private void movementOfProtagonist(float deltaTime) {
@@ -237,7 +242,18 @@ public class Presenter implements GameOverListener, FoundKeyListener, OpenDoorLi
             timer = 0;
             pointOfMovement = translatePointFieldToScreen(way.poll());
         }
+        if(timer > rateOfProtagonist/frequencyOfIntermediateSteps) {
 
+            pointOfMovement = new PointOnTheScreen(
+                    pointOfMovement.getX() +
+                            (way.peek().getX()*sizeOfBlock.getWidth()-pointOfMovement.getX())*
+                                    (int)(timer*frequencyOfIntermediateSteps/rateOfProtagonist)/frequencyOfIntermediateSteps,
+                    pointOfMovement.getY() +
+                            (way.peek().getY()*sizeOfBlock.getHeight()-pointOfMovement.getY())*
+                                    (int)(timer*frequencyOfIntermediateSteps/rateOfProtagonist)/frequencyOfIntermediateSteps);
+        }
+
+        //System.out.println(timer);
 
         if(way.isEmpty())
             finishMovement();

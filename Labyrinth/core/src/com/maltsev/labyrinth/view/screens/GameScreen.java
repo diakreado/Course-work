@@ -41,9 +41,9 @@ public class GameScreen implements Screen, View {
     private SizeOfTexture sizeOfBlock;
     private Texture exit;
     private Texture doorClose;
-    private Texture doorOpen;      //TODO следовало бы объеденить их в один TextureAtlas
+    private Texture doorOpen;       //TODO следовало бы объеденить их в один TextureAtlas, но пока так, потому что планируется замена текстур
     private Texture key;
-    private Texture protagonist;  //TODO как вариант подгружать их всего один раз, при первом создании, а дальше уже только переисользовать
+    private Texture protagonist;    //TODO как вариант подгружать их всего один раз, при первом создании, а дальше уже только переисользовать
     private Texture infoGameEnd;
 
     private Vector3 touchPos;
@@ -53,9 +53,6 @@ public class GameScreen implements Screen, View {
     private boolean isGameEnd = false;
 
     private boolean isInMotion = false;
-
-    private ExtendViewport viewport;
-    private Stage stage;
 
     private final float defaultWidth = Gdx.graphics.getWidth();
     private final float defaultHeight = Gdx.graphics.getHeight();
@@ -67,9 +64,6 @@ public class GameScreen implements Screen, View {
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Labyrinth.V_WIDTH, Labyrinth.V_HEIGHT);
-
-//        viewport = new ExtendViewport(Labyrinth.V_WIDTH, Labyrinth.V_HEIGHT, camera);
-//        stage = new Stage(viewport, batch);
 
         hud = new Hud(batch, this);
         fonGameScreen = new Fon(batch);
