@@ -6,23 +6,34 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.maltsev.labyrinth.view.Labyrinth;
+import com.maltsev.labyrinth.view.utils.Resizable;
 
 /**
  * Класс, который отвечает за отрисовку фона
+ *
+ * Фон делается статическим, т.е. когда протагонист ходит по миру фон остаётся картинкой,
+ * которая просто висит сзади игрового поля, по-моему это упрощает отрисовку
  */
-public class Fon {
+public class Fon implements Disposable, Resizable{
 
     public Stage stage;
-    private Viewport viewport;
+    private ExtendViewport viewport;
 
     private Image img;
     private Texture fon;
 
+    OrthographicCamera camera;
+
     public Fon(SpriteBatch spriteBatch) {
 
-        viewport = new ScreenViewport(new OrthographicCamera());
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, Labyrinth.V_WIDTH, Labyrinth.V_HEIGHT);
+
+        viewport = new ExtendViewport(Labyrinth.V_WIDTH, Labyrinth.V_HEIGHT, camera);
+
         stage = new Stage(viewport, spriteBatch);
 
         fon = new Texture("fon/grass.png");
@@ -33,12 +44,15 @@ public class Fon {
         stage.addActor(img);
     }
 
-    /**
-     * Использовать при окончание работы с объектом
-     */
+    @Override
     public void dispose() {
 
         fon.dispose();
         stage.dispose();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
     }
 }

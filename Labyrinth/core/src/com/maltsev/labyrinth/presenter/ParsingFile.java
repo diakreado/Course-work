@@ -11,8 +11,6 @@ public class ParsingFile {
 
         String fileData = FileReader.read("gameField.txt");
 
-        String field = "";
-
         return fileData;
     }
 }

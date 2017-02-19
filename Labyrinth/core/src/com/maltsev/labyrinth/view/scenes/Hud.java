@@ -14,14 +14,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Disposable;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.utils.viewport.*;
+import com.maltsev.labyrinth.view.Labyrinth;
+import com.maltsev.labyrinth.view.utils.Resizable;
 import com.maltsev.labyrinth.view.screens.GameScreen;
 
 /**
  * Класс, который отвечает за отрисовку обёртки(вывод информирующих лейлбов поверх игрового экрана)
  */
-public class Hud implements Disposable {
+public class Hud implements Disposable, Resizable {
 
     public Stage stage;
     private BitmapFont font;
@@ -43,6 +44,9 @@ public class Hud implements Disposable {
 
     private GameScreen gameScreen;
 
+    ExtendViewport viewport;
+    OrthographicCamera camera;
+
 
     public Hud(SpriteBatch spriteBatch, GameScreen gameScreen) {
 
@@ -50,7 +54,11 @@ public class Hud implements Disposable {
 
         generateFont();
 
-        Viewport viewport = new ScreenViewport(new OrthographicCamera());
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, Labyrinth.V_WIDTH, Labyrinth.V_HEIGHT);
+
+        viewport = new ExtendViewport(Labyrinth.V_WIDTH, Labyrinth.V_HEIGHT, camera);
+
         stage = new Stage(viewport, spriteBatch);
 
         Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);
@@ -112,6 +120,8 @@ public class Hud implements Disposable {
         generator.dispose();
     }
 
+
+
     /**
      * Использовать при окончание работы с объектом
      */
@@ -123,5 +133,11 @@ public class Hud implements Disposable {
         stage.dispose();
         fon.dispose();
         font.dispose();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
+        stage.getViewport().update(width, height, true);
     }
 }

@@ -18,7 +18,12 @@ import com.maltsev.labyrinth.presenter.tempdata.SizeOfTexture;
 
 /**
  * Игровой экран
+ *
  * Здесь происходит основное действо
+ *
+ * Контактирует с классами Fon  и Hud, используя из для удобной отрисовки, с классом Presenter, выступает в качестве
+ * View для него и как следствие обладает методами для отрисовки по запросу, а так же может обратиться к Labyrinth для того,
+ * чтобы закончить игру и перевести управление к другому экрану, в частности к MainMenuScreen
  */
 public class GameScreen implements Screen, View {
 
@@ -77,7 +82,7 @@ public class GameScreen implements Screen, View {
         protagonist = new Texture("game_ui/protagonist.png");
         infoGameEnd = new Texture("game_ui/grey_panel.png");
 
-        presenter = new Presenter(this, 1);
+        presenter = new Presenter(this, numberOfGameField);
 
         changePositionOfProtagonist(presenter.getPositionOfProtagonist());
 
@@ -252,7 +257,8 @@ public class GameScreen implements Screen, View {
     @Override
     public void resize(int width, int height) {
 
-        //viewport.update(width, height);
+        fonGameScreen.resize(width,height);
+        hud.resize(width, height);
     }
 
     @Override
