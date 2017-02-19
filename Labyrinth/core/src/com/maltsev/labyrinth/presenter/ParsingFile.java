@@ -11,6 +11,13 @@ public class ParsingFile {
 
         String fileData = FileReader.read("gameField.txt");
 
-        return fileData;
+        String[] arrayOfField = fileData.split("#\n");
+
+        if (numberOfTheField >= arrayOfField.length || numberOfTheField < 0) {
+
+            numberOfTheField = 0;
+        }
+
+        return arrayOfField[numberOfTheField];
     }
 }

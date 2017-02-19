@@ -25,7 +25,7 @@ public class Fon implements Disposable, Resizable{
     private Image img;
     private Texture fon;
 
-    OrthographicCamera camera;
+    private OrthographicCamera camera;
 
     public Fon(SpriteBatch spriteBatch) {
 

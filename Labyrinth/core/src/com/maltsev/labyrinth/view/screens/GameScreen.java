@@ -57,6 +57,8 @@ public class GameScreen implements Screen, View {
     private final float defaultWidth = Gdx.graphics.getWidth();
     private final float defaultHeight = Gdx.graphics.getHeight();
 
+    private Stage stage;
+
     public GameScreen(final Labyrinth game, int numberOfGameField) {
 
         this.game = game;
@@ -82,6 +84,8 @@ public class GameScreen implements Screen, View {
 
         camera.position.set(positionOfProtagonist);
         camera.update();
+
+        stage = new Stage();
     }
 
     /**
@@ -247,6 +251,9 @@ public class GameScreen implements Screen, View {
     public void messageOfGameOver() {
 
         isGameEnd = true;
+        hud.stopTimer();
+
+        Gdx.input.setInputProcessor(stage);  //Костыль, чтобы убрать ввыод с Hud, без этого при конце игры нажатие на кнопку выхода в меню ломает приложение
     }
 
     @Override

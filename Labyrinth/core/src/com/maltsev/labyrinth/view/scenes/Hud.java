@@ -44,8 +44,10 @@ public class Hud implements Disposable, Resizable {
 
     private GameScreen gameScreen;
 
-    ExtendViewport viewport;
-    OrthographicCamera camera;
+    private ExtendViewport viewport;
+    private OrthographicCamera camera;
+
+    private boolean isStopTimer = false;
 
 
     public Hud(SpriteBatch spriteBatch, GameScreen gameScreen) {
@@ -102,8 +104,19 @@ public class Hud implements Disposable, Resizable {
 
     public void setTime(float delta) {
 
-        timeCount += delta;
+        if(!isStopTimer)
+            timeCount += delta;
         timer.setText("time: " + String.format("%.0f%n", timeCount));
+    }
+
+    public void stopTimer() {
+
+        isStopTimer = true;
+    }
+
+    public void continueTimer() {
+
+        isStopTimer = false;
     }
 
     public void setKeys(int numberOfKeys) {
@@ -119,8 +132,6 @@ public class Hud implements Disposable, Resizable {
         font = generator.generateFont(parameter);
         generator.dispose();
     }
-
-
 
     /**
      * Использовать при окончание работы с объектом
