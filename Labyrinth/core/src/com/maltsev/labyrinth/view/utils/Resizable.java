@@ -7,8 +7,8 @@ public interface Resizable {
 
     /**
      * Изменить размер объекта
-     * @param width - дельта ширины
-     * @param height - дельта высоты
+     * @param width - новая ширина
+     * @param height - новая высота
      */
     void resize(int width, int height);
 }

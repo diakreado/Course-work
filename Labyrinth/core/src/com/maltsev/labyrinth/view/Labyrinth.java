@@ -2,6 +2,7 @@ package com.maltsev.labyrinth.view;
 
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.maltsev.labyrinth.view.screens.GameScreen;
 import com.maltsev.labyrinth.view.screens.MainMenuScreen;

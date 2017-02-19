@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.maltsev.labyrinth.presenter.Presenter;
 import com.maltsev.labyrinth.presenter.interfaces.View;
@@ -39,10 +41,11 @@ public class GameScreen implements Screen, View {
     private SizeOfTexture sizeOfBlock;
     private Texture exit;
     private Texture doorClose;
-    private Texture doorOpen;
+    private Texture doorOpen;      //TODO следовало бы объеденить их в один TextureAtlas
     private Texture key;
-    private Texture protagonist;
+    private Texture protagonist;  //TODO как вариант подгружать их всего один раз, при первом создании, а дальше уже только переисользовать
     private Texture infoGameEnd;
+
     private Vector3 touchPos;
     private Vector3 positionOfProtagonist;
 
@@ -52,35 +55,30 @@ public class GameScreen implements Screen, View {
     private boolean isInMotion = false;
 
     private ExtendViewport viewport;
+    private Stage stage;
+
+    private final float defaultWidth = Gdx.graphics.getWidth();
+    private final float defaultHeight = Gdx.graphics.getHeight();
 
     public GameScreen(final Labyrinth game, int numberOfGameField) {
 
         this.game = game;
-
         batch = game.spriteBatch;
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Labyrinth.V_WIDTH, Labyrinth.V_HEIGHT);
 
-        viewport = new ExtendViewport(Labyrinth.V_WIDTH, Labyrinth.V_HEIGHT, camera);
-
+//        viewport = new ExtendViewport(Labyrinth.V_WIDTH, Labyrinth.V_HEIGHT, camera);
+//        stage = new Stage(viewport, batch);
 
         hud = new Hud(batch, this);
         fonGameScreen = new Fon(batch);
 
+        loadingOfTextures();
+
         touchPos = new Vector3();
 
         positionOfProtagonist = new Vector3();
-
-        block = new Texture("game_ui/block.png");
-        sizeOfBlock = new SizeOfTexture(block.getWidth(), block.getHeight());
-
-        exit = new Texture("game_ui/exit.png");
-        doorClose = new Texture("game_ui/doorClose.png");
-        doorOpen = new Texture("game_ui/doorOpen.png");
-        key = new Texture("game_ui/key.png");
-        protagonist = new Texture("game_ui/protagonist.png");
-        infoGameEnd = new Texture("game_ui/grey_panel.png");
 
         presenter = new Presenter(this, numberOfGameField);
 
@@ -90,6 +88,25 @@ public class GameScreen implements Screen, View {
 
         camera.position.set(positionOfProtagonist);
         camera.update();
+    }
+
+    /**
+     * Загрузка текстур
+     * В это методе происходи создание объектов класса Texture, т.е. после завершения работы этого метода
+     * каждой ссылке на объект будет поставленно в соответствие определённое изображение
+     *
+     * Здесь фиксируется размер Блока, из которого будет конструироваться игровое поле (дорога, по которой идёт протагонист)
+     */
+    private  void loadingOfTextures() {
+
+        block = new Texture("game_ui/block.png");
+        sizeOfBlock = new SizeOfTexture(block.getWidth(), block.getHeight());
+        exit = new Texture("game_ui/exit.png");
+        doorClose = new Texture("game_ui/doorClose.png");
+        doorOpen = new Texture("game_ui/doorOpen.png");
+        key = new Texture("game_ui/key.png");
+        protagonist = new Texture("game_ui/protagonist.png");
+        infoGameEnd = new Texture("game_ui/grey_panel.png");
     }
 
     @Override
@@ -250,15 +267,19 @@ public class GameScreen implements Screen, View {
     }
 
     @Override
-    public void show() {
-
-    }
-
-    @Override
     public void resize(int width, int height) {
 
         fonGameScreen.resize(width,height);
         hud.resize(width, height);
+
+        camera.viewportWidth = Labyrinth.V_WIDTH * (width/defaultWidth);
+        camera.viewportHeight = Labyrinth.V_HEIGHT * (height/defaultHeight);
+        camera.update();
+    }
+
+    @Override
+    public void show() {
+
     }
 
     @Override
