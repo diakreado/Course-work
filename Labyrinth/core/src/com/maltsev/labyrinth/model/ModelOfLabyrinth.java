@@ -85,7 +85,7 @@ public class ModelOfLabyrinth implements Model {
      */
     private void checkDoors(PointOnTheField point) {
 
-        if (doors.contains(point) && protagonist.getNumberOfKeys() > 0) {
+        if (doors.contains(point) && protagonist.getNumberOfKeys() > 0 && !isItPassableCells(point)) {
 
             protagonist.useKey();
             gameField.openDoor(point.getX(), point.getY());
