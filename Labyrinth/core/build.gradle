@@ -25,7 +25,7 @@ jacocoTestReport {
 }
 
 def coverageSourceDirs = [
-        '../src/com/maltsev/labyrinth/model'
+        'src/com/maltsev/labyrinth/model'
 ]
 
 check.dependsOn jacocoTestReport
