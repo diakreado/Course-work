@@ -24,4 +24,8 @@ jacocoTestReport {
     }
 }
 
+def coverageSourceDirs = [
+        '../app/src'
+]
+
 check.dependsOn jacocoTestReport
