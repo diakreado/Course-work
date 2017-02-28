@@ -1,4 +1,4 @@
-#Лабиринт [![Build Status](https://travis-ci.org/mikle9997/Course-work.svg?branch=master)](https://travis-ci.org/mikle9997/Course-work) [![Build Status](https://travis-ci.org/mikle9997/Course-work.svg?branch=master)](https://travis-ci.org/mikle9997/Course-work)
+#Лабиринт [![Build Status](https://travis-ci.org/mikle9997/Course-work.svg?branch=master)](https://travis-ci.org/mikle9997/Course-work) [![codecov](https://codecov.io/gh/mikle9997/Course-work/branch/master/graph/badge.svg)](https://codecov.io/gh/mikle9997/Course-work)
 
 Если вы собираетесь это читать, то не надо.
 
