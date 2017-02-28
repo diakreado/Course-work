@@ -14,4 +14,4 @@ script:
   - docker run -v $TRAVIS_BUILD_DIR:/labyrinth lamtev/android:sdk25 /bin/bash -c " cd labyrinth/Labyrinth && cloc * && gradle build "
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - cd Labyrinth && bash <(curl -s https://codecov.io/bash )
