@@ -11,7 +11,7 @@ before_install:
   - sudo pip install --user codecov
 
 script:
-  - docker run -v $TRAVIS_BUILD_DIR:/labyrinth lamtev/android:sdk25 /bin/bash -c " cd labyrinth && cloc * && gradle build "
+  - docker run -v $TRAVIS_BUILD_DIR:/labyrinth lamtev/java /bin/bash -c " cd labyrinth && cloc * && gradle build "
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
