@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Users\Mikle\.gradle\caches\modules-2\files-2.1\org.jetbrains\annotations-java5\15.0\7011b4551a8451906759b05814c58b9eb829ea9b\annotations-java5-15.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="7011b4551a8451906759b05814c58b9eb829ea9b">
+        <dex dex="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\transforms\dex\debug\folders\1000\10\annotations-java5-15.0_1b9e428557ab4410d141ca518b9cfc8c38ebe72a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Mikle\.gradle\caches\modules-2\files-2.1\junit\junit\4.12\2973d150c0dc1fefe998f834810d68f278ea58ec\junit-4.12.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="2973d150c0dc1fefe998f834810d68f278ea58ec">
+        <dex dex="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\transforms\dex\debug\folders\1000\10\junit-4.12_96a4ad07ca69a7cfd87fd0a49121b1b3d3e5fcef\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Mikle\.gradle\caches\modules-2\files-2.1\org.hamcrest\hamcrest-core\1.3\42a25dc3219429f0e5d060061f71acb49bf010a0\hamcrest-core-1.3.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="42a25dc3219429f0e5d060061f71acb49bf010a0">
+        <dex dex="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\transforms\dex\debug\folders\1000\10\hamcrest-core-1.3_1e8a2f54840acfd0cc17a2beae23deb0e78ac3c2\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Mikle\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx-freetype\1.9.5\71eba1332b3c2436d3b8e24296a0feb1c01d9e67\gdx-freetype-1.9.5.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="71eba1332b3c2436d3b8e24296a0feb1c01d9e67">
+        <dex dex="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\transforms\dex\debug\folders\1000\10\gdx-freetype-1.9.5_c9d1f27020aae93e4939ca30d3268da90bd49c47\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="2dd5317b023fbe0e99203ed97f863eba64e1cb17">
+        <dex dex="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_7a8f23b9be72c38e2a8127130ed5fe9c00c14d81\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="61bc648895b7425f52e4c74631a2b2ac048ce1ed">
+        <dex dex="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_7720c4c6f7e8bf87d0856e597632291bec37c0e2\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Mikle\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx\1.9.5\dc65bb2f51828c58b1b2b3ac585357204d54ee5f\gdx-1.9.5.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="dc65bb2f51828c58b1b2b3ac585357204d54ee5f">
+        <dex dex="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\transforms\dex\debug\folders\1000\10\gdx-1.9.5_3cffde36efe5a57cf594784c12a922eb7ef6eb41\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Mikle\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx-backend-android\1.9.5\293bbe05bfb5ca812c849e4d1f494f56509d5a6e\gdx-backend-android-1.9.5.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="293bbe05bfb5ca812c849e4d1f494f56509d5a6e">
+        <dex dex="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\transforms\dex\debug\folders\1000\10\gdx-backend-android-1.9.5_dbab75aa643495da459c422a00a769861411a0f9\classes.dex" />
+    </item>
+
+</items>

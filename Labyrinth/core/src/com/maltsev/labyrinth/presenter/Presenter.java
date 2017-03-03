@@ -23,18 +23,17 @@ import java.util.List;
  */
 public class Presenter implements GameOverListener, FoundKeyListener, OpenDoorListener {
 
-    //TODO надо как-то выровнять переход с одной клетки на другую, сделать его более плавным
-
     private Model model;
     private View view;
 
     private SizeOfTexture sizeOfBlock;
-    private List<PointOnTheField> passableCells;
     private List<PointOnTheField> doorsClosed;
     private List<PointOnTheField> doorsOpened;
     private List<PointOnTheField> keys;
 
     private ArrayDeque<PointOnTheField> way;
+
+    private PassableCellsDrawer passableCellsDrawer;
 
     private PointOnTheScreen pointOfMovement;
     private double timer = 0;
@@ -92,10 +91,11 @@ public class Presenter implements GameOverListener, FoundKeyListener, OpenDoorLi
         model.setValueOfRangeOfStep(rangeOfStep);
 
         sizeOfBlock = new SizeOfTexture(view.getSizeOfBlock());
-        passableCells = model.getPassableCells();
         doorsClosed = model.getDoors();
-        doorsOpened = new ArrayList<PointOnTheField>();
+        doorsOpened = new ArrayList<>();
         keys = model.getKeys();
+
+        passableCellsDrawer = new PassableCellsDrawer(view, this);
     }
 
     /**
@@ -118,10 +118,7 @@ public class Presenter implements GameOverListener, FoundKeyListener, OpenDoorLi
      */
     public void drawPassableCells() {
 
-        for (PointOnTheField point : passableCells) {
-
-            view.drawBlock(translatePointFieldToScreen(point));
-        }
+        passableCellsDrawer.drawCells();
     }
 
     /**
@@ -253,8 +250,6 @@ public class Presenter implements GameOverListener, FoundKeyListener, OpenDoorLi
                                     (int)(timer*frequencyOfIntermediateSteps/rateOfProtagonist)/frequencyOfIntermediateSteps);
         }
 
-        //System.out.println(timer);
-
         if(way.isEmpty())
             finishMovement();
     }
@@ -284,7 +279,7 @@ public class Presenter implements GameOverListener, FoundKeyListener, OpenDoorLi
      * @param pointOnTheField точка с координатами поля
      * @return точка с координатами экрана
      */
-    private PointOnTheScreen translatePointFieldToScreen(PointOnTheField pointOnTheField) {
+    public PointOnTheScreen translatePointFieldToScreen(PointOnTheField pointOnTheField) {
 
         return new PointOnTheScreen(pointOnTheField.getX() * sizeOfBlock.getWidth(),
                 pointOnTheField.getY() * sizeOfBlock.getHeight());
@@ -312,6 +307,7 @@ public class Presenter implements GameOverListener, FoundKeyListener, OpenDoorLi
     }
 
     /**
+     * Используется для отрисовки открытой двери
      * @param point точка на игровом поле
      * @return ближайшая клетка, на которую не может сходить протигонист
      */
@@ -334,5 +330,10 @@ public class Presenter implements GameOverListener, FoundKeyListener, OpenDoorLi
     public int getNumberOfKeys() {
 
         return model.getNumberOfKeys();
+    }
+
+    public List<PointOnTheField> getPassableCells() {
+
+        return model.getPassableCells();
     }
 }

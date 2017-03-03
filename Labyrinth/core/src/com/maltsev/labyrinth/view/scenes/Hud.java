@@ -71,9 +71,9 @@ public class Hud implements Disposable, Resizable {
         fon = new Texture("hud_gui/fon.png");
         final Image img = new Image(fon);
 
-        atlasUi = new TextureAtlas("hud_gui/hud_ui.pack");
+        atlasUi = new TextureAtlas("hud_gui/hud_gui.pack");
         skin = new Skin(atlasUi);
-        pauseButton = new ImageButton(skin.getDrawable("yellow_button09"), skin.getDrawable("yellow_button090"));
+        pauseButton = new ImageButton(skin.getDrawable("pause"), skin.getDrawable("pause1"));
 
         registeredListenerAgain();
 
@@ -128,7 +128,7 @@ public class Hud implements Disposable, Resizable {
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/abc.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 60;
+        parameter.size = 70;
         font = generator.generateFont(parameter);
         generator.dispose();
     }

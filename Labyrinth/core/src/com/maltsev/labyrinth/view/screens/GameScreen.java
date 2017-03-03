@@ -8,8 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.maltsev.labyrinth.model.field.PointOnTheField;
 import com.maltsev.labyrinth.presenter.Presenter;
 import com.maltsev.labyrinth.presenter.interfaces.View;
 import com.maltsev.labyrinth.presenter.tempdata.PointOnTheScreen;
@@ -38,6 +37,24 @@ public class GameScreen implements Screen, View {
     private OrthographicCamera camera;
 
     private Texture block;
+    private Texture horizontalCells;
+    private Texture centerCells;
+
+    private Texture leftTopCells;
+    private Texture rightTopCells;
+    private Texture leftBottomCells;
+    private Texture rightBottomCells;
+
+    private Texture leftTopRightCells;
+    private Texture bottomLeftTopCells;
+    private Texture rightBottomLeftCells;
+    private Texture topRightBottomCells;
+
+    private Texture rightEndCells;
+    private Texture leftEndCells;
+    private Texture topEndCells;
+    private Texture bottomEndCells;
+
     private SizeOfTexture sizeOfBlock;
     private Texture exit;
     private Texture doorClose;
@@ -98,6 +115,24 @@ public class GameScreen implements Screen, View {
     private  void loadingOfTextures() {
 
         block = new Texture("game_ui/block.png");
+        horizontalCells = new Texture("game_ui/horizontal_cell.png");
+        centerCells = new Texture("game_ui/center_cell.png");
+
+        leftTopCells = new Texture("game_ui/left_top_cell.png");
+        rightTopCells = new Texture("game_ui/right_top_cell.png");
+        leftBottomCells = new Texture("game_ui/left_bottom_cell.png");
+        rightBottomCells = new Texture("game_ui/right_bottom_cell.png");
+
+        rightEndCells = new Texture("game_ui/right_end_cell.png");
+        leftEndCells = new Texture("game_ui/left_end_cell.png");
+        topEndCells = new Texture("game_ui/top_end_cell.png");
+        bottomEndCells = new Texture("game_ui/bottom_end_cell.png");
+
+        leftTopRightCells = new Texture("game_ui/left_top_right_cell.png");
+        rightBottomLeftCells = new Texture("game_ui/right_bottom_left_cell.png");
+        bottomLeftTopCells = new Texture("game_ui/bottom_left_top_cell.png");
+        topRightBottomCells = new Texture("game_ui/top_right_bottom_cell.png");
+
         sizeOfBlock = new SizeOfTexture(block.getWidth(), block.getHeight());
         exit = new Texture("game_ui/exit.png");
         doorClose = new Texture("game_ui/doorClose.png");
@@ -212,12 +247,6 @@ public class GameScreen implements Screen, View {
     }
 
     @Override
-    public void drawBlock(PointOnTheScreen point) {
-
-        batch.draw(block, point.getX(), point.getY());
-    }
-
-    @Override
     public void drawExit(PointOnTheScreen point) {
 
         batch.draw(exit, point.getX(), point.getY());
@@ -298,4 +327,93 @@ public class GameScreen implements Screen, View {
 
     }
 
+    @Override
+    public void drawHorizontalCells(PointOnTheScreen point) {
+
+        batch.draw(horizontalCells, point.getX(), point.getY());
+    }
+
+    @Override
+    public void drawCenterCells(PointOnTheScreen point) {
+
+        batch.draw(centerCells, point.getX(), point.getY());
+    }
+
+    @Override
+    public void drawLeftTopCells(PointOnTheScreen point) {
+
+        batch.draw(leftTopCells, point.getX(), point.getY());
+    }
+
+    @Override
+    public void drawRightTopCells(PointOnTheScreen point) {
+
+        batch.draw(rightTopCells, point.getX(), point.getY());
+    }
+
+    @Override
+    public void drawLeftBottomCells(PointOnTheScreen point) {
+
+        batch.draw(leftBottomCells, point.getX(), point.getY());
+    }
+
+    @Override
+    public void drawRightBottomCells(PointOnTheScreen point) {
+
+        batch.draw(rightBottomCells, point.getX(), point.getY());
+    }
+
+    @Override
+    public void drawRightEndCells(PointOnTheScreen point) {
+
+        batch.draw(rightEndCells, point.getX(), point.getY());
+    }
+
+    @Override
+    public void drawLeftEndCells(PointOnTheScreen point) {
+
+        batch.draw(leftEndCells, point.getX(), point.getY());
+    }
+
+    @Override
+    public void drawTopEndCells(PointOnTheScreen point) {
+
+        batch.draw(topEndCells, point.getX(), point.getY());
+    }
+
+    @Override
+    public void drawBottomEndCells(PointOnTheScreen point) {
+
+        batch.draw(bottomEndCells, point.getX(), point.getY());
+    }
+
+    @Override
+    public void drawLeftTopRightCells(PointOnTheScreen point) {
+
+        batch.draw(leftTopRightCells, point.getX(), point.getY());
+    }
+
+    @Override
+    public void drawBottomLeftTopCells(PointOnTheScreen point) {
+
+        batch.draw(bottomLeftTopCells, point.getX(), point.getY());
+    }
+
+    @Override
+    public void drawRightBottomLeftCells(PointOnTheScreen point) {
+
+        batch.draw(rightBottomLeftCells, point.getX(), point.getY());
+    }
+
+    @Override
+    public void drawTopRightBottomCells(PointOnTheScreen point) {
+
+        batch.draw(topRightBottomCells, point.getX(), point.getY());
+    }
+
+    @Override
+    public void drawBlock(PointOnTheScreen point) {
+
+        batch.draw(block, point.getX(), point.getY());
+    }
 }
