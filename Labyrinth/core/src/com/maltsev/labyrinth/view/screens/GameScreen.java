@@ -45,7 +45,7 @@ public class GameScreen implements Screen, View {
     private Texture leftBottomCells;
     private Texture rightBottomCells;
 
-    private Texture leftTopRightCells;
+    private Texture leftTopRightCells;          //TODO ну тут TextureAtlas сам просится
     private Texture bottomLeftTopCells;
     private Texture rightBottomLeftCells;
     private Texture topRightBottomCells;
@@ -72,7 +72,7 @@ public class GameScreen implements Screen, View {
     private boolean isInMotion = false;
 
     private final float defaultWidth = Gdx.graphics.getWidth();
-    private final float defaultHeight = Gdx.graphics.getHeight();
+    private final float defaultHeight = Gdx.graphics.getWidth() * (((float)Labyrinth.V_HEIGHT) / (float)Labyrinth.V_WIDTH);
 
     private Stage stage;
 
@@ -304,6 +304,7 @@ public class GameScreen implements Screen, View {
 
         camera.viewportWidth = Labyrinth.V_WIDTH * (width/defaultWidth);
         camera.viewportHeight = Labyrinth.V_HEIGHT * (height/defaultHeight);
+
         camera.update();
     }
 
