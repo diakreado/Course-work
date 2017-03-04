@@ -8,8 +8,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.maltsev.labyrinth.view.Labyrinth;
@@ -23,8 +25,15 @@ public class SettingsScreen implements Screen {
     private ButtonGroup<CheckBox> boxButtonGroup;
     private CheckBox.CheckBoxStyle checkBoxStyle;
 
+    private ImageTextButton.ImageTextButtonStyle buttonStyle;
+
     private BitmapFont font;
     private BitmapFont fontForLabel;
+    private BitmapFont smallFont;
+
+    private ClickListener backToMenuListener;
+
+    private ImageTextButton backToMenu;
 
     private Table table;
 
@@ -33,7 +42,7 @@ public class SettingsScreen implements Screen {
 
     private Labyrinth game;
 
-    public SettingsScreen(Labyrinth game) {
+    public SettingsScreen(final Labyrinth game) {
 
         this.game = game;
 
@@ -41,11 +50,12 @@ public class SettingsScreen implements Screen {
         checkBoxOff = new Texture("settings_ui/grey_circle.png");
 
         font = game.fontGenerator.getFont();
+        smallFont = game.fontGenerator.getSmallFont();
 
         fontForLabel = game.fontGenerator.getFontForLabel();
 
         checkBoxStyle = new CheckBox.CheckBoxStyle(new TextureRegionDrawable(new TextureRegion(checkBoxOff)),
-                new TextureRegionDrawable(new TextureRegion(checkBoxOn)), font, new Color(0,0,0,1));
+                new TextureRegionDrawable(new TextureRegion(checkBoxOn)), smallFont, new Color(0,0,0,1));
 
         checkBox1 = new CheckBox("Touch",checkBoxStyle);
         checkBox2 = new CheckBox("Controller", checkBoxStyle);
@@ -56,21 +66,45 @@ public class SettingsScreen implements Screen {
 
         checkBox1.getCells().get(0).size(100,100);
         checkBox1.getImage().setWidth(90);
+        checkBox1.setChecked(true);
         checkBox2.getCells().get(0).size(200,200);
+
+        buttonStyle = game.menuButtonStyle.getButtonStyle();
+
+        backToMenu = new ImageTextButton("Back to menu", buttonStyle);
+
+        registeredListenerAgain();
 
         table = new Table();
 
-        table.center();
+        table.top();
         table.setFillParent(true);
 
-        table.add(label).padLeft(300).padBottom(100);
+        table.add(label).padTop(300).padBottom(50);
         table.row();
-        table.add(checkBox1).padRight(50);
-        table.add(checkBox2).padRight(150);
+        table.add(checkBox1);
+        table.add(checkBox2).padRight(100);
 
         stage = new Stage(new ExtendViewport(Labyrinth.V_WIDTH, Labyrinth.V_HEIGHT));
 
+        backToMenu.setPosition(1300,900);
+        stage.addActor(backToMenu);
         stage.addActor(table);
+    }
+
+    private void registeredListenerAgain(){
+
+        backToMenuListener = new ClickListener() {
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
+                game.setMainMenuScreen();
+                registeredListenerAgain();
+            }
+        };
+
+        backToMenu.addListener(backToMenuListener);
     }
 
     @Override
@@ -92,6 +126,7 @@ public class SettingsScreen implements Screen {
     @Override
     public void resize(int width, int height) {
 
+        stage.getViewport().update(width, height, true);
     }
 
     @Override
@@ -112,5 +147,8 @@ public class SettingsScreen implements Screen {
     @Override
     public void dispose() {
 
+        font.dispose();
+        fontForLabel.dispose();
+        stage.dispose();
     }
 }

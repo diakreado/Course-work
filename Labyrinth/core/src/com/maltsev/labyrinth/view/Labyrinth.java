@@ -8,6 +8,7 @@ import com.maltsev.labyrinth.view.screens.GameScreen;
 import com.maltsev.labyrinth.view.screens.MainMenuScreen;
 import com.maltsev.labyrinth.view.screens.SettingsScreen;
 import com.maltsev.labyrinth.view.utils.FontGenerator;
+import com.maltsev.labyrinth.view.utils.MenuButtonStyle;
 
 /**
  * Главный класс из пакета view
@@ -44,6 +45,8 @@ public class Labyrinth extends Game {
 
     public FontGenerator fontGenerator;
 
+    public MenuButtonStyle menuButtonStyle;
+
     public SpriteBatch spriteBatch;
 
     @Override
@@ -51,7 +54,7 @@ public class Labyrinth extends Game {
 
         spriteBatch = new SpriteBatch();
         fontGenerator = new FontGenerator();
-
+        menuButtonStyle = new MenuButtonStyle(this);
         settingsScreen = new SettingsScreen(this);
 
         setMainMenuScreen();
@@ -97,6 +100,7 @@ public class Labyrinth extends Game {
 
         spriteBatch.dispose();
         fontGenerator.dispose();
+        menuButtonStyle.dispose();
 
         if(gameScreen != null)
             gameScreen.dispose();

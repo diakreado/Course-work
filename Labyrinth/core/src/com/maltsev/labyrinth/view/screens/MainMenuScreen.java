@@ -27,8 +27,6 @@ public class MainMenuScreen implements Screen{
 
     //TODO Планируется добавить возможность просматривать результаты  прошедших игр
 
-    private Skin skinForButton;
-    private TextureAtlas atlasUiForButton;
     private ImageTextButton.ImageTextButtonStyle buttonStyle;
     private Stage stage;
     private ImageTextButton play;
@@ -50,17 +48,9 @@ public class MainMenuScreen implements Screen{
         // Сначала масштабируется мир по размеру окна просмотра,
         // затем короткий размер удлиняется до заполнения окна просмотра.
 
-
-        atlasUiForButton = new TextureAtlas("menu_ui/menu.pack");
-
-        skinForButton = new Skin(atlasUiForButton);
-
-        buttonStyle = new ImageTextButton.ImageTextButtonStyle();
-        buttonStyle.up = skinForButton.getDrawable("blue_button04");
-        buttonStyle.down = skinForButton.getDrawable("blue_button04_down");
+        buttonStyle = game.menuButtonStyle.getButtonStyle();
 
         setUpFont();
-        buttonStyle.font = font;
 
         play = new ImageTextButton("Start", buttonStyle);
         play.addListener(new ClickListener() {
@@ -159,10 +149,8 @@ public class MainMenuScreen implements Screen{
     @Override
     public void dispose() {
 
-        skinForButton.dispose();
         stage.dispose();
         font.dispose();
-        atlasUiForButton.dispose();
     }
 
     @Override

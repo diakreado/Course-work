@@ -15,9 +15,6 @@ import com.badlogic.gdx.utils.Disposable;
  */
 public class FontGenerator implements Disposable {
 
-    private BitmapFont font;
-    private BitmapFont fontForLabel;
-
     private FreeTypeFontGenerator generator;
     private FreeTypeFontGenerator.FreeTypeFontParameter parameter;
 
@@ -25,22 +22,27 @@ public class FontGenerator implements Disposable {
 
         generator = new FreeTypeFontGenerator(Gdx.files.internal("font/some_font.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-
-        parameter.size = 65;
-        font = generator.generateFont(parameter);
-
-        parameter.borderWidth = 2;
-        fontForLabel = generator.generateFont(parameter);                    //Делаем шрифт для Метки жирным
     }
 
     public BitmapFont getFont() {
 
-        return font;
+        parameter.size = 65;
+        parameter.borderWidth = 0;
+        return generator.generateFont(parameter);
+    }
+
+    public BitmapFont getSmallFont() {
+
+        parameter.size = 50;
+        parameter.borderWidth = 0;
+        return generator.generateFont(parameter);
     }
 
     public BitmapFont getFontForLabel() {
 
-        return fontForLabel;
+        parameter.size = 65;
+        parameter.borderWidth = 2;
+        return generator.generateFont(parameter);                    //Делаем шрифт для Метки жирным
     }
 
     @Override
