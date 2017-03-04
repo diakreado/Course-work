@@ -36,6 +36,7 @@ public class SettingsScreen implements Screen {
     private ImageTextButton backToMenu;
 
     private Table table;
+    private Table subTable;
 
     private Texture checkBoxOn;
     private Texture checkBoxOff;
@@ -76,19 +77,23 @@ public class SettingsScreen implements Screen {
         registeredListenerAgain();
 
         table = new Table();
+        subTable = new Table();
 
         table.top();
         table.setFillParent(true);
 
-        table.add(label).padTop(300).padBottom(50);
+        table.add(backToMenu).padLeft(1300).padTop(20);
         table.row();
-        table.add(checkBox1);
-        table.add(checkBox2).padRight(100);
+
+        subTable.add(label).padBottom(10);
+        subTable.row();
+        subTable.add(checkBox1).padRight(300);
+        subTable.add(checkBox2).padRight(100);
+
+        table.add(subTable).padTop(50);
 
         stage = new Stage(new ExtendViewport(Labyrinth.V_WIDTH, Labyrinth.V_HEIGHT));
 
-        backToMenu.setPosition(1300,900);
-        stage.addActor(backToMenu);
         stage.addActor(table);
     }
 
@@ -105,6 +110,11 @@ public class SettingsScreen implements Screen {
         };
 
         backToMenu.addListener(backToMenuListener);
+    }
+
+    public int getChoice() {
+
+        return boxButtonGroup.getCheckedIndex();
     }
 
     @Override

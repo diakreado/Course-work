@@ -6,15 +6,13 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.freetype.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.maltsev.labyrinth.view.Labyrinth;
-import com.maltsev.labyrinth.view.utils.DrawableObject;
 
 /**
  * Главное меню игры
@@ -58,8 +56,6 @@ public class MainMenuScreen implements Screen{
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
-
-
                 game.setGameScreen(list.getSelectedIndex());
                 dispose();
             }
@@ -83,7 +79,7 @@ public class MainMenuScreen implements Screen{
                 "eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen"};
 
         List.ListStyle listStyle = new List.ListStyle(font,new Color(0.96f,0.0f,0.16f,1),
-                new Color(0,0,0,1), new DrawableObject());
+                new Color(0,0,0,1), new BaseDrawable());
         list = new List(listStyle);
 
         list.setItems(inputData);

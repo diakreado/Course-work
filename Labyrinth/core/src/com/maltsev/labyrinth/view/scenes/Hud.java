@@ -6,13 +6,14 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.*;
 import com.maltsev.labyrinth.view.Labyrinth;
@@ -38,6 +39,9 @@ public class Hud implements Disposable, Resizable {
     private TextureAtlas atlasUi;
     private Skin skin;
 
+    private Texture backPartOfControl;
+    private Texture forwardPartOfControl;
+
     private ClickListener pauseListener;
 
     private Texture fon;
@@ -49,10 +53,18 @@ public class Hud implements Disposable, Resizable {
 
     private boolean isStopTimer = false;
 
+    private boolean typeOfControl;
 
-    public Hud(SpriteBatch spriteBatch, GameScreen gameScreen) {
+    private Labyrinth game;
 
+    private Touchpad touchpad;
+
+
+    public Hud(Labyrinth game, GameScreen gameScreen) {
+
+        this.game = game;
         this.gameScreen = gameScreen;
+        this.typeOfControl = game.infoOfSettings.getTypeOfTheControl();
 
         generateFont();
 
@@ -61,7 +73,7 @@ public class Hud implements Disposable, Resizable {
 
         viewport = new ExtendViewport(Labyrinth.V_WIDTH, Labyrinth.V_HEIGHT, camera);
 
-        stage = new Stage(viewport, spriteBatch);
+        stage = new Stage(viewport);
 
         Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);
 
@@ -77,6 +89,9 @@ public class Hud implements Disposable, Resizable {
 
         registeredListenerAgain();
 
+        backPartOfControl = new Texture("hud_gui/shadedDark07.png");
+        forwardPartOfControl = new Texture("hud_gui/shadedDark01.png");
+
         tableTop = new Table();
         tableTop.top();
         tableTop.setFillParent(true);
@@ -85,8 +100,23 @@ public class Hud implements Disposable, Resizable {
         tableTop.add(keys).expandX().top();
         tableTop.add(pauseButton).expandX();
 
-
         stage.addActor(tableTop);
+
+        if(typeOfControl) {
+
+            touchpad = new Touchpad(10, new Touchpad.TouchpadStyle(
+                    new TextureRegionDrawable(new TextureRegion(backPartOfControl)),
+                    new TextureRegionDrawable(new TextureRegion(forwardPartOfControl))));
+
+            touchpad.setPosition(100,100);
+
+            stage.addActor(touchpad);
+        }
+    }
+
+    public void handleInput() {
+
+        System.out.println(touchpad.getKnobPercentX()+" " + touchpad.getKnobPercentY());
     }
 
     private void registeredListenerAgain(){

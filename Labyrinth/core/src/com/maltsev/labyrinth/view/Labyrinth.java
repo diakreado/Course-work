@@ -8,6 +8,7 @@ import com.maltsev.labyrinth.view.screens.GameScreen;
 import com.maltsev.labyrinth.view.screens.MainMenuScreen;
 import com.maltsev.labyrinth.view.screens.SettingsScreen;
 import com.maltsev.labyrinth.view.utils.FontGenerator;
+import com.maltsev.labyrinth.view.utils.InfoOfSettings;
 import com.maltsev.labyrinth.view.utils.MenuButtonStyle;
 
 /**
@@ -49,6 +50,8 @@ public class Labyrinth extends Game {
 
     public SpriteBatch spriteBatch;
 
+    public InfoOfSettings infoOfSettings;
+
     @Override
     public void create() {
 
@@ -56,6 +59,7 @@ public class Labyrinth extends Game {
         fontGenerator = new FontGenerator();
         menuButtonStyle = new MenuButtonStyle(this);
         settingsScreen = new SettingsScreen(this);
+        infoOfSettings = new InfoOfSettings(0,false);
 
         setMainMenuScreen();
     }
@@ -66,7 +70,14 @@ public class Labyrinth extends Game {
      */
     public void setGameScreen(int numberOfGameField) {
 
-        gameScreen = new GameScreen(this, numberOfGameField);
+        boolean choice = false;
+
+        if(settingsScreen.getChoice() == 1) {
+            choice = true;
+        }
+
+        infoOfSettings = new InfoOfSettings(numberOfGameField, choice);
+        gameScreen = new GameScreen(this);
         this.setScreen(gameScreen);
 
         mainMenuScreen = null;

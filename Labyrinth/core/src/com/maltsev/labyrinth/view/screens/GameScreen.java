@@ -76,7 +76,9 @@ public class GameScreen implements Screen, View {
 
     private Stage stage;
 
-    public GameScreen(final Labyrinth game, int numberOfGameField) {
+    private boolean typeOfControl = false;
+
+    public GameScreen(final Labyrinth game) {
 
         this.game = game;
         batch = game.spriteBatch;
@@ -84,16 +86,18 @@ public class GameScreen implements Screen, View {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Labyrinth.V_WIDTH, Labyrinth.V_HEIGHT);
 
-        hud = new Hud(batch, this);
+        hud = new Hud(game, this);
         fonGameScreen = new Fon(batch);
 
         loadingOfTextures();
+
+        typeOfControl = game.infoOfSettings.getTypeOfTheControl();
 
         touchPos = new Vector3();
 
         positionOfProtagonist = new Vector3();
 
-        presenter = new Presenter(this, numberOfGameField);
+        presenter = new Presenter(this, game.infoOfSettings.getNumberOfGameField());
 
         changePositionOfProtagonist(presenter.getPositionOfProtagonist());
 
@@ -180,7 +184,7 @@ public class GameScreen implements Screen, View {
 
     private void handelInput(float delta) {
 
-        if (Gdx.input.justTouched() && !lockInput) {
+        if (Gdx.input.justTouched() && !lockInput && !typeOfControl) {
 
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 
@@ -188,6 +192,9 @@ public class GameScreen implements Screen, View {
 
             presenter.moveProtagonist(touchPos.x, touchPos.y);
         }
+
+        if(typeOfControl)
+            hud.handleInput();
     }
 
     private void update(float delta) {
