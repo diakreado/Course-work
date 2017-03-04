@@ -32,10 +32,12 @@ public class MainMenuScreen implements Screen{
     private ImageTextButton.ImageTextButtonStyle buttonStyle;
     private Stage stage;
     private ImageTextButton play;
+    private ImageTextButton settings;
     private Labyrinth game;
     private BitmapFont font;
     private BitmapFont fontForLabel;
     private Table table;
+    private Table subTable;
     private ScrollPane scrollPane;
     private List list;
 
@@ -73,6 +75,19 @@ public class MainMenuScreen implements Screen{
             }
         });
 
+        settings = new ImageTextButton("Settings", buttonStyle);
+        settings.addListener(new ClickListener() {
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
+
+
+                game.openSettingsScreen();
+                //dispose();
+            }
+        });
+
         //TODO Этот список надо получать из файла с игровыми полями, скорее всего от Presenter'a, но это не точно
         String[] inputData = {"one","two","three","four","five","six","seven","eight","nine","ten",
                 "eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen"};
@@ -91,6 +106,7 @@ public class MainMenuScreen implements Screen{
 
 
         table = new Table();
+        subTable = new Table();
 
         table.center();
         table.setFillParent(true);
@@ -98,7 +114,10 @@ public class MainMenuScreen implements Screen{
         table.add(label).padRight(400);                     //Размещени объектов на сцене
         table.row();
         table.add(scrollPane).padRight(300);
-        table.add(play);
+        subTable.add(play);
+        subTable.row();
+        subTable.add(settings).padTop(100);
+        table.add(subTable);
         stage.addActor(table);
 
         Gdx.input.setInputProcessor(stage);
@@ -113,16 +132,9 @@ public class MainMenuScreen implements Screen{
      */
     private void setUpFont() {
 
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/some_font.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        font = game.fontGenerator.getFont();
 
-        parameter.size = 65;
-        font = generator.generateFont(parameter);
-
-        parameter.borderWidth = 2;
-        fontForLabel = generator.generateFont(parameter);                    //Делаем шрифт для Метки жирным
-
-        generator.dispose();
+        fontForLabel = game.fontGenerator.getFontForLabel();
     }
 
     /**

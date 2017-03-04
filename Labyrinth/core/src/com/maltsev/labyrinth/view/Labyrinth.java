@@ -6,6 +6,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.maltsev.labyrinth.view.screens.GameScreen;
 import com.maltsev.labyrinth.view.screens.MainMenuScreen;
+import com.maltsev.labyrinth.view.screens.SettingsScreen;
+import com.maltsev.labyrinth.view.utils.FontGenerator;
 
 /**
  * Главный класс из пакета view
@@ -38,6 +40,9 @@ public class Labyrinth extends Game {
 
     private MainMenuScreen mainMenuScreen;
     private GameScreen gameScreen;
+    private SettingsScreen settingsScreen;
+
+    public FontGenerator fontGenerator;
 
     public SpriteBatch spriteBatch;
 
@@ -45,6 +50,9 @@ public class Labyrinth extends Game {
     public void create() {
 
         spriteBatch = new SpriteBatch();
+        fontGenerator = new FontGenerator();
+
+        settingsScreen = new SettingsScreen(this);
 
         setMainMenuScreen();
     }
@@ -72,6 +80,12 @@ public class Labyrinth extends Game {
         gameScreen = null;
     }
 
+    public void openSettingsScreen() {
+
+
+        this.setScreen(settingsScreen);
+    }
+
     @Override
     public void render() {
 
@@ -82,6 +96,7 @@ public class Labyrinth extends Game {
     public void dispose() {
 
         spriteBatch.dispose();
+        fontGenerator.dispose();
 
         if(gameScreen != null)
             gameScreen.dispose();
