@@ -160,5 +160,7 @@ public class SettingsScreen implements Screen {
         font.dispose();
         fontForLabel.dispose();
         stage.dispose();
+        checkBoxOn.dispose();
+        checkBoxOff.dispose();
     }
 }

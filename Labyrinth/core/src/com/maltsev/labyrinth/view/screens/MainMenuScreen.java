@@ -37,6 +37,9 @@ public class MainMenuScreen implements Screen{
     private ScrollPane scrollPane;
     private List list;
 
+    private final float defaultWidth = Gdx.graphics.getWidth();
+    private final float defaultHeight = Gdx.graphics.getWidth() * (((float)Labyrinth.V_HEIGHT) / (float)Labyrinth.V_WIDTH);
+
     public MainMenuScreen(final Labyrinth game) {
 
         this.game = game;
@@ -67,10 +70,7 @@ public class MainMenuScreen implements Screen{
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
-
-
                 game.openSettingsScreen();
-                //dispose();
             }
         });
 
@@ -107,6 +107,16 @@ public class MainMenuScreen implements Screen{
         stage.addActor(table);
 
         Gdx.input.setInputProcessor(stage);
+    }
+
+    public float getDefaultHeight() {
+
+        return defaultHeight;
+    }
+
+    public float getDefaultWidth() {
+
+        return defaultWidth;
     }
 
     /**
@@ -147,6 +157,7 @@ public class MainMenuScreen implements Screen{
 
         stage.dispose();
         font.dispose();
+        fontForLabel.dispose();
     }
 
     @Override

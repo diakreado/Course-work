@@ -184,6 +184,14 @@ public class Presenter implements GameOverListener, FoundKeyListener, OpenDoorLi
             startMovement();
     }
 
+    public void moveProtagonistInTheFieldCoordinate(int fieldX, int fieldY) {
+
+        way = model.movesOfProtagonist(fieldX, fieldY);
+
+        if (way != null)
+            startMovement();
+    }
+
     /**
      * Метод, который вызывается в начале движения
      * Вызывает методы lockInput() и startMovement() у View
@@ -273,6 +281,12 @@ public class Presenter implements GameOverListener, FoundKeyListener, OpenDoorLi
 
         return  translatePointFieldToScreen(model.getPositionOfProtagonist());
     }
+
+    public PointOnTheField getPositionOfProtagonistInTheFieldCoorditane() {
+
+        return  model.getPositionOfProtagonist();
+    }
+
 
     /**
      * Перевод координат точки из координат поля в координаты экрана

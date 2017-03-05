@@ -1,4 +1,4 @@
-#Sat Mar 04 22:01:14 MSK 2017
+#Sun Mar 05 01:13:54 MSK 2017
 base.0=C\:\\Users\\Mikle\\Documents\\GitHub\\Course-work\\Labyrinth\\android\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_7a8f23b9be72c38e2a8127130ed5fe9c00c14d81
 renamed.1=classes2.dex
 renamed.0=classes.dex

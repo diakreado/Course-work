@@ -16,7 +16,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.*;
+import com.maltsev.labyrinth.model.field.PointOnTheField;
+import com.maltsev.labyrinth.presenter.Presenter;
 import com.maltsev.labyrinth.view.Labyrinth;
+import com.maltsev.labyrinth.view.utils.MenuButtonStyle;
 import com.maltsev.labyrinth.view.utils.Resizable;
 import com.maltsev.labyrinth.view.screens.GameScreen;
 
@@ -25,46 +28,37 @@ import com.maltsev.labyrinth.view.screens.GameScreen;
  */
 public class Hud implements Disposable, Resizable {
 
-    public Stage stage;
+    public Stage hudStage;
+    public Stage pauseStage;
     private BitmapFont font;
-
     private double timeCount =0;
-
     private Label keys;
     private Label timer;
-
     private Table tableTop;
-
     private ImageButton pauseButton;
     private TextureAtlas atlasUi;
     private Skin skin;
-
     private Texture backPartOfControl;
     private Texture forwardPartOfControl;
-
     private ClickListener pauseListener;
-
-    private Texture fon;
-
     private GameScreen gameScreen;
-
     private ExtendViewport viewport;
     private OrthographicCamera camera;
-
     private boolean isStopTimer = false;
-
     private boolean typeOfControl;
-
-    private Labyrinth game;
-
+    private final Labyrinth game;
     private Touchpad touchpad;
+    private Presenter presenter;
+    private Texture border;
+    private Image image;
+    private boolean isItPasuse = false;
 
-
-    public Hud(Labyrinth game, GameScreen gameScreen) {
+    public Hud(final Labyrinth game, final GameScreen gameScreen, Presenter presenter) {
 
         this.game = game;
         this.gameScreen = gameScreen;
         this.typeOfControl = game.infoOfSettings.getTypeOfTheControl();
+        this.presenter = presenter;
 
         generateFont();
 
@@ -73,15 +67,12 @@ public class Hud implements Disposable, Resizable {
 
         viewport = new ExtendViewport(Labyrinth.V_WIDTH, Labyrinth.V_HEIGHT, camera);
 
-        stage = new Stage(viewport);
+        hudStage = new Stage(viewport);
 
         Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);
 
         timer  = new Label("",labelStyle);
         keys = new Label("", labelStyle);
-
-        fon = new Texture("hud_gui/fon.png");
-        final Image img = new Image(fon);
 
         atlasUi = new TextureAtlas("hud_gui/hud_gui.pack");
         skin = new Skin(atlasUi);
@@ -100,7 +91,7 @@ public class Hud implements Disposable, Resizable {
         tableTop.add(keys).expandX().top();
         tableTop.add(pauseButton).expandX();
 
-        stage.addActor(tableTop);
+        hudStage.addActor(tableTop);
 
         if(typeOfControl) {
 
@@ -110,13 +101,68 @@ public class Hud implements Disposable, Resizable {
 
             touchpad.setPosition(100,100);
 
-            stage.addActor(touchpad);
+            hudStage.addActor(touchpad);
         }
+
+        pauseStage = new Stage(viewport);
+
+        border = new Texture("pause_ui/pause_screen.png");
+        image = new Image(border);
+        image.setPosition(375,220);
+
+        ImageTextButton backToMenu = new ImageTextButton("Back to Menu",game.menuButtonStyle.getButtonStyle());
+
+        backToMenu.addListener(new ClickListener() {
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
+                game.setMainMenuScreen();
+                gameScreen.close();
+            }
+        });
+
+        Table table = new Table();
+        table.setFillParent(true);
+        table.center();
+        table.add(backToMenu);            //todo Отрисовывать конец игры через hud
+
+
+        pauseStage.addActor(image);
+        pauseStage.addActor(table);
     }
 
     public void handleInput() {
 
-        System.out.println(touchpad.getKnobPercentX()+" " + touchpad.getKnobPercentY());
+        double sqrt2 = Math.sqrt(2);
+
+        float coordinateOfTouchpadX = touchpad.getKnobPercentX();
+        float coordinateOfTouchpadY = touchpad.getKnobPercentY();
+
+        PointOnTheField point = presenter.getPositionOfProtagonistInTheFieldCoorditane();
+
+        if((Math.abs(coordinateOfTouchpadX) > sqrt2/2 || Math.abs(coordinateOfTouchpadY) > sqrt2/2) && !gameScreen.isLockInput()) {
+
+            if(coordinateOfTouchpadX *sqrt2 < coordinateOfTouchpadY){
+
+                if (coordinateOfTouchpadX * (-sqrt2) > coordinateOfTouchpadY) {
+
+                    presenter.moveProtagonistInTheFieldCoordinate(point.getX() - 1, point.getY());
+                } else {
+
+                    presenter.moveProtagonistInTheFieldCoordinate(point.getX(), point.getY() + 1);
+                }
+            } else {
+
+                if (coordinateOfTouchpadX * (-sqrt2) > coordinateOfTouchpadY) {
+
+                    presenter.moveProtagonistInTheFieldCoordinate(point.getX(), point.getY() - 1);
+                } else {
+
+                    presenter.moveProtagonistInTheFieldCoordinate(point.getX() + 1, point.getY());
+                }
+            }
+        }
     }
 
     private void registeredListenerAgain(){
@@ -125,11 +171,18 @@ public class Hud implements Disposable, Resizable {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
-                gameScreen.close();
+                setPause();
                 registeredListenerAgain();
             }
         };
         pauseButton.addListener(pauseListener);
+    }
+
+    private void setPause() {
+
+        isItPasuse = true;
+        gameScreen.setPause();
+        stopTimer();
     }
 
     public void setTime(float delta) {
@@ -171,14 +224,16 @@ public class Hud implements Disposable, Resizable {
 
         skin.dispose();
         atlasUi.dispose();
-        stage.dispose();
-        fon.dispose();
+        hudStage.dispose();
         font.dispose();
+        backPartOfControl.dispose();
+        forwardPartOfControl.dispose();
+        border.dispose();
     }
 
     @Override
     public void resize(int width, int height) {
 
-        stage.getViewport().update(width, height, true);
+        hudStage.getViewport().update(width, height, true);
     }
 }

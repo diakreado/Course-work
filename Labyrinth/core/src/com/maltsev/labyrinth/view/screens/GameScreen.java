@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.maltsev.labyrinth.model.field.PointOnTheField;
 import com.maltsev.labyrinth.presenter.Presenter;
 import com.maltsev.labyrinth.presenter.interfaces.View;
 import com.maltsev.labyrinth.presenter.tempdata.PointOnTheScreen;
@@ -68,11 +67,11 @@ public class GameScreen implements Screen, View {
 
     private boolean lockInput = false;
     private boolean isGameEnd = false;
-
+    private boolean isItPause = false;
     private boolean isInMotion = false;
 
-    private final float defaultWidth = Gdx.graphics.getWidth();
-    private final float defaultHeight = Gdx.graphics.getWidth() * (((float)Labyrinth.V_HEIGHT) / (float)Labyrinth.V_WIDTH);
+    private float defaultWidth;
+    private float defaultHeight;
 
     private Stage stage;
 
@@ -83,11 +82,11 @@ public class GameScreen implements Screen, View {
         this.game = game;
         batch = game.spriteBatch;
 
+        defaultHeight = game.getDefaultHeight();
+        defaultWidth = game.getDefaultWidth();
+
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Labyrinth.V_WIDTH, Labyrinth.V_HEIGHT);
-
-        hud = new Hud(game, this);
-        fonGameScreen = new Fon(batch);
 
         loadingOfTextures();
 
@@ -99,9 +98,12 @@ public class GameScreen implements Screen, View {
 
         presenter = new Presenter(this, game.infoOfSettings.getNumberOfGameField());
 
+        hud = new Hud(game, this, presenter);
+        fonGameScreen = new Fon(batch);
+
         changePositionOfProtagonist(presenter.getPositionOfProtagonist());
 
-        Gdx.input.setInputProcessor(hud.stage);
+        Gdx.input.setInputProcessor(hud.hudStage);
 
         camera.position.set(positionOfProtagonist);
         camera.update();
@@ -144,6 +146,37 @@ public class GameScreen implements Screen, View {
         key = new Texture("game_ui/key.png");
         protagonist = new Texture("game_ui/protagonist.png");
         infoGameEnd = new Texture("game_ui/grey_panel.png");
+    }
+
+    @Override
+    public void dispose () {
+
+        hud.dispose();
+        fonGameScreen.dispose();
+        block.dispose();
+        exit.dispose();
+        protagonist.dispose();
+        infoGameEnd.dispose();
+
+        infoGameEnd.dispose();
+        protagonist.dispose();
+        key.dispose();
+        doorOpen.dispose();
+        doorClose.dispose();
+        horizontalCells.dispose();
+        centerCells.dispose();
+        leftTopCells.dispose();
+        rightTopCells.dispose();
+        leftBottomCells.dispose();
+        rightBottomCells.dispose();
+        leftTopRightCells.dispose();
+        rightBottomLeftCells.dispose();
+        topEndCells.dispose();
+        bottomEndCells.dispose();
+        leftTopRightCells.dispose();
+        rightBottomLeftCells.dispose();
+        bottomLeftTopCells.dispose();
+        topRightBottomCells.dispose();
     }
 
     @Override
@@ -193,8 +226,15 @@ public class GameScreen implements Screen, View {
             presenter.moveProtagonist(touchPos.x, touchPos.y);
         }
 
-        if(typeOfControl)
+        if(typeOfControl && !lockInput)
             hud.handleInput();
+    }
+
+    public void setPause() {
+
+        lockInput();
+        Gdx.input.setInputProcessor(hud.pauseStage);
+        isItPause = true;
     }
 
     private void update(float delta) {
@@ -250,7 +290,9 @@ public class GameScreen implements Screen, View {
         draw(delta);
         batch.end();
 
-        hud.stage.draw();
+        hud.hudStage.draw();
+        if(isItPause)
+            hud.pauseStage.draw();
     }
 
     @Override
@@ -293,17 +335,6 @@ public class GameScreen implements Screen, View {
     }
 
     @Override
-    public void dispose () {
-
-        hud.dispose();
-        fonGameScreen.dispose();
-        block.dispose();
-        exit.dispose();
-        protagonist.dispose();
-        infoGameEnd.dispose();
-    }
-
-    @Override
     public void resize(int width, int height) {
 
         fonGameScreen.resize(width,height);
@@ -313,6 +344,11 @@ public class GameScreen implements Screen, View {
         camera.viewportHeight = Labyrinth.V_HEIGHT * (height/defaultHeight);
 
         camera.update();
+    }
+
+    public boolean isLockInput() {
+
+        return lockInput;
     }
 
     @Override

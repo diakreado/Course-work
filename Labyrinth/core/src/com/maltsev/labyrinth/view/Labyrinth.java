@@ -2,7 +2,6 @@ package com.maltsev.labyrinth.view;
 
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.maltsev.labyrinth.view.screens.GameScreen;
 import com.maltsev.labyrinth.view.screens.MainMenuScreen;
@@ -40,6 +39,9 @@ public class Labyrinth extends Game {
     public static final int V_WIDTH = 1920;
     public static final int V_HEIGHT = 1080;
 
+    private float defaultWidth = 0;
+    private float defaultHeight = 0;
+
     private MainMenuScreen mainMenuScreen;
     private GameScreen gameScreen;
     private SettingsScreen settingsScreen;
@@ -64,11 +66,18 @@ public class Labyrinth extends Game {
         setMainMenuScreen();
     }
 
+
     /**
      * Установка главным экраном - GameScreen
      * @param numberOfGameField - номер игрового поля выбранного пользователем
      */
     public void setGameScreen(int numberOfGameField) {
+
+        if (defaultWidth + defaultHeight < 1) {
+
+            defaultHeight = mainMenuScreen.getDefaultHeight();
+            defaultWidth = mainMenuScreen.getDefaultWidth();
+        }
 
         boolean choice = false;
 
@@ -94,8 +103,17 @@ public class Labyrinth extends Game {
         gameScreen = null;
     }
 
-    public void openSettingsScreen() {
+    public float getDefaultHeight() {
 
+        return defaultHeight;
+    }
+
+    public float getDefaultWidth() {
+
+        return defaultWidth;
+    }
+
+    public void openSettingsScreen() {
 
         this.setScreen(settingsScreen);
     }
