@@ -50,6 +50,20 @@ public class GameField implements FoundKeyListener{
      */
     private PointOnTheField finishingPoint;
 
+    /**
+     * Расположение деревьев на игровом поле
+     *
+     * Деревья - это декор
+     */
+    private List<PointOnTheField> trees;
+
+    /**
+     * Расположение травы на игровом поле
+     *
+     * Трава - это декор
+     */
+    private List<PointOnTheField> grass;
+
 
     /**
      * Конструктор, в которм создаётся игровое поле
@@ -58,9 +72,12 @@ public class GameField implements FoundKeyListener{
      */
     public GameField(final String newField) throws FieldIsEmptyException{
 
-        passableCells = new ArrayList<PointOnTheField>();
-        doors = new ArrayList<PointOnTheField>();
-        keys = new ArrayList<PointOnTheField>();
+        passableCells = new ArrayList<>();
+        doors = new ArrayList<>();
+        keys = new ArrayList<>();
+
+        trees = new ArrayList<>();
+        grass = new ArrayList<>();
 
         String[] fieldFromString = newField.split("\\n");   // делим полученую строчку на части
 
@@ -87,11 +104,12 @@ public class GameField implements FoundKeyListener{
 
                 boolean isItPossibleWay = false;
 
-                if (fieldFromString[x].charAt(y) != '0') {            // Установка проходимости
+                if (fieldFromString[x].charAt(y) != '0' && fieldFromString[x].charAt(y) != 't'
+                        && fieldFromString[x].charAt(y) != 'g') {            // Установка проходимости
 
                     isItPossibleWay = true;
 
-                    passableCells.add(new PointOnTheField(x,y));
+                    passableCells.add(new PointOnTheField(x,y));     //TODO  это всё должно скоро уйти и вместо интерпретации будет нечто иное, планируется использовать JSON формат сохранения информации
                 }
 
                 field[x][y] = new CellOfField(isItPossibleWay);
@@ -124,6 +142,16 @@ public class GameField implements FoundKeyListener{
                     case 'K': {
 
                         keys.add(new PointOnTheField(x,y));
+                        break;
+                    }
+                    case 't': {
+
+                        trees.add(new PointOnTheField(x,y));
+                        break;
+                    }
+                    case 'g': {
+
+                        grass.add(new PointOnTheField(x,y));
                         break;
                     }
                 }
@@ -267,5 +295,21 @@ public class GameField implements FoundKeyListener{
     public void keyIsFound(PointOnTheField keyPosition) {
 
         keys.remove(keyPosition);
+    }
+
+    /**
+     * @return массив точек, содержащих координаты деревьев
+     */
+    public List<PointOnTheField> getTrees(){
+
+        return new ArrayList<>(trees);
+    }
+
+    /**
+     * @return массив точек, содержащих координаты травы
+     */
+    public List<PointOnTheField> getGrass() {
+
+        return new ArrayList<>(grass);
     }
 }

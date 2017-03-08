@@ -77,6 +77,14 @@ public class GameScreen implements Screen, View {
 
     private boolean typeOfControl = false;
 
+    private Texture protagonistRight;
+    private Texture protagonistLeft;
+    private Texture protagonistBack;
+    private Texture protagonistBackStep;
+
+    private Texture tree;
+    private Texture grass;
+
     public GameScreen(final Labyrinth game) {
 
         this.game = game;
@@ -144,12 +152,84 @@ public class GameScreen implements Screen, View {
         doorClose = new Texture("game_ui/doorClose.png");
         doorOpen = new Texture("game_ui/doorOpen.png");
         key = new Texture("game_ui/key.png");
-        protagonist = new Texture("game_ui/protagonist.png");
         infoGameEnd = new Texture("game_ui/grey_panel.png");
+
+        tree = new Texture("game_ui/tree02.png");
+        grass = new Texture("game_ui/grass4.png");
+
+
+        switch (game.infoOfSettings.getNumberOfTexture()) {
+
+            case 0: {
+                protagonistRight = new Texture("game_ui/1.png");
+                protagonistLeft = new Texture("game_ui/1.png");
+                protagonistBack = new Texture("game_ui/1.png");
+                protagonistBackStep = new Texture("game_ui/1.png");
+                break;
+            }
+
+            case 2: {
+                protagonistRight = new Texture("game_ui/33.jpg");
+                protagonistLeft = new Texture("game_ui/33.jpg");
+                protagonistBack = new Texture("game_ui/33.jpg");
+                protagonistBackStep = new Texture("game_ui/33.jpg");
+                break;
+            }
+
+            case 3: {
+                protagonistRight = new Texture("game_ui/wanderer.png");
+                protagonistLeft = new Texture("game_ui/wanderer.png");
+                protagonistBack = new Texture("game_ui/wanderer.png");
+                protagonistBackStep = new Texture("game_ui/wanderer.png");
+                break;
+            }
+
+            case 4: {
+                protagonistRight = new Texture("game_ui/protagonist.png");
+                protagonistLeft = new Texture("game_ui/protagonist.png");
+                protagonistBack = new Texture("game_ui/protagonist.png");
+                protagonistBackStep = new Texture("game_ui/protagonist.png");
+                break;
+            }
+
+            default: {
+                protagonistRight = new Texture("game_ui/BirdRight.png");
+                protagonistLeft = new Texture("game_ui/BirdLeft.png");
+                protagonistBack = new Texture("game_ui/BirdBackRight.png");
+                protagonistBackStep = new Texture("game_ui/BirdBackLeft.png");
+                break;
+            }
+        }
+
+
+        protagonist = protagonistRight;
+    }
+
+    public void changeDirectionToRight() {
+
+        protagonist = protagonistRight;
+    }
+
+    public void changeDirectionToLeft() {
+
+        protagonist = protagonistLeft;
+    }
+
+    public void changeDirectionToBack() {
+
+        protagonist = protagonistBack;
+    }
+
+    public void changeDirectionToBackStep() {
+
+        protagonist = protagonistBackStep;
     }
 
     @Override
     public void dispose () {
+
+        grass.dispose();
+        tree.dispose();
 
         hud.dispose();
         fonGameScreen.dispose();
@@ -159,7 +239,9 @@ public class GameScreen implements Screen, View {
         infoGameEnd.dispose();
 
         infoGameEnd.dispose();
-        protagonist.dispose();
+        protagonistRight.dispose();
+        protagonistLeft.dispose();
+        protagonistBack.dispose();
         key.dispose();
         doorOpen.dispose();
         doorClose.dispose();
@@ -291,8 +373,15 @@ public class GameScreen implements Screen, View {
         batch.end();
 
         hud.hudStage.draw();
+
         if(isItPause)
             hud.pauseStage.draw();
+    }
+
+    @Override
+    public void drawGrass(PointOnTheScreen point) {
+
+        batch.draw(grass, point.getX(), point.getY());
     }
 
     @Override
@@ -305,6 +394,12 @@ public class GameScreen implements Screen, View {
     public void drawKey(PointOnTheScreen point) {
 
         batch.draw(key, point.getX(), point.getY());
+    }
+
+    @Override
+    public void drawTree(PointOnTheScreen point) {
+
+        batch.draw(tree, point.getX(), point.getY());
     }
 
     @Override

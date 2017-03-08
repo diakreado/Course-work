@@ -61,7 +61,7 @@ public class Labyrinth extends Game {
         fontGenerator = new FontGenerator();
         menuButtonStyle = new MenuButtonStyle(this);
         settingsScreen = new SettingsScreen(this);
-        infoOfSettings = new InfoOfSettings(0,false);
+        infoOfSettings = new InfoOfSettings(0,false, 0);
 
         setMainMenuScreen();
     }
@@ -81,11 +81,11 @@ public class Labyrinth extends Game {
 
         boolean choice = false;
 
-        if(settingsScreen.getChoice() == 1) {
+        if(settingsScreen.getChoiceAboutControl() == 1) {
             choice = true;
         }
 
-        infoOfSettings = new InfoOfSettings(numberOfGameField, choice);
+        infoOfSettings = new InfoOfSettings(numberOfGameField, choice, settingsScreen.getChoiceAboutTexture());
         gameScreen = new GameScreen(this);
         this.setScreen(gameScreen);
 

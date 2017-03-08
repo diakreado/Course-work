@@ -64,6 +64,16 @@ public interface View {
      */
     void messageOfGameOver();
 
+    void changeDirectionToRight();
+
+    void changeDirectionToLeft();
+
+    void changeDirectionToBack();
+
+    void drawTree(PointOnTheScreen point);
+
+    void drawGrass(PointOnTheScreen point);
+
     /**
      * Отрисовка блока текстуры
      * @param point точка, в которой следует отрисовать блок

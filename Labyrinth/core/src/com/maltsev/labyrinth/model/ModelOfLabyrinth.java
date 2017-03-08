@@ -241,4 +241,16 @@ public class ModelOfLabyrinth implements Model {
 
         return protagonist.getNumberOfKeys();
     }
+
+    @Override
+    public List<PointOnTheField> getTrees() {
+
+        return gameField.getTrees();
+    }
+
+    @Override
+    public List<PointOnTheField> getGrass() {
+
+        return gameField.getGrass();
+    }
 }

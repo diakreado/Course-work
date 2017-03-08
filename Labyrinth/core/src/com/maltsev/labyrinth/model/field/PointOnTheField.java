@@ -2,6 +2,10 @@ package com.maltsev.labyrinth.model.field;
 
 /**
  * Точка на поле
+ *
+ * Используется как структура для хранения информации о позиции чего-либо
+ *
+ * Вполне может хранить отрицательные значения
  */
 public class PointOnTheField {
 
@@ -28,7 +32,7 @@ public class PointOnTheField {
     }
 
     /**
-     *  Конструктор копирования
+     * Конструктор копирования
      * @param point - объект, который копируют
      */
     public PointOnTheField(final PointOnTheField point) {

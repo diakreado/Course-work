@@ -19,7 +19,6 @@ import com.badlogic.gdx.utils.viewport.*;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
 import com.maltsev.labyrinth.presenter.Presenter;
 import com.maltsev.labyrinth.view.Labyrinth;
-import com.maltsev.labyrinth.view.utils.MenuButtonStyle;
 import com.maltsev.labyrinth.view.utils.Resizable;
 import com.maltsev.labyrinth.view.screens.GameScreen;
 
@@ -139,7 +138,7 @@ public class Hud implements Disposable, Resizable {
         float coordinateOfTouchpadX = touchpad.getKnobPercentX();
         float coordinateOfTouchpadY = touchpad.getKnobPercentY();
 
-        PointOnTheField point = presenter.getPositionOfProtagonistInTheFieldCoorditane();
+        PointOnTheField point = presenter.getPositionOfProtagonistInTheFieldCoordinate();
 
         if((Math.abs(coordinateOfTouchpadX) > sqrt2/2 || Math.abs(coordinateOfTouchpadY) > sqrt2/2) && !gameScreen.isLockInput()) {
 

@@ -20,9 +20,20 @@ import com.maltsev.labyrinth.view.Labyrinth;
 public class SettingsScreen implements Screen {
 
     private Stage stage;
-    private CheckBox checkBox1;
-    private CheckBox checkBox2;
-    private ButtonGroup<CheckBox> boxButtonGroup;
+
+    private CheckBox checkBoxOfTouch;
+    private CheckBox checkBoxController;
+
+    private CheckBox checkBoxOfCat;
+    private CheckBox checkBoxOfBird;
+    private CheckBox checkBoxOfKnight;
+    private CheckBox checkBoxOfWanderer;
+    private CheckBox checkBoxOfTurtle;
+
+    private ButtonGroup<CheckBox> boxButtonGroupOfControl;
+    private ButtonGroup<CheckBox> boxButtonGroupOfTexture;
+
+
     private CheckBox.CheckBoxStyle checkBoxStyle;
 
     private ImageTextButton.ImageTextButtonStyle buttonStyle;
@@ -58,17 +69,38 @@ public class SettingsScreen implements Screen {
         checkBoxStyle = new CheckBox.CheckBoxStyle(new TextureRegionDrawable(new TextureRegion(checkBoxOff)),
                 new TextureRegionDrawable(new TextureRegion(checkBoxOn)), smallFont, new Color(0,0,0,1));
 
-        checkBox1 = new CheckBox("Touch",checkBoxStyle);
-        checkBox2 = new CheckBox("Controller", checkBoxStyle);
+        checkBoxOfTouch = new CheckBox("Touch",checkBoxStyle);
+        checkBoxController = new CheckBox("Controller", checkBoxStyle);
 
-        boxButtonGroup = new ButtonGroup<>(checkBox1,checkBox2);
+        boxButtonGroupOfControl = new ButtonGroup<>(checkBoxOfTouch, checkBoxController);
 
-        Label label = new Label("Select the type of control:", new Label.LabelStyle(fontForLabel,new Color(0,0,0,1)));
+        Label selectionOfControl = new Label("Select the type of control:", new Label.LabelStyle(fontForLabel,new Color(0,0,0,1)));
 
-        checkBox1.getCells().get(0).size(100,100);
-        checkBox1.getImage().setWidth(90);
-        checkBox1.setChecked(true);
-        checkBox2.getCells().get(0).size(200,200);
+        Label selectionOfTheTextureOfProtagonist = new Label("Select the texture of protagonist:", new Label.LabelStyle(fontForLabel,new Color(0,0,0,1)));
+
+
+        checkBoxOfCat = new CheckBox("Cat",checkBoxStyle);
+        checkBoxOfBird = new CheckBox("Bird",checkBoxStyle);
+        checkBoxOfTurtle = new CheckBox("Turtle",checkBoxStyle);
+        checkBoxOfWanderer = new CheckBox("Wanderer",checkBoxStyle);
+        checkBoxOfKnight = new CheckBox("Knight",checkBoxStyle);
+
+        boxButtonGroupOfTexture = new ButtonGroup<>(checkBoxOfCat,checkBoxOfBird, checkBoxOfTurtle,checkBoxOfWanderer,checkBoxOfKnight);
+
+        checkBoxOfCat.getCells().get(0).size(100,100);
+        checkBoxOfCat.getImage().setWidth(90);
+        checkBoxOfBird.getCells().get(0).size(200,200);
+
+        checkBoxOfTurtle.getCells().get(0).size(100,100);
+        checkBoxOfTurtle.getImage().setWidth(90);
+        checkBoxOfWanderer.getCells().get(0).size(200,200);
+
+        checkBoxOfKnight.setChecked(true);
+
+        checkBoxOfTouch.getCells().get(0).size(100,100);
+        checkBoxOfTouch.getImage().setWidth(90);
+        checkBoxOfTouch.setChecked(true);
+        checkBoxController.getCells().get(0).size(200,200);
 
         buttonStyle = game.menuButtonStyle.getButtonStyle();
 
@@ -85,10 +117,21 @@ public class SettingsScreen implements Screen {
         table.add(backToMenu).padLeft(1300).padTop(20);
         table.row();
 
-        subTable.add(label).padBottom(10);
+        subTable.add(selectionOfControl).padBottom(10);
         subTable.row();
-        subTable.add(checkBox1).padRight(300);
-        subTable.add(checkBox2).padRight(100);
+        subTable.add(checkBoxOfTouch).padRight(300);
+        subTable.add(checkBoxController).padRight(100);
+
+        subTable.row();
+        subTable.add(selectionOfTheTextureOfProtagonist).padBottom(10);
+        subTable.row();
+        subTable.add(checkBoxOfCat).padRight(370);
+        subTable.add(checkBoxOfBird).padRight(210);
+        subTable.row();
+        subTable.add(checkBoxOfTurtle).padRight(310);
+        subTable.add(checkBoxOfWanderer).padRight(80);
+        subTable.row();
+        subTable.add(checkBoxOfKnight).padLeft(500);
 
         table.add(subTable).padTop(50);
 
@@ -112,9 +155,14 @@ public class SettingsScreen implements Screen {
         backToMenu.addListener(backToMenuListener);
     }
 
-    public int getChoice() {
+    public int getChoiceAboutControl() {
 
-        return boxButtonGroup.getCheckedIndex();
+        return boxButtonGroupOfControl.getCheckedIndex();
+    }
+
+    public int getChoiceAboutTexture() {
+
+        return boxButtonGroupOfTexture.getCheckedIndex();
     }
 
     @Override

@@ -36,7 +36,9 @@ public class Presenter implements GameOverListener, FoundKeyListener, OpenDoorLi
     private PassableCellsDrawer passableCellsDrawer;
 
     private PointOnTheScreen pointOfMovement;
+    private PointOnTheField pointOfMovementInTheFiledCoordinate;
     private double timer = 0;
+    private double timerForStep = 0;
     private double rateOfProtagonist = 0.185;
     private float frequencyOfIntermediateSteps = 10.88f;
 
@@ -51,6 +53,9 @@ public class Presenter implements GameOverListener, FoundKeyListener, OpenDoorLi
      * Поле, созданное, чтобы ключ исчезал с карты после окончания движения протагониста, а не при нажатие на ключ
      */
     private boolean isKeyFound = false;
+
+    private List<PointOnTheField> trees;
+    private List<PointOnTheField> grass;
 
 
     /**
@@ -95,6 +100,9 @@ public class Presenter implements GameOverListener, FoundKeyListener, OpenDoorLi
         doorsOpened = new ArrayList<>();
         keys = model.getKeys();
 
+        trees = model.getTrees();
+        grass = model.getGrass();
+
         passableCellsDrawer = new PassableCellsDrawer(view, this);
     }
 
@@ -110,6 +118,25 @@ public class Presenter implements GameOverListener, FoundKeyListener, OpenDoorLi
         drawKeys();
         drawClosedDoors();
         drawOpenedDoors();
+
+        drawTrees();
+        drawGrass();
+    }
+
+    public void drawGrass() {
+
+        for (PointOnTheField point : grass) {
+
+            view.drawGrass(translatePointFieldToScreen(point));
+        }
+    }
+
+    public void drawTrees() {
+
+        for (PointOnTheField point : trees) {
+
+            view.drawTree(translatePointFieldToScreen(point));
+        }
     }
 
     /**
@@ -201,7 +228,9 @@ public class Presenter implements GameOverListener, FoundKeyListener, OpenDoorLi
         view.lockInput();
         view.startMovement();
         timer = 0;
-        pointOfMovement = translatePointFieldToScreen(way.poll());
+        timerForStep = 0;
+        pointOfMovementInTheFiledCoordinate = way.poll();
+        pointOfMovement = translatePointFieldToScreen(pointOfMovementInTheFiledCoordinate);
     }
 
     /**
@@ -242,10 +271,15 @@ public class Presenter implements GameOverListener, FoundKeyListener, OpenDoorLi
 
         timer += deltaTime;
 
+        checkDirection(pointOfMovementInTheFiledCoordinate, way.peek());
+
+
         if(timer > rateOfProtagonist) {
 
             timer = 0;
-            pointOfMovement = translatePointFieldToScreen(way.poll());
+            pointOfMovementInTheFiledCoordinate = way.poll();
+            pointOfMovement = translatePointFieldToScreen(pointOfMovementInTheFiledCoordinate);
+
         }
         if(timer > rateOfProtagonist/frequencyOfIntermediateSteps) {
 
@@ -260,6 +294,29 @@ public class Presenter implements GameOverListener, FoundKeyListener, OpenDoorLi
 
         if(way.isEmpty())
             finishMovement();
+    }
+
+    private void checkDirection(PointOnTheField firstPoint, PointOnTheField secondPoint) {
+
+        if (secondPoint.getX() > firstPoint.getX()) {
+
+            view.changeDirectionToRight();
+        }
+
+        if (secondPoint.getX() < firstPoint.getX()) {
+
+            view.changeDirectionToLeft();
+        }
+
+        if (secondPoint.getY() > firstPoint.getY()) {
+
+            view.changeDirectionToBack();
+        }
+
+        if (secondPoint.getY() < firstPoint.getY()) {
+
+            view.changeDirectionToRight();
+        }
     }
 
     /**
@@ -282,7 +339,7 @@ public class Presenter implements GameOverListener, FoundKeyListener, OpenDoorLi
         return  translatePointFieldToScreen(model.getPositionOfProtagonist());
     }
 
-    public PointOnTheField getPositionOfProtagonistInTheFieldCoorditane() {
+    public PointOnTheField getPositionOfProtagonistInTheFieldCoordinate() {
 
         return  model.getPositionOfProtagonist();
     }
