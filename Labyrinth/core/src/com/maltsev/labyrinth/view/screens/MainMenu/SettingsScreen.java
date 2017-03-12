@@ -1,4 +1,4 @@
-package com.maltsev.labyrinth.view.screens;
+package com.maltsev.labyrinth.view.screens.MainMenu;
 
 
 import com.badlogic.gdx.Gdx;

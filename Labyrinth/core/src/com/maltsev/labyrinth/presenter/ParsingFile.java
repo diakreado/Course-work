@@ -9,7 +9,7 @@ package com.maltsev.labyrinth.presenter;
 
     static String getFieldOnTheNumber(int numberOfTheField) {
 
-        String fileData = FileReader.read("gameField.txt");
+        String fileData = com.maltsev.labyrinth.view.utils.FileReader.read("gameField.txt");
 
         String[] arrayOfField = fileData.split("#\n");
 

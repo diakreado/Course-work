@@ -1,6 +1,5 @@
 package com.maltsev.labyrinth.presenter.tempdata;
 
-
 public class PointOnTheScreen {
 
     private float x;
@@ -12,12 +11,6 @@ public class PointOnTheScreen {
         this.y = y;
     }
 
-    public PointOnTheScreen(SizeOfTexture obj) {
-
-        this.x = obj.getWidth();
-        this.y = obj.getHeight();
-    }
-
     public float getX() {
 
         return x;
@@ -26,6 +19,24 @@ public class PointOnTheScreen {
     public float getY() {
 
         return y;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+
+        if (obj == this) {
+
+            return true;
+        }
+
+        if (obj == null || obj.getClass() != this.getClass()) {
+
+            return false;
+        }
+
+        PointOnTheScreen comparePoint = (PointOnTheScreen) obj;
+
+        return this.x == comparePoint.x && this.y == comparePoint.y;
     }
 
     @Override

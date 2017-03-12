@@ -1,7 +1,7 @@
 package com.maltsev.labyrinth.model.analyzer;
 
 
-import com.maltsev.labyrinth.model.Model;
+import com.maltsev.labyrinth.model.IModel;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
 
 import java.util.ArrayDeque;
@@ -11,7 +11,7 @@ import java.util.ArrayDeque;
  */
 public class WayAnalyzer {
 
-    private Model model;
+    private IModel IModel;
 
     private int[][] fieldForWave;
 
@@ -25,9 +25,9 @@ public class WayAnalyzer {
     private int sizeOfFieldX;
     private int sizeOfFieldY;
 
-    public WayAnalyzer(Model model) {
+    public WayAnalyzer(IModel IModel) {
 
-        this.model = model;
+        this.IModel = IModel;
     }
 
     /**
@@ -64,15 +64,15 @@ public class WayAnalyzer {
      */
     public ArrayDeque<PointOnTheField> getWay(final PointOnTheField startPoint, final PointOnTheField finishPoint, int range) {
 
-        if (!model.isItPassableCells(startPoint) || !model.isItPassableCells(finishPoint))
+        if (!IModel.isItPassableCells(startPoint) || !IModel.isItPassableCells(finishPoint))
             return null;                            // Проверка на правильность задания начальной и конечной точки
 
         this.startPoint = startPoint;
         this.finishPoint = finishPoint;              // Записываем введённые параметры
         this.range = range;
 
-        sizeOfFieldX = model.getSizeOfFieldX();      // Выписываем из модели значения размера поля
-        sizeOfFieldY = model.getSizeOfFieldY();
+        sizeOfFieldX = IModel.getSizeOfFieldX();      // Выписываем из модели значения размера поля
+        sizeOfFieldY = IModel.getSizeOfFieldY();
 
         fieldForWave = new int[sizeOfFieldX][sizeOfFieldY];
 
@@ -160,19 +160,19 @@ public class WayAnalyzer {
 
                     if (fieldForWave[i][j] == weightOfTheWave) {
 
-                        if (i + 1 < sizeOfFieldX && fieldForWave[i + 1][j] > weightOfTheWave  && model.isItPassableCells(i + 1, j)) {
+                        if (i + 1 < sizeOfFieldX && fieldForWave[i + 1][j] > weightOfTheWave  && IModel.isItPassableCells(i + 1, j)) {
 
                             fieldForWave[i + 1][j] = weightOfTheWave + 1;
                         }
-                        if (j + 1 < sizeOfFieldY && fieldForWave[i][j + 1] > weightOfTheWave  && model.isItPassableCells(i, j + 1)) {
+                        if (j + 1 < sizeOfFieldY && fieldForWave[i][j + 1] > weightOfTheWave  && IModel.isItPassableCells(i, j + 1)) {
 
                             fieldForWave[i][j + 1] = weightOfTheWave + 1;
                         }
-                        if (i - 1 >= 0 && fieldForWave[i - 1][j] > weightOfTheWave  && model.isItPassableCells(i - 1, j)) {
+                        if (i - 1 >= 0 && fieldForWave[i - 1][j] > weightOfTheWave  && IModel.isItPassableCells(i - 1, j)) {
 
                             fieldForWave[i - 1][j] = weightOfTheWave + 1;
                         }
-                        if (j - 1 >= 0 && fieldForWave[i][j - 1] > weightOfTheWave && model.isItPassableCells(i, j - 1)) {
+                        if (j - 1 >= 0 && fieldForWave[i][j - 1] > weightOfTheWave && IModel.isItPassableCells(i, j - 1)) {
 
                             fieldForWave[i][j - 1] = weightOfTheWave + 1;
                         }

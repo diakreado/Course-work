@@ -1,14 +1,13 @@
 package com.maltsev.labyrinth.presenter.interfaces;
 
 
-import com.maltsev.labyrinth.model.field.PointOnTheField;
 import com.maltsev.labyrinth.presenter.tempdata.PointOnTheScreen;
 import com.maltsev.labyrinth.presenter.tempdata.SizeOfTexture;
 
 /**
- * Интерфейс для взаимодействия с Presenter
+ * Интерфейс для взаимодействия с PresenterOfGameProcess
  */
-public interface View {
+public interface IGameScreen {
 
     /**
      * @return размер блока текстуры
@@ -64,50 +63,12 @@ public interface View {
      */
     void messageOfGameOver();
 
-    void changeDirectionToRight();
-
-    void changeDirectionToLeft();
-
-    void changeDirectionToBack();
-
-    void drawTree(PointOnTheScreen point);
-
-    void drawGrass(PointOnTheScreen point);
-
-    /**
-     * Отрисовка блока текстуры
-     * @param point точка, в которой следует отрисовать блок
-     */
-    void drawBlock(PointOnTheScreen point);
-
-    void drawHorizontalCells(PointOnTheScreen point);
-
-    void drawCenterCells(PointOnTheScreen point);
 
 
-    void drawLeftTopCells(PointOnTheScreen point);
-
-    void drawRightTopCells(PointOnTheScreen point);
-
-    void drawLeftBottomCells(PointOnTheScreen point);
-
-    void drawRightBottomCells(PointOnTheScreen point);
 
 
-    void drawRightEndCells(PointOnTheScreen point);
+    IProtagonistDrawer getProtagonistDrawer();
 
-    void drawLeftEndCells(PointOnTheScreen point);
+    IFieldDrawer getFieldDrawer();
 
-    void drawTopEndCells(PointOnTheScreen point);
-
-    void drawBottomEndCells(PointOnTheScreen point);
-
-
-    void drawLeftTopRightCells(PointOnTheScreen point);
-
-    void drawBottomLeftTopCells(PointOnTheScreen point);
-
-    void drawRightBottomLeftCells(PointOnTheScreen point);
-
-    void drawTopRightBottomCells(PointOnTheScreen point);
 }

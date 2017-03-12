@@ -12,12 +12,6 @@ public class SizeOfTexture {
         this.height = height;
     }
 
-    public SizeOfTexture(SizeOfTexture newObj) {
-
-        this.width = newObj.getWidth();
-        this.height = newObj.getHeight();
-    }
-
     public int getWidth() {
 
         return width;
@@ -26,5 +20,10 @@ public class SizeOfTexture {
     public int getHeight() {
 
         return height;
+    }
+
+    @Override
+    public String toString() {
+        return "width= " + width + ";  height= " + height + ";";
     }
 }

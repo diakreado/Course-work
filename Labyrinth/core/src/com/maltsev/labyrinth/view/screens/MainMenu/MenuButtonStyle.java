@@ -1,4 +1,4 @@
-package com.maltsev.labyrinth.view.utils;
+package com.maltsev.labyrinth.view.screens.MainMenu;
 
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;

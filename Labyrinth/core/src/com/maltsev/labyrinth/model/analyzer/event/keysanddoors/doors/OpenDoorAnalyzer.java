@@ -1,7 +1,7 @@
 package com.maltsev.labyrinth.model.analyzer.event.keysanddoors.doors;
 
 
-import com.maltsev.labyrinth.model.Model;
+import com.maltsev.labyrinth.model.IModel;
 import com.maltsev.labyrinth.model.analyzer.event.EventAnalyzer;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
 
@@ -17,13 +17,13 @@ public class OpenDoorAnalyzer extends EventAnalyzer{
     List<PointOnTheField> doors;
 
 
-    public OpenDoorAnalyzer(Model model) {
+    public OpenDoorAnalyzer(IModel IModel) {
 
-        super(model);
+        super(IModel);
 
         queue = new LinkedList<OpenDoorListener>();
 
-        doors = model.getDoors();
+        doors = IModel.getDoors();
     }
 
     /**

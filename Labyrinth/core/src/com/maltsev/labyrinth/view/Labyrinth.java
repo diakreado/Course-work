@@ -2,18 +2,18 @@ package com.maltsev.labyrinth.view;
 
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.maltsev.labyrinth.view.screens.GameScreen;
-import com.maltsev.labyrinth.view.screens.MainMenuScreen;
-import com.maltsev.labyrinth.view.screens.SettingsScreen;
+import com.maltsev.labyrinth.presenter.IPresenter;
+import com.maltsev.labyrinth.view.screens.Game.GameScreen;
+import com.maltsev.labyrinth.view.screens.MainMenu.MainMenuScreen;
+import com.maltsev.labyrinth.view.screens.MainMenu.SettingsScreen;
 import com.maltsev.labyrinth.view.utils.FontGenerator;
 import com.maltsev.labyrinth.view.utils.InfoOfSettings;
-import com.maltsev.labyrinth.view.utils.MenuButtonStyle;
+import com.maltsev.labyrinth.view.screens.MainMenu.MenuButtonStyle;
 
 /**
  * Главный класс из пакета view
  *
- * Общее определение View из шаблона проектирования MVP:
+ * Общее определение IGameScreen из шаблона проектирования MVP:
  * Представление, как правило, реализуется в Activity,
  * которая содержит ссылку на презентер.
  * Единственное, что делает представление,
@@ -36,28 +36,59 @@ public class Labyrinth extends Game {
     //TODO сделать отрисовку передвижени плавной, возможно использовать спрайты движения
     //TODO сменить игровые текстуры
 
+
+    // Размеры экрана, на которые ориентируются при отрисовке, далее если размеры реального экрана
+    // не совпадают с ними происходит  масштабирование
     public static final int V_WIDTH = 1920;
     public static final int V_HEIGHT = 1080;
 
+
+    // Реальниые размеры экрана, которые устанавливаются, как размеры первого открывшегося окна
     private float defaultWidth = 0;
     private float defaultHeight = 0;
 
+    // Игровые экраны
+
+    /**
+     * Главный экран, изначально открывается он
+     */
     private MainMenuScreen mainMenuScreen;
+
+    /**
+     * Экран на котором представлен непосредственно лабиринт
+     */
     private GameScreen gameScreen;
+
+    /**
+     * Экран с настройками вызывается из меню и служит для настройки приложения под прихоти пользователя
+     */
     private SettingsScreen settingsScreen;
 
+    /**
+     * Генератор шрифтов, с его помощь можно создать шрифт определённого размера
+     */
     public FontGenerator fontGenerator;
 
+    /**
+     * Класс определяющий стиль кнопки, созданый для удобного создания идентичных кнопок
+     */
     public MenuButtonStyle menuButtonStyle;
 
-    public SpriteBatch spriteBatch;
 
+    /**
+     * Структура, которая использауется для передачи настроечных данных
+     */
     public InfoOfSettings infoOfSettings;
+
+
+    /**
+     * Главный
+     */
+    private IPresenter IPresenter;
 
     @Override
     public void create() {
 
-        spriteBatch = new SpriteBatch();
         fontGenerator = new FontGenerator();
         menuButtonStyle = new MenuButtonStyle(this);
         settingsScreen = new SettingsScreen(this);
@@ -127,7 +158,6 @@ public class Labyrinth extends Game {
     @Override
     public void dispose() {
 
-        spriteBatch.dispose();
         fontGenerator.dispose();
         menuButtonStyle.dispose();
 

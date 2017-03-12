@@ -1,6 +1,6 @@
 package com.maltsev.labyrinth.model.analyzer;
 
-import com.maltsev.labyrinth.model.ModelOfLabyrinth;
+import com.maltsev.labyrinth.model.IModel;
 import com.maltsev.labyrinth.model.Model;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
 import org.junit.Test;
@@ -15,7 +15,7 @@ public class WayAnalyzerTest {
     @Test
     public void motionInStraightLine() throws Exception {
 
-        Model model = new ModelOfLabyrinth();
+        IModel IModel = new Model();
 
         String gameField = "11111\n" +
                            "11s11\n" +
@@ -23,9 +23,9 @@ public class WayAnalyzerTest {
                            "1f111\n" +
                            "11111";
 
-        model.setGameField(gameField);
+        IModel.setGameField(gameField);
 
-        WayAnalyzer analyzer = new WayAnalyzer(model);
+        WayAnalyzer analyzer = new WayAnalyzer(IModel);
         analyzer.setDefaultRange(5);
 
         PointOnTheField startPoint1 = new PointOnTheField(0,0);

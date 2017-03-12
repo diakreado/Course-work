@@ -1,7 +1,7 @@
 package com.maltsev.labyrinth.model.analyzer.event.keysanddoors.keys;
 
 
-import com.maltsev.labyrinth.model.Model;
+import com.maltsev.labyrinth.model.IModel;
 import com.maltsev.labyrinth.model.analyzer.event.EventAnalyzer;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
 
@@ -21,13 +21,13 @@ public class FoundKeyAnalyzer extends EventAnalyzer {
     private PointOnTheField keyPosition;
 
 
-    public FoundKeyAnalyzer(Model model) {
+    public FoundKeyAnalyzer(IModel IModel) {
 
-        super(model);
+        super(IModel);
 
         queue = new LinkedList<FoundKeyListener>();
 
-        keys = model.getKeys();
+        keys = IModel.getKeys();
     }
 
     /**
@@ -55,7 +55,7 @@ public class FoundKeyAnalyzer extends EventAnalyzer {
      */
     public void messageAboutChangingSystem() {
 
-        keyPosition = model.getPositionOfProtagonist();    //Не всегда на этой позиции есть ключь, но мы его там ожидаем
+        keyPosition = IModel.getPositionOfProtagonist();    //Не всегда на этой позиции есть ключь, но мы его там ожидаем
 
         if(keys.contains(keyPosition))
             alertListener();
@@ -75,7 +75,7 @@ public class FoundKeyAnalyzer extends EventAnalyzer {
             queue.add(item);
         }
 
-        keys = model.getKeys();
+        keys = IModel.getKeys();
     }
 
 }

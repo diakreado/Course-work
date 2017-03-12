@@ -1,4 +1,4 @@
-package com.maltsev.labyrinth.view.scenes;
+package com.maltsev.labyrinth.view.screens.Game.scenes;
 
 
 import com.badlogic.gdx.graphics.OrthographicCamera;

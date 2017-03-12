@@ -1,59 +1,95 @@
 package com.maltsev.labyrinth.presenter;
 
 
+import com.maltsev.labyrinth.model.IModel;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
-import com.maltsev.labyrinth.presenter.interfaces.View;
+import com.maltsev.labyrinth.presenter.interfaces.IFieldDrawer;
+import static com.maltsev.labyrinth.presenter.TranslatorOfCoordinate.translatePointFieldToScreen;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Отвечает за логику отрисовки игрового мира, проходимые ячейки и декорации
+ */
+class GameFieldDrawer {
 
-class PassableCellsDrawer {
+    private List<PointOnTheField> passableCells;
 
-    private ArrayList<PointOnTheField> cellsVertical;
-    private ArrayList<PointOnTheField> cellsHorizontal;
-
-    private ArrayList<PointOnTheField> cellsCenter;
+    private ArrayList<PointOnTheField> cellsTopBottom;
+    private ArrayList<PointOnTheField> cellsLeftRight;
+    private ArrayList<PointOnTheField> cellsLeftTopRightBottom;
 
     private ArrayList<PointOnTheField> cellsLeftTop;
     private ArrayList<PointOnTheField> cellsRightTop;
     private ArrayList<PointOnTheField> cellsLeftBottom;
     private ArrayList<PointOnTheField> cellsRightBottom;
 
-    private ArrayList<PointOnTheField> cellsEndTop;
-    private ArrayList<PointOnTheField> cellsEndBottom;
-    private ArrayList<PointOnTheField> cellsEndRight;
-    private ArrayList<PointOnTheField> cellsEndLeft;
+    private ArrayList<PointOnTheField> cellsBottom;
+    private ArrayList<PointOnTheField> cellsTop;
+    private ArrayList<PointOnTheField> cellsLeft;
+    private ArrayList<PointOnTheField> cellsRight;
 
     private ArrayList<PointOnTheField> cellsLeftTopRight;
     private ArrayList<PointOnTheField> cellsBottomLeftTop;
     private ArrayList<PointOnTheField> cellsRightBottomLeft;
     private ArrayList<PointOnTheField> cellsTopRightBottom;
 
-    private View view;
-    private Presenter presenter;
-    private List<PointOnTheField> passableCells;
+    private List<PointOnTheField> trees;
+    private List<PointOnTheField> grass;
 
-    PassableCellsDrawer(View view, Presenter presenter) {
+    private IFieldDrawer fieldDrawer;
 
-        this.view = view;
-        this.presenter = presenter;
-        this.passableCells = presenter.getPassableCells();
+    /**
+     * @param fieldDrawer отрисовщик
+     * @param model ссылка на Model, для извлечения данных необходимых для отрисовки
+     */
+    GameFieldDrawer(IFieldDrawer fieldDrawer, IModel model) {
 
-        cellsVertical = new ArrayList<>();
-        cellsHorizontal = new ArrayList<>();
+        this.passableCells = model.getPassableCells();
+        this.fieldDrawer = fieldDrawer;
 
-        cellsCenter = new ArrayList<>();
+        trees = model.getTrees();
+        grass = model.getGrass();
+
+        initializeTheArraysOfPassableCells();
+    }
+
+    /**
+     * Отрисовка декоративных элементов
+     */
+    void drawDecoration(){
+
+        for (PointOnTheField point : grass) {
+
+            fieldDrawer.drawGrass(translatePointFieldToScreen(point));
+        }
+
+        for (PointOnTheField point : trees) {
+
+            fieldDrawer.drawTree(translatePointFieldToScreen(point));
+        }
+    }
+
+    /**
+     * Выделение памяти и заполнение массивов проходимых ячеек
+     */
+    private void initializeTheArraysOfPassableCells() {
+
+        cellsTopBottom = new ArrayList<>();
+        cellsLeftRight = new ArrayList<>();
+
+        cellsLeftTopRightBottom = new ArrayList<>();
 
         cellsLeftTop = new ArrayList<>();
         cellsRightTop = new ArrayList<>();
         cellsLeftBottom = new ArrayList<>();
         cellsRightBottom = new ArrayList<>();
 
-        cellsEndTop = new ArrayList<>();
-        cellsEndBottom = new ArrayList<>();
-        cellsEndRight = new ArrayList<>();
-        cellsEndLeft = new ArrayList<>();
+        cellsBottom = new ArrayList<>();
+        cellsTop = new ArrayList<>();
+        cellsLeft = new ArrayList<>();
+        cellsRight = new ArrayList<>();
 
         cellsLeftTopRight = new ArrayList<>();
         cellsBottomLeftTop = new ArrayList<>();
@@ -67,7 +103,7 @@ class PassableCellsDrawer {
                     passableCells.contains(new PointOnTheField(point.getX(), point.getY() + 1)) &&
                     passableCells.contains(new PointOnTheField(point.getX(), point.getY() - 1))) {
 
-                cellsCenter.add(point);
+                cellsLeftTopRightBottom.add(point);
                 continue;
             }
 
@@ -107,14 +143,14 @@ class PassableCellsDrawer {
             if (passableCells.contains(new PointOnTheField(point.getX() + 1, point.getY())) &&
                     passableCells.contains(new PointOnTheField(point.getX() - 1, point.getY()))){
 
-                cellsHorizontal.add(point);
+                cellsLeftRight.add(point);
                 continue;
             }
 
             if (passableCells.contains(new PointOnTheField(point.getX(), point.getY() + 1)) &&
                     passableCells.contains(new PointOnTheField(point.getX(), point.getY() - 1))){
 
-                cellsVertical.add(point);
+                cellsTopBottom.add(point);
                 continue;
             }
 
@@ -152,111 +188,78 @@ class PassableCellsDrawer {
 
             if(passableCells.contains(new PointOnTheField(point.getX() + 1, point.getY()))){
 
-                cellsEndLeft.add(point);
+                cellsRight.add(point);
                 continue;
             }
 
             if(passableCells.contains(new PointOnTheField(point.getX() - 1, point.getY()))){
 
-                cellsEndRight.add(point);
+                cellsLeft.add(point);
                 continue;
             }
 
             if(passableCells.contains(new PointOnTheField(point.getX(), point.getY() + 1))){
 
-                cellsEndBottom.add(point);
+                cellsTop.add(point);
                 continue;
             }
 
             if(passableCells.contains(new PointOnTheField(point.getX(), point.getY() - 1))){
 
-                cellsEndTop.add(point);
+                cellsBottom.add(point);
             }
 
         }
-
-        // Проверка, что всё поле покрыто
-//        System.out.println(passableCells.size());
-//        System.out.println(cellsCenter.size() + cellsEndBottom.size() + cellsEndLeft.size()
-//                + cellsEndRight.size() + cellsEndTop.size() + cellsHorizontal.size() + cellsLeftBottom.size()
-//                + cellsLeftTop.size() + cellsRightBottom.size() + cellsRightTop.size() + cellsVertical.size());
     }
 
-    void drawCells() {
+    /**
+     * Отрисовка проходимых ячеек
+     */
+    void drawPassableCells() {
 
-        for (PointOnTheField point : cellsCenter) {
+        for (PointOnTheField point : cellsLeftTopRightBottom)
+            fieldDrawer.drawLeftTopRightBottomCells(translatePointFieldToScreen(point));
 
-            view.drawCenterCells(presenter.translatePointFieldToScreen(point));
-        }
+        for (PointOnTheField point : cellsTop)
+            fieldDrawer.drawTopCells(translatePointFieldToScreen(point));
 
-        for (PointOnTheField point : cellsEndBottom) {
+        for (PointOnTheField point : cellsRight)
+            fieldDrawer.drawRightCells(translatePointFieldToScreen(point));
 
-            view.drawBottomEndCells(presenter.translatePointFieldToScreen(point));
-        }
+        for (PointOnTheField point : cellsLeft)
+            fieldDrawer.drawLeftCells(translatePointFieldToScreen(point));
 
-        for (PointOnTheField point : cellsEndLeft) {
+        for (PointOnTheField point : cellsBottom)
+            fieldDrawer.drawBottomCells(translatePointFieldToScreen(point));
 
-            view.drawLeftEndCells(presenter.translatePointFieldToScreen(point));
-        }
+        for (PointOnTheField point : cellsLeftTop)
+            fieldDrawer.drawLeftTopCells(translatePointFieldToScreen(point));
 
-        for (PointOnTheField point : cellsEndRight) {
+        for (PointOnTheField point : cellsRightBottom)
+            fieldDrawer.drawRightBottomCells(translatePointFieldToScreen(point));
 
-            view.drawRightEndCells(presenter.translatePointFieldToScreen(point));
-        }
+        for (PointOnTheField point : cellsLeftRight)
+            fieldDrawer.drawLeftRightCells(translatePointFieldToScreen(point));
 
-        for (PointOnTheField point : cellsEndTop) {
+        for (PointOnTheField point : cellsLeftBottom)
+            fieldDrawer.drawLeftBottomCells(translatePointFieldToScreen(point));
 
-            view.drawTopEndCells(presenter.translatePointFieldToScreen(point));
-        }
+        for (PointOnTheField point : cellsRightTop)
+            fieldDrawer.drawRightTopCells(translatePointFieldToScreen(point));
 
-        for (PointOnTheField point : cellsLeftTop) {
+        for (PointOnTheField point : cellsTopBottom)
+            fieldDrawer.drawTopBottomCells(translatePointFieldToScreen(point));
 
-            view.drawLeftTopCells(presenter.translatePointFieldToScreen(point));
-        }
+        for (PointOnTheField point : cellsLeftTopRight)
+            fieldDrawer.drawLeftTopRightCells(translatePointFieldToScreen(point));
 
-        for (PointOnTheField point : cellsRightBottom) {
+        for (PointOnTheField point : cellsBottomLeftTop)
+            fieldDrawer.drawBottomLeftTopCells(translatePointFieldToScreen(point));
 
-            view.drawRightBottomCells(presenter.translatePointFieldToScreen(point));
-        }
+        for (PointOnTheField point : cellsRightBottomLeft)
+            fieldDrawer.drawRightBottomLeftCells(translatePointFieldToScreen(point));
 
-        for (PointOnTheField point : cellsHorizontal) {
-
-            view.drawHorizontalCells(presenter.translatePointFieldToScreen(point));
-        }
-
-        for (PointOnTheField point : cellsLeftBottom) {
-
-            view.drawLeftBottomCells(presenter.translatePointFieldToScreen(point));
-        }
-
-        for (PointOnTheField point : cellsRightTop) {
-
-            view.drawRightTopCells(presenter.translatePointFieldToScreen(point));
-        }
-
-        for (PointOnTheField point : cellsVertical) {
-
-            view.drawBlock(presenter.translatePointFieldToScreen(point));
-        }
-
-        for (PointOnTheField point : cellsLeftTopRight) {
-
-            view.drawLeftTopRightCells(presenter.translatePointFieldToScreen(point));
-        }
-
-        for (PointOnTheField point : cellsBottomLeftTop) {
-
-            view.drawBottomLeftTopCells(presenter.translatePointFieldToScreen(point));
-        }
-
-        for (PointOnTheField point : cellsRightBottomLeft) {
-
-            view.drawRightBottomLeftCells(presenter.translatePointFieldToScreen(point));
-        }
-
-        for (PointOnTheField point : cellsTopRightBottom) {
-
-            view.drawTopRightBottomCells(presenter.translatePointFieldToScreen(point));
-        }
+        for (PointOnTheField point : cellsTopRightBottom)
+            fieldDrawer.drawTopRightBottomCells(translatePointFieldToScreen(point));
     }
 }

@@ -1,160 +1,256 @@
 package com.maltsev.labyrinth.model;
 
-
+import com.maltsev.labyrinth.model.analyzer.WayAnalyzer;
+import com.maltsev.labyrinth.model.analyzer.event.gameover.GameOverAnalyzer;
 import com.maltsev.labyrinth.model.analyzer.event.gameover.GameOverListener;
+import com.maltsev.labyrinth.model.analyzer.event.keysanddoors.doors.OpenDoorAnalyzer;
 import com.maltsev.labyrinth.model.analyzer.event.keysanddoors.doors.OpenDoorListener;
+import com.maltsev.labyrinth.model.analyzer.event.keysanddoors.keys.FoundKeyAnalyzer;
 import com.maltsev.labyrinth.model.analyzer.event.keysanddoors.keys.FoundKeyListener;
 import com.maltsev.labyrinth.model.field.FieldIsEmptyException;
+import com.maltsev.labyrinth.model.field.GameField;
+import com.maltsev.labyrinth.model.field.OutOfBoundaryOfTheFieldException;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
+import com.maltsev.labyrinth.model.protagonist.Protagonist;
 
 import java.util.ArrayDeque;
 import java.util.List;
 
-/**
- * ModelOfLabyrinth рассматривается в качестве поставщика данных,
- * которые будут отображаться во View.
- */
-public interface Model {
+public class Model implements IModel {
+
+    public Model() {}
 
     /**
-     * Возможно ли поместить протигониста в определённую ячейку
-     * @param x координата ячейки по оси Х
-     * @param y координата ячейки по оси Y
-     * @return возвращяет значение логического типа, если true, то протагонист может находится в этой ячейке, иначе false
+     * Главный герой
+     * Здесь хранится информацию о том, где он находится и его
+     * определённые параметры (например, сколько у него ключей)
      */
-    boolean isItPassableCells(final int x, final int y);
+    private Protagonist protagonist;
 
     /**
-     * Возможно ли поместить протигониста в определённую ячейку
-     * @param point точка указывающая на ячейку
-     * @return возвращяет значение логического типа, если true, то протагонист может находится в этой ячейке, иначе false
+     * Игровое поле.
      */
-    boolean isItPassableCells(final PointOnTheField point);
+    private GameField gameField;
 
     /**
-     * @return Размер поля по оси Х
+     *  Наблюдатель за концом игры
+     *  Оповещает его слушателей о том, что игра закночилась
      */
-    int getSizeOfFieldX();
+    private GameOverAnalyzer analyzerOfGameOver;
 
     /**
-     * @return Размер поля по оси Y
+     * Наблюдатель за открытием дверей
+     * Оповещает слушателей о том, что была открыта дверь
      */
-    int getSizeOfFieldY();
+    private OpenDoorAnalyzer analyzerOfOpenDoor;
 
     /**
-     * @return Массив объектов Точка на плоскости, который содержит номера ячеек, которые являются проходимыми
+     * Наблюдатель за нахождением ключей
+     * Оповещает слушателей о том, что найден ключ
      */
-    List<PointOnTheField> getPassableCells();
+    private FoundKeyAnalyzer analyzerOfFoundKey;
 
     /**
-     * Установка игрового поля
-     * @param newField игровое поле, строка-матрица, где 1,s,f - проходимые элементы, а 0 - нет, s - начальная точка поля, f - конечная, а новая строчка задаётся \n
-     * @throws FieldIsEmptyException выбрасывается, когда поле задано лишь 0, т.е. ходить некуда
+     * Анализатор пути
+     * Строит путь определённой длинны между двумя точкам
+     * Длинна ограниченна, потому что не хотелось бы, чтобы игрок в одно касание перешёл от начал к концу
      */
-    void setGameField(final String newField)  throws FieldIsEmptyException;
+    private WayAnalyzer analyzerOfWay;
 
     /**
-     * Перемещаяет протагониста в определённыю точку пространства, если это возможно, иначе оставляет на прежнем месте.
-     * Работает только если конечная точка пути находитсся не дальше 5 клеток от начальной
-     * @param x координата ячейки по оси Х
-     * @param y координата ячейки по оси Y
-     * @return маршрут(массив точек) перемещения из одной точки в другую, если он возможен, иначе null
+     * Массив дверей
+     * Запоминается, т.к. многократно используется при проверке возможности хода
      */
-    ArrayDeque<PointOnTheField> movesOfProtagonist(final int x, final int y);
+    private List<PointOnTheField> doors;
+
+
+    @Override
+    public void setGameField(final String newField) throws FieldIsEmptyException {
+
+        this.gameField = new GameField(newField);
+        protagonist = new Protagonist(gameField.getStartingPoint());
+        analyzerOfGameOver = new GameOverAnalyzer(this);
+        analyzerOfFoundKey = new FoundKeyAnalyzer(this);
+        analyzerOfOpenDoor = new OpenDoorAnalyzer(this);
+        analyzerOfWay = new WayAnalyzer(this);
+        doors = gameField.getDoors();
+
+        analyzerOfFoundKey.addListener(protagonist);
+        analyzerOfFoundKey.addListener(gameField);
+    }
 
     /**
-     * Добавляет слушателя на событие окончание игры
-     * @param listener объект-слушатель
+     * Вызывается перед тем, как сделать ход, т.к. возможно дверь откроется
+     * @param point - точка, в которую попытался сходить игрок
      */
-    void addListenerOfGameOver(GameOverListener listener);
+    private void checkDoors(PointOnTheField point) {
+
+        if (doors.contains(point) && protagonist.getNumberOfKeys() > 0 && !isItPassableCells(point)) {
+
+            protagonist.useKey();
+            gameField.openDoor(point.getX(), point.getY());
+            analyzerOfOpenDoor.doorIsOpen(point);
+        }
+    }
+
+    @Override
+    public ArrayDeque<PointOnTheField> movesOfProtagonist(final int x, final  int y) {
+
+        checkDoors(new PointOnTheField(x,y));
+
+        ArrayDeque<PointOnTheField> way = analyzerOfWay.getWay(getPositionOfProtagonist(), new PointOnTheField(x,y));
+
+        if (way == null) return null;
+
+        protagonist.movesOfProtagonist(x,y);
+
+        noticeAfterMotion();
+
+        return way;
+    }
 
     /**
-     * Отписка слушателя от раассылки на Конец игры
-     * @param listener объект-слушатель
+     * Метод, который сообщает необходимым классам, что состояние системы изменилось
+     * Вызывается после хода игрока
      */
-    void removeListenerOfGameOver(GameOverListener listener);
+    private void noticeAfterMotion() {
 
-    /**
-     * Добавляет слушателя на событие Найден ключ
-     * @param listener объект-слушатель
-     */
-    void addListenerOfFoundKey(FoundKeyListener listener);
+        analyzerOfGameOver.messageAboutChangingSystem();
+        analyzerOfFoundKey.messageAboutChangingSystem();
+    }
 
-    /**
-     * Отписка слушателя от раассылки на Найден ключ
-     * @param listener объект-слушатель
-     */
-    void removeListenerOfFoundKey(FoundKeyListener listener);
+    @Override
+    public boolean isItPassableCells(final int x, final int y) {
 
-    /**
-     * Добавляет слушателя на событие Открытие двери
-     * @param listener объект-слушатель
-     */
-    void addListenerOfOpenDoor(OpenDoorListener listener);
+        try {
 
-    /**
-     * Отписка слушателя от раассылки на Открытие двери
-     * @param listener объект-слушатель
-     */
-    void removeListenerOfOpenDoor(OpenDoorListener listener);
+            return gameField.isItPassableCell(x,y);
 
-    /**
-     * @return Точка, местоположение героя
-     */
-    PointOnTheField getPositionOfProtagonist();
+        }catch (OutOfBoundaryOfTheFieldException ex) {
 
-    /**
-     * @return начальная точка поля
-     *
-     * Та точка, куда помещается протагонист, с самого начала игры
-     */
-    PointOnTheField getStartPosition();
+            return false;
+        }
+    }
 
-    /**
-     * @return конечная точка поля
-     *
-     * Точка, куда нужно пройти протагонисту, чтобы окончить игру
-     */
-    PointOnTheField getFinishPosition();
+    @Override
+    public boolean isItPassableCells(final PointOnTheField point) {
 
-    /**
-     * Установить значение дальности шага протагониста
-     *
-     * В общем, шаги были введены, чтобы игрок не мог пройти
-     * от начала карты до конца в один клик
-     * @param valueOfRangeOfStep дальность шага
-     */
-    void setValueOfRangeOfStep(int valueOfRangeOfStep);
+        try {
 
-    /**
-     * @return Массив с координатами дверей
-     * Изначально двери закрыты, но если есть ключ, то дверь откроется, а
-     * количество ключей уменьшится на 1
-     */
-    List<PointOnTheField> getDoors();
+            return gameField.isItPassableCell(point);
 
-    /**
-     * @return Массив с координатами ключей
-     * Ключи нужны чтобы открывать двери
-     */
-    List<PointOnTheField> getKeys();
+        }catch (OutOfBoundaryOfTheFieldException ex) {
 
-    /**
-     * @return Число ключей, собраных игроком
-     */
-    int getNumberOfKeys();
+            return false;
+        }
+    }
 
-    /**
-     * @return Массив с координатами деревьев
-     * по факту это лишь дектор
-     */
-    List<PointOnTheField> getTrees();
+    @Override
+    public int getSizeOfFieldX() {
 
-    /**
-     * @return Массив с координатами травы на игровом поле
-     * по факту это лишь дектор
-     *
-     * Возможно перейдёт в нечто другое, т.к. трава не справляется со своей задачей, удачно декорировать лабиринт
-     */
-    List<PointOnTheField> getGrass();
+        return gameField.getSizeX();
+    }
+
+    @Override
+    public int getSizeOfFieldY() {
+
+        return gameField.getSizeY();
+    }
+
+    @Override
+    public List<PointOnTheField> getPassableCells() {
+
+        return gameField.getPassableCells();
+    }
+
+    @Override
+    public PointOnTheField getPositionOfProtagonist() {
+
+        return protagonist.getLocationOfProtagonist();
+    }
+
+    @Override
+    public PointOnTheField getStartPosition() {
+
+        return gameField.getStartingPoint();
+    }
+
+    @Override
+    public PointOnTheField getFinishPosition() {
+
+        return gameField.getFinishingPoint();
+    }
+
+    @Override
+    public void setValueOfRangeOfStep(int valueOfRangeOfStep) {
+
+        analyzerOfWay.setDefaultRange(valueOfRangeOfStep);
+    }
+
+    @Override
+    public List<PointOnTheField> getKeys() {
+
+        return gameField.getKeys();
+    }
+
+    @Override
+    public List<PointOnTheField> getDoors() {
+
+        return gameField.getDoors();
+    }
+
+
+    @Override
+    public void addListenerOfGameOver(GameOverListener listener) {
+
+        analyzerOfGameOver.addListener(listener);
+    }
+
+    @Override
+    public void removeListenerOfGameOver(GameOverListener listener) {
+
+        analyzerOfGameOver.removeListener(listener);
+    }
+
+    @Override
+    public void addListenerOfFoundKey(FoundKeyListener listener) {
+
+        analyzerOfFoundKey.addListener(listener);
+    }
+
+    @Override
+    public void removeListenerOfFoundKey(FoundKeyListener listener) {
+
+        analyzerOfFoundKey.removeListener(listener);
+    }
+
+    @Override
+    public void addListenerOfOpenDoor(OpenDoorListener listener) {
+
+        analyzerOfOpenDoor.addListener(listener);
+    }
+
+    @Override
+    public void removeListenerOfOpenDoor(OpenDoorListener listener) {
+
+        analyzerOfOpenDoor.removeListener(listener);
+    }
+
+    @Override
+    public int getNumberOfKeys() {
+
+        return protagonist.getNumberOfKeys();
+    }
+
+    @Override
+    public List<PointOnTheField> getTrees() {
+
+        return gameField.getTrees();
+    }
+
+    @Override
+    public List<PointOnTheField> getGrass() {
+
+        return gameField.getGrass();
+    }
 }

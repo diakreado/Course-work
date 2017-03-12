@@ -1,4 +1,4 @@
-package com.maltsev.labyrinth.view.screens;
+package com.maltsev.labyrinth.view.screens.MainMenu;
 
 
 import com.badlogic.gdx.Gdx;
@@ -74,7 +74,7 @@ public class MainMenuScreen implements Screen{
             }
         });
 
-        //TODO Этот список надо получать из файла с игровыми полями, скорее всего от Presenter'a, но это не точно
+        //TODO Этот список надо получать из файла с игровыми полями, скорее всего от PresenterOfGameProcess'a, но это не точно
         String[] inputData = {"one","two","three","four","five","six","seven","eight","nine","ten",
                 "eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen"};
 

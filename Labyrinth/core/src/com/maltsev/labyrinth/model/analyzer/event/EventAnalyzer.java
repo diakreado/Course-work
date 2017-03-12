@@ -1,18 +1,18 @@
 package com.maltsev.labyrinth.model.analyzer.event;
 
 
-import com.maltsev.labyrinth.model.Model;
+import com.maltsev.labyrinth.model.IModel;
 
 /**
  * Обобщающий класс для тех, кто следит за событиями и оповещает других, если оно произошло
  */
 public abstract class EventAnalyzer {
 
-    protected Model model;
+    protected IModel IModel;
 
-    protected EventAnalyzer(Model model) {
+    protected EventAnalyzer(IModel IModel) {
 
-        this.model = model;
+        this.IModel = IModel;
     }
 
 }
