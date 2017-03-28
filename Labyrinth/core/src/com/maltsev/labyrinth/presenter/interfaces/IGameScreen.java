@@ -5,7 +5,7 @@ import com.maltsev.labyrinth.presenter.tempdata.PointOnTheScreen;
 import com.maltsev.labyrinth.presenter.tempdata.SizeOfTexture;
 
 /**
- * Интерфейс для взаимодействия с PresenterOfGameProcess
+ * Интерфейс для взаимодействия с Presenter
  */
 public interface IGameScreen {
 
@@ -62,8 +62,6 @@ public interface IGameScreen {
      * Сообщение об окончание игры
      */
     void messageOfGameOver();
-
-
 
 
 

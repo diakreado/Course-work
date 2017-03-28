@@ -1,6 +1,8 @@
 package com.maltsev.labyrinth.presenter;
 
 
+import com.maltsev.labyrinth.view.utils.FileReader;
+
 /**
  * Класс, созданый для того, чтобы парсить файл с полем,
  * получать из него игровое поле по номеру
@@ -9,7 +11,7 @@ package com.maltsev.labyrinth.presenter;
 
     static String getFieldOnTheNumber(int numberOfTheField) {
 
-        String fileData = com.maltsev.labyrinth.view.utils.FileReader.read("gameField.txt");
+        String fileData = FileReader.read("gameField.txt");             //TODO здесь не должно быть этого класса
 
         String[] arrayOfField = fileData.split("#\n");
 

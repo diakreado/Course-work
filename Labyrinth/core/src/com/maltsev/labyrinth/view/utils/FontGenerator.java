@@ -20,7 +20,7 @@ public class FontGenerator implements Disposable {
 
     public FontGenerator() {
 
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("font/some_font.ttf"));
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("font/font_for_title.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
     }
 
@@ -29,20 +29,6 @@ public class FontGenerator implements Disposable {
         parameter.size = 65;
         parameter.borderWidth = 0;
         return generator.generateFont(parameter);
-    }
-
-    public BitmapFont getSmallFont() {
-
-        parameter.size = 50;
-        parameter.borderWidth = 0;
-        return generator.generateFont(parameter);
-    }
-
-    public BitmapFont getFontForLabel() {
-
-        parameter.size = 65;
-        parameter.borderWidth = 2;
-        return generator.generateFont(parameter);                    //Делаем шрифт для Метки жирным
     }
 
     @Override

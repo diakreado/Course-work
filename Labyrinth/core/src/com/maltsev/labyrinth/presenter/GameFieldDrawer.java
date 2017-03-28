@@ -4,7 +4,7 @@ package com.maltsev.labyrinth.presenter;
 import com.maltsev.labyrinth.model.IModel;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
 import com.maltsev.labyrinth.presenter.interfaces.IFieldDrawer;
-import static com.maltsev.labyrinth.presenter.TranslatorOfCoordinate.translatePointFieldToScreen;
+import static com.maltsev.labyrinth.presenter.transkatorofcoordinate.TranslatorOfCoordinate.translatePointFieldToScreen;
 
 import java.util.ArrayList;
 import java.util.List;

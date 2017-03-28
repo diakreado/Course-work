@@ -1,20 +1,38 @@
 package com.maltsev.labyrinth.presenter;
 
 
-import com.maltsev.labyrinth.presenter.interfaces.IGameScreen;
+import com.maltsev.labyrinth.model.field.PointOnTheField;
+import com.maltsev.labyrinth.presenter.tempdata.PointOnTheScreen;
 
-/**
- * Presenter выступает в качестве посредника между View и Model.
- * Он извлекает данные из модели и передает их во View. Также решает,
- * что нужно делать, когда вы взаимодействуете с View.
- */
 public interface IPresenter {
 
     /**
-     * Начать игру
-     * @param gameScreen экран с игровым процессом, должен уметь воплнять ряд действий описанных в интерфейсе IGameScreen
-     * @param numberOfTheField номер игрового поля
-     * @return объект отвечающий служащий посредником между GameScreen и Model, обеспечивающий логику отрисовки и правила игры
+     * Отрисовывает поле
+     * Вызывает метод drawTopBottomCells() drawExit() drawKeys() drawClosedDoors() у gameScreen
      */
-    IPresenterOfGameProcess startGame(IGameScreen gameScreen, int numberOfTheField);
+    void drawField();
+
+    /**
+     * Движение протагониста
+     * Если движение в указаную точку невозможно, то никаких действий совершенно не будет
+     * @param screenX координата экрана по оси Х
+     * @param screenY координата экрана по оси Y
+     */
+    void moveProtagonist(float screenX, float screenY);
+
+    void moveProtagonistInTheFieldCoordinate(int fieldX, int fieldY);
+
+    /**
+     * Вызывается, чтобы узнать где находится протагонист во время передвижения
+     * @param deltaTime промежуток времени между кадрами
+     * @return Точка, в которой находится двигающийся протагонист в данный момент
+     */
+    PointOnTheScreen getPositionOfMovingProtagonist(float deltaTime);
+
+    PointOnTheField getPositionOfProtagonistInTheFieldCoordinate();
+
+    /**
+     * @return число ключей, которые собрал игрок
+     */
+    int getNumberOfKeys();
 }

@@ -14,12 +14,6 @@ public interface IProtagonistDrawer {
      */
     void draw();
 
-    void changeDirectionToRight();
-
-    void changeDirectionToLeft();
-
-    void changeDirectionToBack();
-
     /**
      * @param pointOfNewLocationOfProtagonist точка, в которой следует отрисовать протагониста
      */

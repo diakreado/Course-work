@@ -1,7 +1,0 @@
-#Tue Mar 07 21:12:35 MSK 2017
-base.0=C\:\\Users\\Mikle\\Documents\\GitHub\\Course-work\\Labyrinth\\android\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_7a8f23b9be72c38e2a8127130ed5fe9c00c14d81
-renamed.1=classes2.dex
-renamed.0=classes.dex
-file.1=C\:\\Users\\Mikle\\Documents\\GitHub\\Course-work\\Labyrinth\\android\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_7720c4c6f7e8bf87d0856e597632291bec37c0e2\\classes.dex
-base.1=C\:\\Users\\Mikle\\Documents\\GitHub\\Course-work\\Labyrinth\\android\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_7720c4c6f7e8bf87d0856e597632291bec37c0e2
-file.0=C\:\\Users\\Mikle\\Documents\\GitHub\\Course-work\\Labyrinth\\android\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_7a8f23b9be72c38e2a8127130ed5fe9c00c14d81\\classes.dex

@@ -109,7 +109,7 @@ public class GameField implements FoundKeyListener{
 
                     isItPossibleWay = true;
 
-                    passableCells.add(new PointOnTheField(x,y));     //TODO  это всё должно скоро уйти и вместо интерпретации будет нечто иное, планируется использовать JSON формат сохранения информации
+                    passableCells.add(new PointOnTheField(x,y));
                 }
 
                 field[x][y] = new CellOfField(isItPossibleWay);

@@ -1,8 +1,5 @@
 package com.maltsev.labyrinth.model.analyzer.event.gameover;
 
-//Мне кажется довольно странным, что GameOverAnalyzer содержит поле Model, а Model содержит поле GameOverAnalyzer
-//todo это вполне нормально, ведь GameOverAnalyzer должен получать информацию про игровое поле и ему не сильно интересно, что там внутри, следовательно ему удобнее работать с  Model
-
 import com.maltsev.labyrinth.model.IModel;
 import com.maltsev.labyrinth.model.analyzer.event.EventAnalyzer;
 import com.maltsev.labyrinth.model.field.PointOnTheField;

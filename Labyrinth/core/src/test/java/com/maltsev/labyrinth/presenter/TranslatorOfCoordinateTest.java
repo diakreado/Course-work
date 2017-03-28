@@ -4,7 +4,7 @@ import com.maltsev.labyrinth.model.field.PointOnTheField;
 import com.maltsev.labyrinth.presenter.tempdata.PointOnTheScreen;
 import com.maltsev.labyrinth.presenter.tempdata.SizeOfTexture;
 import org.junit.Test;
-import static com.maltsev.labyrinth.presenter.TranslatorOfCoordinate.*;
+import static com.maltsev.labyrinth.presenter.transkatorofcoordinate.TranslatorOfCoordinate.*;
 
 import static org.junit.Assert.*;
 
@@ -18,7 +18,7 @@ public class TranslatorOfCoordinateTest {
             translatePointFieldToScreen(new PointOnTheField(30,40));
         }
         catch (RuntimeException ex) {
-            assertEquals(ex.toString(),"com.maltsev.labyrinth.presenter.TranslatorIsNotInitialize:" +
+            assertEquals(ex.toString(),"com.maltsev.labyrinth.presenter.transkatorofcoordinate.TranslatorIsNotInitialize:" +
                     " Нельзя пользоватся ПереводчикомКоординат без его инициализации");
         }
 
@@ -26,7 +26,7 @@ public class TranslatorOfCoordinateTest {
             translatePointScreenToField(new PointOnTheScreen(30,40));
         }
         catch (RuntimeException ex) {
-            assertEquals(ex.toString(),"com.maltsev.labyrinth.presenter.TranslatorIsNotInitialize:" +
+            assertEquals(ex.toString(),"com.maltsev.labyrinth.presenter.transkatorofcoordinate.TranslatorIsNotInitialize:" +
                     " Нельзя пользоватся ПереводчикомКоординат без его инициализации");
         }
         

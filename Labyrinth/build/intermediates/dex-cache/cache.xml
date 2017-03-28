@@ -43,7 +43,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
-        sha1="d15ae3b545d80ededd50a6c5c853b944976e4ca3">
+        sha1="65c1381b1d558c84acfb5a43c7c75a59b7852005">
         <dex dex="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_7a8f23b9be72c38e2a8127130ed5fe9c00c14d81\classes.dex" />
     </item>
     <item
@@ -52,7 +52,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
-        sha1="40406a1ac96a74778fa381334502e23547bf5c7f">
+        sha1="19ea525d8381756b429a4e140f2d333dfd149c46">
         <dex dex="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_7720c4c6f7e8bf87d0856e597632291bec37c0e2\classes.dex" />
     </item>
     <item
