@@ -1,4 +1,4 @@
-package com.maltsev.labyrinth.view.Game;
+package com.maltsev.labyrinth.view.game;
 
 
 import com.badlogic.gdx.Gdx;
@@ -15,10 +15,10 @@ import com.maltsev.labyrinth.presenter.interfaces.IProtagonistDrawer;
 import com.maltsev.labyrinth.presenter.interfaces.IGameScreen;
 import com.maltsev.labyrinth.presenter.tempdata.PointOnTheScreen;
 import com.maltsev.labyrinth.view.Labyrinth;
-import com.maltsev.labyrinth.view.Game.Drawers.FieldDrawer;
-import com.maltsev.labyrinth.view.Game.Drawers.ProtagonistDrawer;
-import com.maltsev.labyrinth.view.Game.scenes.Fon;
-import com.maltsev.labyrinth.view.Game.scenes.Hud;
+import com.maltsev.labyrinth.view.game.drawers.FieldDrawer;
+import com.maltsev.labyrinth.view.game.drawers.ProtagonistDrawer;
+import com.maltsev.labyrinth.view.game.scenes.Fon;
+import com.maltsev.labyrinth.view.game.scenes.Hud;
 import com.maltsev.labyrinth.presenter.tempdata.SizeOfTexture;
 
 /**

@@ -1,4 +1,4 @@
-package com.maltsev.labyrinth.view.Game.scenes;
+package com.maltsev.labyrinth.view.game.scenes;
 
 
 import com.badlogic.gdx.Gdx;
@@ -18,10 +18,9 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.*;
 import com.maltsev.labyrinth.model.field.PointOnTheField;
 import com.maltsev.labyrinth.presenter.IPresenter;
-import com.maltsev.labyrinth.presenter.Presenter;
 import com.maltsev.labyrinth.view.Labyrinth;
 import com.maltsev.labyrinth.view.utils.Resizable;
-import com.maltsev.labyrinth.view.Game.GameScreen;
+import com.maltsev.labyrinth.view.game.GameScreen;
 
 /**
  * Класс, который отвечает за отрисовку обёртки(вывод информирующих лейлбов поверх игрового экрана)

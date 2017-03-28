@@ -1,4 +1,4 @@
-package com.maltsev.labyrinth.view.Game.Drawers;
+package com.maltsev.labyrinth.view.game.drawers;
 
 
 import com.badlogic.gdx.graphics.Texture;

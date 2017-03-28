@@ -2,7 +2,7 @@ package com.maltsev.labyrinth.view;
 
 
 import com.badlogic.gdx.Game;
-import com.maltsev.labyrinth.view.Game.GameScreen;
+import com.maltsev.labyrinth.view.game.GameScreen;
 import com.maltsev.labyrinth.view.utils.FontGenerator;
 import com.maltsev.labyrinth.view.utils.InfoAboutSettings;
 
