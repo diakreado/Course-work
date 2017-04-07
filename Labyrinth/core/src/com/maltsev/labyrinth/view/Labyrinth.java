@@ -67,8 +67,7 @@ public class Labyrinth extends Game {
 
         fontGenerator.dispose();
 
-        if(gameScreen != null)
-            gameScreen.dispose();
+        gameScreen.dispose();
 
         super.dispose();
     }

@@ -11,14 +11,7 @@
                     "endOffset": 97
                 },
                 "from": {
-                    "file": "C:\\Users\\Mikle\\Documents\\GitHub\\Course-work\\Labyrinth\\android\\res\\values\\strings.xml",
-                    "position": {
-                        "startLine": 3,
-                        "startColumn": 4,
-                        "startOffset": 56,
-                        "endColumn": 46,
-                        "endOffset": 98
-                    }
+                    "file": "C:\\Users\\Mikle\\Documents\\GitHub\\Course-work\\Labyrinth\\android\\res\\values\\strings.xml"
                 }
             },
             {
@@ -28,7 +21,7 @@
                     "startOffset": 102,
                     "endLine": 10,
                     "endColumn": 12,
-                    "endOffset": 560
+                    "endOffset": 566
                 },
                 "from": {
                     "file": "C:\\Users\\Mikle\\Documents\\GitHub\\Course-work\\Labyrinth\\android\\res\\values\\styles.xml",
@@ -38,7 +31,7 @@
                         "startOffset": 17,
                         "endLine": 9,
                         "endColumn": 12,
-                        "endOffset": 475
+                        "endOffset": 481
                     }
                 }
             }

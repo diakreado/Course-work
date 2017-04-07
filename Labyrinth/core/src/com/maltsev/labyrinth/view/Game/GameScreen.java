@@ -286,6 +286,7 @@ public class GameScreen implements Screen, IGameScreen {
 
     public void close() {
 
+
         dispose();
     }
 
