@@ -2,85 +2,22 @@
 <items version="2" >
 
     <item
-        is-multidex="false"
-        jar="C:\Users\Mikle\.android\build-cache\7b8dcefa6fb45550cd95220ced863ef5d96e4837\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
-        <dex dex="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\pre-dexed\debug\classes_a648b0440659026cc6ce8f75b7a594a02b33e218.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\Mikle\.android\build-cache\814fce069d3e4d954b9b56cb737177071a973e7a\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
-        <dex dex="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\pre-dexed\debug\classes_339fa1cbffa4323f43bec1c8d5deed861c67cc47.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\Mikle\.android\build-cache\f063903a5b48369ca4065dca31cb2926fb3341ca\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
-        <dex dex="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\pre-dexed\debug\classes_94d5a4e04388088ce83d0981768b090e144a0cc5.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\Mikle\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.3.1\support-annotations-25.3.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
-        <dex dex="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\pre-dexed\debug\support-annotations-25.3.1_b10f49674e4b6853b1506e1d1876a78b10dbf379.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\Mikle\.android\build-cache\8f2244a4cb2dfc7428243516d2f4e04129f4d380\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
-        <dex dex="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\pre-dexed\debug\classes_367a8e2e0bacfd0e4c037943b2d40f7230b2e09d.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\Mikle\.android\build-cache\bf135637eee3442f52e8fa3e39d422f068bb65e2\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\pre-dexed\debug\classes_3618495d0057376d372a083e7c28c93e77a7487d.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\Mikle\.android\build-cache\96bed830e6b3dfd165130f83253b18ad4a4470c1\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
-        <dex dex="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\pre-dexed\debug\classes_c4b56b8dba45cbf5b79969a4e5ccfda906910f90.jar" />
-    </item>
-    <item
         is-multidex="true"
         jar="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
-        sha1="3ad1f6177ea40dcc165917dd8477cbfb3c39c376">
+        sha1="e0bf0a8a3b2fb186945bafbd8edb71f9968dfc5e">
         <dex dex="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_7a8f23b9be72c38e2a8127130ed5fe9c00c14d81\classes.dex" />
     </item>
     <item
-        is-multidex="false"
-        jar="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\core\build\libs\core-1.0.jar"
-        jumboMode="false"
+        is-multidex="true"
+        jar="C:\Users\Mikle\.android\build-cache\b2f9179832a41442596f4f91ae7495f21e53f1ed\output\jars\classes.jar"
+        jumboMode="true"
         optimize="true"
         revision="25.0.1"
-        sha1="cd9b6183b543e2de102e9d3bd9631cd4d564a358">
-        <dex dex="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\pre-dexed\debug\core-1.0_4d62840c87f47467ecb275872aba2afb6a5cfdca.jar" />
+        sha1="914f5d3e3ace66080e59613708f06d129a222e25">
+        <dex dex="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\transforms\dex\debug\folders\1000\10\classes_fba30ab6cde3e77bd6ed9b66608710c09490c8cb\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -88,7 +25,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
-        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
+        sha1="510aa6efc159983dfbffa676a0dae37568c0a46f">
         <dex dex="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_7720c4c6f7e8bf87d0856e597632291bec37c0e2\classes.dex" />
     </item>
 

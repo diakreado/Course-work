@@ -2,6 +2,7 @@ package com.maltsev.labyrinth;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -19,7 +20,17 @@ public class GameFragment extends AndroidFragmentApplication {
         config.useCompass = false;
         config.useImmersiveMode = true;
 
-        // return the GLSurfaceView on which libgdx is drawing game stuff
-        return initializeForView(new Labyrinth(), config);
+        View view = initializeForView(new Labyrinth(), config);
+
+        setupSurfaceView();
+
+        return view;
+    }
+
+    private void setupSurfaceView() {
+        if (graphics.getView() instanceof SurfaceView) {
+            SurfaceView surfaceView = (SurfaceView) graphics.getView();
+            surfaceView.setZOrderOnTop(false);
+        }
     }
 }

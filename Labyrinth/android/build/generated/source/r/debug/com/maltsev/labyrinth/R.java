@@ -9,23 +9,688 @@ package com.maltsev.labyrinth;
 
 public final class R {
     public static final class attr {
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int cardBackgroundColor=0x7f010000;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int cardCornerRadius=0x7f010001;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int cardElevation=0x7f010002;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int cardMaxElevation=0x7f010003;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int cardPreventCornerOverlap=0x7f010005;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int cardUseCompatPadding=0x7f010004;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int contentPadding=0x7f010006;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int contentPaddingBottom=0x7f01000a;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int contentPaddingLeft=0x7f010007;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int contentPaddingRight=0x7f010008;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int contentPaddingTop=0x7f010009;
+    }
+    public static final class color {
+        public static final int activity_background=0x7f050000;
+        public static final int amber_primary=0x7f050001;
+        public static final int amber_primary_dark=0x7f050002;
+        public static final int app_blue=0x7f050003;
+        public static final int app_blue_dark=0x7f050004;
+        public static final int app_green=0x7f050005;
+        public static final int app_green_dark=0x7f050006;
+        public static final int app_red=0x7f050007;
+        public static final int app_yellow=0x7f050008;
+        public static final int app_yellow_dark=0x7f050009;
+        public static final int black=0x7f05000a;
+        public static final int black_overlay=0x7f05000b;
+        public static final int blue_grey_primary=0x7f05000c;
+        public static final int blue_grey_primary_dark=0x7f05000d;
+        public static final int blue_primary=0x7f05000e;
+        public static final int blue_primary_dark=0x7f05000f;
+        public static final int brown_primary=0x7f050010;
+        public static final int brown_primary_dark=0x7f050011;
+        public static final int cardview_dark_background=0x7f050012;
+        public static final int cardview_light_background=0x7f050013;
+        public static final int cardview_shadow_end_color=0x7f050014;
+        public static final int cardview_shadow_start_color=0x7f050015;
+        public static final int colorAccent=0x7f050016;
+        public static final int colorPrimary=0x7f050017;
+        public static final int colorPrimaryDark=0x7f050018;
+        public static final int cyan_primary=0x7f050019;
+        public static final int cyan_primary_dark=0x7f05001a;
+        public static final int deep_orange_primary=0x7f05001b;
+        public static final int deep_orange_primary_dark=0x7f05001c;
+        public static final int deep_purple_primary=0x7f05001d;
+        public static final int deep_purple_primary_dark=0x7f05001e;
+        public static final int google_assistant_background=0x7f05001f;
+        public static final int google_blue=0x7f050020;
+        public static final int google_green=0x7f050021;
+        public static final int google_red=0x7f050022;
+        public static final int google_yellow=0x7f050023;
+        public static final int gray=0x7f050024;
+        public static final int gray_deep=0x7f050025;
+        public static final int gray_light=0x7f050026;
+        public static final int gray_very_light=0x7f050027;
+        public static final int green_primary=0x7f050028;
+        public static final int green_primary_dark=0x7f050029;
+        public static final int grey_primary=0x7f05002a;
+        public static final int grey_primary_dark=0x7f05002b;
+        public static final int indigo_primary=0x7f05002c;
+        public static final int indigo_primary_dark=0x7f05002d;
+        public static final int light_blue_primary=0x7f05002e;
+        public static final int light_blue_primary_dark=0x7f05002f;
+        public static final int light_green_primary=0x7f050030;
+        public static final int light_green_primary_dark=0x7f050031;
+        public static final int lime_primary=0x7f050032;
+        public static final int lime_primary_dark=0x7f050033;
+        public static final int main_background=0x7f050034;
+        public static final int md_amber_100=0x7f050035;
+        public static final int md_amber_200=0x7f050036;
+        public static final int md_amber_300=0x7f050037;
+        public static final int md_amber_400=0x7f050038;
+        public static final int md_amber_50=0x7f050039;
+        public static final int md_amber_500=0x7f05003a;
+        public static final int md_amber_600=0x7f05003b;
+        public static final int md_amber_700=0x7f05003c;
+        public static final int md_amber_800=0x7f05003d;
+        public static final int md_amber_900=0x7f05003e;
+        public static final int md_amber_A100=0x7f05003f;
+        public static final int md_amber_A200=0x7f050040;
+        public static final int md_amber_A400=0x7f050041;
+        public static final int md_amber_A700=0x7f050042;
+        public static final int md_black_1000=0x7f050043;
+        public static final int md_blue_100=0x7f050044;
+        public static final int md_blue_200=0x7f050045;
+        public static final int md_blue_300=0x7f050046;
+        public static final int md_blue_400=0x7f050047;
+        public static final int md_blue_50=0x7f050048;
+        public static final int md_blue_500=0x7f050049;
+        public static final int md_blue_600=0x7f05004a;
+        public static final int md_blue_700=0x7f05004b;
+        public static final int md_blue_800=0x7f05004c;
+        public static final int md_blue_900=0x7f05004d;
+        public static final int md_blue_A100=0x7f05004e;
+        public static final int md_blue_A200=0x7f05004f;
+        public static final int md_blue_A400=0x7f050050;
+        public static final int md_blue_A700=0x7f050051;
+        public static final int md_blue_grey_100=0x7f050052;
+        public static final int md_blue_grey_200=0x7f050053;
+        public static final int md_blue_grey_300=0x7f050054;
+        public static final int md_blue_grey_400=0x7f050055;
+        public static final int md_blue_grey_50=0x7f050056;
+        public static final int md_blue_grey_500=0x7f050057;
+        public static final int md_blue_grey_600=0x7f050058;
+        public static final int md_blue_grey_700=0x7f050059;
+        public static final int md_blue_grey_800=0x7f05005a;
+        public static final int md_blue_grey_900=0x7f05005b;
+        public static final int md_brown_100=0x7f05005c;
+        public static final int md_brown_200=0x7f05005d;
+        public static final int md_brown_300=0x7f05005e;
+        public static final int md_brown_400=0x7f05005f;
+        public static final int md_brown_50=0x7f050060;
+        public static final int md_brown_500=0x7f050061;
+        public static final int md_brown_600=0x7f050062;
+        public static final int md_brown_700=0x7f050063;
+        public static final int md_brown_800=0x7f050064;
+        public static final int md_brown_900=0x7f050065;
+        public static final int md_cyan_100=0x7f050066;
+        public static final int md_cyan_200=0x7f050067;
+        public static final int md_cyan_300=0x7f050068;
+        public static final int md_cyan_400=0x7f050069;
+        public static final int md_cyan_50=0x7f05006a;
+        public static final int md_cyan_500=0x7f05006b;
+        public static final int md_cyan_600=0x7f05006c;
+        public static final int md_cyan_700=0x7f05006d;
+        public static final int md_cyan_800=0x7f05006e;
+        public static final int md_cyan_900=0x7f05006f;
+        public static final int md_cyan_A100=0x7f050070;
+        public static final int md_cyan_A200=0x7f050071;
+        public static final int md_cyan_A400=0x7f050072;
+        public static final int md_cyan_A700=0x7f050073;
+        public static final int md_deep_orange_100=0x7f050074;
+        public static final int md_deep_orange_200=0x7f050075;
+        public static final int md_deep_orange_300=0x7f050076;
+        public static final int md_deep_orange_400=0x7f050077;
+        public static final int md_deep_orange_50=0x7f050078;
+        public static final int md_deep_orange_500=0x7f050079;
+        public static final int md_deep_orange_600=0x7f05007a;
+        public static final int md_deep_orange_700=0x7f05007b;
+        public static final int md_deep_orange_800=0x7f05007c;
+        public static final int md_deep_orange_900=0x7f05007d;
+        public static final int md_deep_orange_A100=0x7f05007e;
+        public static final int md_deep_orange_A200=0x7f05007f;
+        public static final int md_deep_orange_A400=0x7f050080;
+        public static final int md_deep_orange_A700=0x7f050081;
+        public static final int md_deep_purple_100=0x7f050082;
+        public static final int md_deep_purple_200=0x7f050083;
+        public static final int md_deep_purple_300=0x7f050084;
+        public static final int md_deep_purple_400=0x7f050085;
+        public static final int md_deep_purple_50=0x7f050086;
+        public static final int md_deep_purple_500=0x7f050087;
+        public static final int md_deep_purple_600=0x7f050088;
+        public static final int md_deep_purple_700=0x7f050089;
+        public static final int md_deep_purple_800=0x7f05008a;
+        public static final int md_deep_purple_900=0x7f05008b;
+        public static final int md_deep_purple_A100=0x7f05008c;
+        public static final int md_deep_purple_A200=0x7f05008d;
+        public static final int md_deep_purple_A400=0x7f05008e;
+        public static final int md_deep_purple_A700=0x7f05008f;
+        public static final int md_green_100=0x7f050090;
+        public static final int md_green_200=0x7f050091;
+        public static final int md_green_300=0x7f050092;
+        public static final int md_green_400=0x7f050093;
+        public static final int md_green_50=0x7f050094;
+        public static final int md_green_500=0x7f050095;
+        public static final int md_green_600=0x7f050096;
+        public static final int md_green_700=0x7f050097;
+        public static final int md_green_800=0x7f050098;
+        public static final int md_green_900=0x7f050099;
+        public static final int md_green_A100=0x7f05009a;
+        public static final int md_green_A200=0x7f05009b;
+        public static final int md_green_A400=0x7f05009c;
+        public static final int md_green_A700=0x7f05009d;
+        public static final int md_grey_100=0x7f05009e;
+        public static final int md_grey_200=0x7f05009f;
+        public static final int md_grey_300=0x7f0500a0;
+        public static final int md_grey_400=0x7f0500a1;
+        public static final int md_grey_50=0x7f0500a2;
+        public static final int md_grey_500=0x7f0500a3;
+        public static final int md_grey_600=0x7f0500a4;
+        public static final int md_grey_700=0x7f0500a5;
+        public static final int md_grey_800=0x7f0500a6;
+        public static final int md_grey_900=0x7f0500a7;
+        public static final int md_indigo_100=0x7f0500a8;
+        public static final int md_indigo_200=0x7f0500a9;
+        public static final int md_indigo_300=0x7f0500aa;
+        public static final int md_indigo_400=0x7f0500ab;
+        public static final int md_indigo_50=0x7f0500ac;
+        public static final int md_indigo_500=0x7f0500ad;
+        public static final int md_indigo_600=0x7f0500ae;
+        public static final int md_indigo_700=0x7f0500af;
+        public static final int md_indigo_800=0x7f0500b0;
+        public static final int md_indigo_900=0x7f0500b1;
+        public static final int md_indigo_A100=0x7f0500b2;
+        public static final int md_indigo_A200=0x7f0500b3;
+        public static final int md_indigo_A400=0x7f0500b4;
+        public static final int md_indigo_A700=0x7f0500b5;
+        public static final int md_light_blue_100=0x7f0500b6;
+        public static final int md_light_blue_200=0x7f0500b7;
+        public static final int md_light_blue_300=0x7f0500b8;
+        public static final int md_light_blue_400=0x7f0500b9;
+        public static final int md_light_blue_50=0x7f0500ba;
+        public static final int md_light_blue_500=0x7f0500bb;
+        public static final int md_light_blue_600=0x7f0500bc;
+        public static final int md_light_blue_700=0x7f0500bd;
+        public static final int md_light_blue_800=0x7f0500be;
+        public static final int md_light_blue_900=0x7f0500bf;
+        public static final int md_light_blue_A100=0x7f0500c0;
+        public static final int md_light_blue_A200=0x7f0500c1;
+        public static final int md_light_blue_A400=0x7f0500c2;
+        public static final int md_light_blue_A700=0x7f0500c3;
+        public static final int md_light_green_100=0x7f0500c4;
+        public static final int md_light_green_200=0x7f0500c5;
+        public static final int md_light_green_300=0x7f0500c6;
+        public static final int md_light_green_400=0x7f0500c7;
+        public static final int md_light_green_50=0x7f0500c8;
+        public static final int md_light_green_500=0x7f0500c9;
+        public static final int md_light_green_600=0x7f0500ca;
+        public static final int md_light_green_700=0x7f0500cb;
+        public static final int md_light_green_800=0x7f0500cc;
+        public static final int md_light_green_900=0x7f0500cd;
+        public static final int md_light_green_A100=0x7f0500ce;
+        public static final int md_light_green_A200=0x7f0500cf;
+        public static final int md_light_green_A400=0x7f0500d0;
+        public static final int md_light_green_A700=0x7f0500d1;
+        public static final int md_lime_100=0x7f0500d2;
+        public static final int md_lime_200=0x7f0500d3;
+        public static final int md_lime_300=0x7f0500d4;
+        public static final int md_lime_400=0x7f0500d5;
+        public static final int md_lime_50=0x7f0500d6;
+        public static final int md_lime_500=0x7f0500d7;
+        public static final int md_lime_600=0x7f0500d8;
+        public static final int md_lime_700=0x7f0500d9;
+        public static final int md_lime_800=0x7f0500da;
+        public static final int md_lime_900=0x7f0500db;
+        public static final int md_lime_A100=0x7f0500dc;
+        public static final int md_lime_A200=0x7f0500dd;
+        public static final int md_lime_A400=0x7f0500de;
+        public static final int md_lime_A700=0x7f0500df;
+        public static final int md_orange_100=0x7f0500e0;
+        public static final int md_orange_200=0x7f0500e1;
+        public static final int md_orange_300=0x7f0500e2;
+        public static final int md_orange_400=0x7f0500e3;
+        public static final int md_orange_50=0x7f0500e4;
+        public static final int md_orange_500=0x7f0500e5;
+        public static final int md_orange_600=0x7f0500e6;
+        public static final int md_orange_700=0x7f0500e7;
+        public static final int md_orange_800=0x7f0500e8;
+        public static final int md_orange_900=0x7f0500e9;
+        public static final int md_orange_A100=0x7f0500ea;
+        public static final int md_orange_A200=0x7f0500eb;
+        public static final int md_orange_A400=0x7f0500ec;
+        public static final int md_orange_A700=0x7f0500ed;
+        public static final int md_pink_100=0x7f0500ee;
+        public static final int md_pink_200=0x7f0500ef;
+        public static final int md_pink_300=0x7f0500f0;
+        public static final int md_pink_400=0x7f0500f1;
+        public static final int md_pink_50=0x7f0500f2;
+        public static final int md_pink_500=0x7f0500f3;
+        public static final int md_pink_600=0x7f0500f4;
+        public static final int md_pink_700=0x7f0500f5;
+        public static final int md_pink_800=0x7f0500f6;
+        public static final int md_pink_900=0x7f0500f7;
+        public static final int md_pink_A100=0x7f0500f8;
+        public static final int md_pink_A200=0x7f0500f9;
+        public static final int md_pink_A400=0x7f0500fa;
+        public static final int md_pink_A700=0x7f0500fb;
+        public static final int md_purple_100=0x7f0500fc;
+        public static final int md_purple_200=0x7f0500fd;
+        public static final int md_purple_300=0x7f0500fe;
+        public static final int md_purple_400=0x7f0500ff;
+        public static final int md_purple_50=0x7f050100;
+        public static final int md_purple_500=0x7f050101;
+        public static final int md_purple_600=0x7f050102;
+        public static final int md_purple_700=0x7f050103;
+        public static final int md_purple_800=0x7f050104;
+        public static final int md_purple_900=0x7f050105;
+        public static final int md_purple_A100=0x7f050106;
+        public static final int md_purple_A200=0x7f050107;
+        public static final int md_purple_A400=0x7f050108;
+        public static final int md_purple_A700=0x7f050109;
+        public static final int md_red_100=0x7f05010a;
+        public static final int md_red_200=0x7f05010b;
+        public static final int md_red_300=0x7f05010c;
+        public static final int md_red_400=0x7f05010d;
+        public static final int md_red_50=0x7f05010e;
+        public static final int md_red_500=0x7f05010f;
+        public static final int md_red_600=0x7f050110;
+        public static final int md_red_700=0x7f050111;
+        public static final int md_red_800=0x7f050112;
+        public static final int md_red_900=0x7f050113;
+        public static final int md_red_A100=0x7f050114;
+        public static final int md_red_A200=0x7f050115;
+        public static final int md_red_A400=0x7f050116;
+        public static final int md_red_A700=0x7f050117;
+        public static final int md_teal_100=0x7f050118;
+        public static final int md_teal_200=0x7f050119;
+        public static final int md_teal_300=0x7f05011a;
+        public static final int md_teal_400=0x7f05011b;
+        public static final int md_teal_50=0x7f05011c;
+        public static final int md_teal_500=0x7f05011d;
+        public static final int md_teal_600=0x7f05011e;
+        public static final int md_teal_700=0x7f05011f;
+        public static final int md_teal_800=0x7f050120;
+        public static final int md_teal_900=0x7f050121;
+        public static final int md_teal_A100=0x7f050122;
+        public static final int md_teal_A200=0x7f050123;
+        public static final int md_teal_A400=0x7f050124;
+        public static final int md_teal_A700=0x7f050125;
+        public static final int md_white_1000=0x7f050126;
+        public static final int md_yellow_100=0x7f050127;
+        public static final int md_yellow_200=0x7f050128;
+        public static final int md_yellow_300=0x7f050129;
+        public static final int md_yellow_400=0x7f05012a;
+        public static final int md_yellow_50=0x7f05012b;
+        public static final int md_yellow_500=0x7f05012c;
+        public static final int md_yellow_600=0x7f05012d;
+        public static final int md_yellow_700=0x7f05012e;
+        public static final int md_yellow_800=0x7f05012f;
+        public static final int md_yellow_900=0x7f050130;
+        public static final int md_yellow_A100=0x7f050131;
+        public static final int md_yellow_A200=0x7f050132;
+        public static final int md_yellow_A400=0x7f050133;
+        public static final int md_yellow_A700=0x7f050134;
+        public static final int orange_primary=0x7f050135;
+        public static final int orange_primary_dark=0x7f050136;
+        public static final int pink_primary=0x7f050137;
+        public static final int pink_primary_dark=0x7f050138;
+        public static final int purple_primary=0x7f050139;
+        public static final int purple_primary_dark=0x7f05013a;
+        public static final int red_primary=0x7f05013b;
+        public static final int red_primary_dark=0x7f05013c;
+        public static final int teal_primary=0x7f05013d;
+        public static final int teal_primary_dark=0x7f05013e;
+        public static final int transparent=0x7f05013f;
+        public static final int white=0x7f050140;
+        public static final int yellow_primary=0x7f050141;
+        public static final int yellow_primary_dark=0x7f050142;
+    }
+    public static final class dimen {
+        public static final int cardview_compat_inset_shadow=0x7f060000;
+        public static final int cardview_default_elevation=0x7f060001;
+        public static final int cardview_default_radius=0x7f060002;
     }
     public static final class drawable {
-        public static final int drawer_shadow=0x7f020000;
-        public static final int ic_drawer=0x7f020001;
-        public static final int ic_launcher=0x7f020002;
+        public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int content_framelayout=0x7f060001;
-        public static final int main_layout=0x7f060000;
+        public static final int game_fragment_container=0x7f080004;
+        public static final int hscroll=0x7f080000;
+        public static final int info_text=0x7f080002;
+        public static final int info_text1=0x7f080003;
+        public static final int info_text2=0x7f080001;
     }
     public static final class layout {
         public static final int layout=0x7f030000;
     }
     public static final class string {
-        public static final int app_name=0x7f040000;
+        public static final int app_name=0x7f070000;
     }
     public static final class style {
-        public static final int GdxTheme=0x7f050000;
+        public static final int Base_CardView=0x7f040002;
+        public static final int CardView=0x7f040000;
+        public static final int CardView_Dark=0x7f040003;
+        public static final int CardView_Light=0x7f040004;
+        public static final int GdxTheme=0x7f040001;
     }
+    public static final class styleable {
+        /** Attributes that can be used with a CardView.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #CardView_android_minHeight android:minHeight}</code></td><td></td></tr>
+           <tr><td><code>{@link #CardView_android_minWidth android:minWidth}</code></td><td></td></tr>
+           <tr><td><code>{@link #CardView_cardBackgroundColor com.maltsev.labyrinth:cardBackgroundColor}</code></td><td></td></tr>
+           <tr><td><code>{@link #CardView_cardCornerRadius com.maltsev.labyrinth:cardCornerRadius}</code></td><td></td></tr>
+           <tr><td><code>{@link #CardView_cardElevation com.maltsev.labyrinth:cardElevation}</code></td><td></td></tr>
+           <tr><td><code>{@link #CardView_cardMaxElevation com.maltsev.labyrinth:cardMaxElevation}</code></td><td></td></tr>
+           <tr><td><code>{@link #CardView_cardPreventCornerOverlap com.maltsev.labyrinth:cardPreventCornerOverlap}</code></td><td></td></tr>
+           <tr><td><code>{@link #CardView_cardUseCompatPadding com.maltsev.labyrinth:cardUseCompatPadding}</code></td><td></td></tr>
+           <tr><td><code>{@link #CardView_contentPadding com.maltsev.labyrinth:contentPadding}</code></td><td></td></tr>
+           <tr><td><code>{@link #CardView_contentPaddingBottom com.maltsev.labyrinth:contentPaddingBottom}</code></td><td></td></tr>
+           <tr><td><code>{@link #CardView_contentPaddingLeft com.maltsev.labyrinth:contentPaddingLeft}</code></td><td></td></tr>
+           <tr><td><code>{@link #CardView_contentPaddingRight com.maltsev.labyrinth:contentPaddingRight}</code></td><td></td></tr>
+           <tr><td><code>{@link #CardView_contentPaddingTop com.maltsev.labyrinth:contentPaddingTop}</code></td><td></td></tr>
+           </table>
+           @see #CardView_android_minHeight
+           @see #CardView_android_minWidth
+           @see #CardView_cardBackgroundColor
+           @see #CardView_cardCornerRadius
+           @see #CardView_cardElevation
+           @see #CardView_cardMaxElevation
+           @see #CardView_cardPreventCornerOverlap
+           @see #CardView_cardUseCompatPadding
+           @see #CardView_contentPadding
+           @see #CardView_contentPaddingBottom
+           @see #CardView_contentPaddingLeft
+           @see #CardView_contentPaddingRight
+           @see #CardView_contentPaddingTop
+         */
+        public static final int[] CardView = {
+            0x0101013f, 0x01010140, 0x7f010000, 0x7f010001,
+            0x7f010002, 0x7f010003, 0x7f010004, 0x7f010005,
+            0x7f010006, 0x7f010007, 0x7f010008, 0x7f010009,
+            0x7f01000a
+        };
+        /**
+          <p>This symbol is the offset where the {@link android.R.attr#minHeight}
+          attribute's value can be found in the {@link #CardView} array.
+          @attr name android:minHeight
+        */
+        public static final int CardView_android_minHeight = 1;
+        /**
+          <p>This symbol is the offset where the {@link android.R.attr#minWidth}
+          attribute's value can be found in the {@link #CardView} array.
+          @attr name android:minWidth
+        */
+        public static final int CardView_android_minWidth = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.maltsev.labyrinth.R.attr#cardBackgroundColor}
+          attribute's value can be found in the {@link #CardView} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.maltsev.labyrinth:cardBackgroundColor
+        */
+        public static final int CardView_cardBackgroundColor = 2;
+        /**
+          <p>This symbol is the offset where the {@link com.maltsev.labyrinth.R.attr#cardCornerRadius}
+          attribute's value can be found in the {@link #CardView} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.maltsev.labyrinth:cardCornerRadius
+        */
+        public static final int CardView_cardCornerRadius = 3;
+        /**
+          <p>This symbol is the offset where the {@link com.maltsev.labyrinth.R.attr#cardElevation}
+          attribute's value can be found in the {@link #CardView} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.maltsev.labyrinth:cardElevation
+        */
+        public static final int CardView_cardElevation = 4;
+        /**
+          <p>This symbol is the offset where the {@link com.maltsev.labyrinth.R.attr#cardMaxElevation}
+          attribute's value can be found in the {@link #CardView} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.maltsev.labyrinth:cardMaxElevation
+        */
+        public static final int CardView_cardMaxElevation = 5;
+        /**
+          <p>This symbol is the offset where the {@link com.maltsev.labyrinth.R.attr#cardPreventCornerOverlap}
+          attribute's value can be found in the {@link #CardView} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.maltsev.labyrinth:cardPreventCornerOverlap
+        */
+        public static final int CardView_cardPreventCornerOverlap = 7;
+        /**
+          <p>This symbol is the offset where the {@link com.maltsev.labyrinth.R.attr#cardUseCompatPadding}
+          attribute's value can be found in the {@link #CardView} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.maltsev.labyrinth:cardUseCompatPadding
+        */
+        public static final int CardView_cardUseCompatPadding = 6;
+        /**
+          <p>This symbol is the offset where the {@link com.maltsev.labyrinth.R.attr#contentPadding}
+          attribute's value can be found in the {@link #CardView} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.maltsev.labyrinth:contentPadding
+        */
+        public static final int CardView_contentPadding = 8;
+        /**
+          <p>This symbol is the offset where the {@link com.maltsev.labyrinth.R.attr#contentPaddingBottom}
+          attribute's value can be found in the {@link #CardView} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.maltsev.labyrinth:contentPaddingBottom
+        */
+        public static final int CardView_contentPaddingBottom = 12;
+        /**
+          <p>This symbol is the offset where the {@link com.maltsev.labyrinth.R.attr#contentPaddingLeft}
+          attribute's value can be found in the {@link #CardView} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.maltsev.labyrinth:contentPaddingLeft
+        */
+        public static final int CardView_contentPaddingLeft = 9;
+        /**
+          <p>This symbol is the offset where the {@link com.maltsev.labyrinth.R.attr#contentPaddingRight}
+          attribute's value can be found in the {@link #CardView} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.maltsev.labyrinth:contentPaddingRight
+        */
+        public static final int CardView_contentPaddingRight = 10;
+        /**
+          <p>This symbol is the offset where the {@link com.maltsev.labyrinth.R.attr#contentPaddingTop}
+          attribute's value can be found in the {@link #CardView} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.maltsev.labyrinth:contentPaddingTop
+        */
+        public static final int CardView_contentPaddingTop = 11;
+    };
 }

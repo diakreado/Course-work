@@ -3,31 +3,43 @@ package com.maltsev.labyrinth;
 import android.os.Bundle;
 
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+import android.view.WindowManager;
+
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
 
+
 public class AndroidLauncher extends FragmentActivity implements AndroidFragmentApplication.Callbacks{
+
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-//
-//		config.useAccelerometer = false;
-//		config.useCompass = false;
-//		config.useImmersiveMode = true;
-
-		//View gameView = initializeForView(new Labyrinth(), config);
 
 		setContentView(R.layout.layout);
 
-        // Create libgdx fragment
-        GameFragment libgdxFragment = new GameFragment();
+		hideSystemAndActionBar();
+	}
 
-        // Put it inside the framelayout (which is defined in the layout.xml file).
-        getSupportFragmentManager().beginTransaction().
-                add(R.id.content_framelayout, libgdxFragment).
-                commit();
+	private void hideSystemAndActionBar() {
 
-		//initialize(new Labyrinth(), config);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+		View decorView = getWindow().getDecorView();
+		int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+		decorView.setSystemUiVisibility(uiOptions);
+	}
+
+	private void setupGameFragment() {
+		GameFragment fragment = new GameFragment();
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+		transaction.replace(R.id.game_fragment_container, fragment);
+		transaction.commit();
+	}
+
+	public void foo(View v) {
+
+		setupGameFragment();
 	}
 
     @Override
