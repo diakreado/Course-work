@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AndroidLauncher">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/my_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="horizontal">
+
+
+
+    </android.support.v7.widget.RecyclerView>
+
+    <FrameLayout
+
+        android:id="@+id/game_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+    </FrameLayout>
+
+</RelativeLayout>
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/liner_layout"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginRight="-500dp"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<include layout="@layout/card_main_1" />-->
+
+    <!--<include layout="@layout/card_main_1" />-->
+
+    <!--<include layout="@layout/card_main_1" />-->
+
+    <!--<include layout="@layout/card_main_1" />-->
+
+
+
+    <!--android:background="@color/main_background"-->
+
+    <!--</LinearLayout>
+-->
+
+    <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+    <!--android:scrollbars="none"-->
