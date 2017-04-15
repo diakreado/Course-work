@@ -1,11 +1,7 @@
 <resources>
 
-    <style name="GdxTheme" parent="android:Theme.Material.Light.DarkActionBar">
-        <item name="android:navigationBarColor">@android:color/background_dark</item>
-    </style>
+    <style name="GdxTheme" parent="android:Theme.Material.Light.DarkActionBar">    </style>
 
     <style name="Widget.AppCompat.Button.Borderless" parent="@android:style/Widget.Material.Button.Borderless"/>
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

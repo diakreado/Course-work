@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Labyrinth</string>
+    <string name="app_name">Лабиринт</string>
 
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
+    <string name="name_of_button_1">Начать игру</string>
+    <string name="name_of_button_2">Конпка_2</string>
+
 </resources>

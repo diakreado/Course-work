@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\AndroidManifest.xml:2:1-32:12
+ADDED from C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\AndroidManifest.xml:2:1-38:12
 	package
 		ADDED from C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\AndroidManifest.xml:3:5-36
 		INJECTED from C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\AndroidManifest.xml
@@ -53,7 +53,7 @@ ADDED from C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\Android
 	android:name
 		ADDED from C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\AndroidManifest.xml:13:22-77
 application
-ADDED from C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\AndroidManifest.xml:15:5-30:19
+ADDED from C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\AndroidManifest.xml:15:5-36:19
 MERGED from [com.android.support:design:25.3.1] C:\Users\Mikle\.android\build-cache\1e68ec12b11663fcf9403409e46ce729e3eb1c9f\output\AndroidManifest.xml:29:5-20
 MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\Mikle\.android\build-cache\41796a178b60623eb838c3686366be53e33b0fa1\output\AndroidManifest.xml:29:5-20
 MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\Mikle\.android\build-cache\2b6b126d8981f8b8f2f62137de1f653c7475d6d9\output\AndroidManifest.xml:26:5-20
@@ -94,6 +94,18 @@ category#android.intent.category.LAUNCHER
 ADDED from C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\AndroidManifest.xml:27:17-77
 	android:name
 		ADDED from C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\AndroidManifest.xml:27:27-74
+activity#com.maltsev.labyrinth.InfoViewActivity
+ADDED from C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\AndroidManifest.xml:30:9-35:72
+	android:screenOrientation
+		ADDED from C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\AndroidManifest.xml:33:13-50
+	android:label
+		ADDED from C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\AndroidManifest.xml:32:13-39
+	android:configChanges
+		ADDED from C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\AndroidManifest.xml:34:13-83
+	android:theme
+		ADDED from C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\AndroidManifest.xml:35:13-69
+	android:name
+		ADDED from C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\AndroidManifest.xml:31:13-66
 meta-data#android.support.VERSION
 ADDED from [com.android.support:design:25.3.1] C:\Users\Mikle\.android\build-cache\1e68ec12b11663fcf9403409e46ce729e3eb1c9f\output\AndroidManifest.xml:25:5-27:34
 MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\Mikle\.android\build-cache\41796a178b60623eb838c3686366be53e33b0fa1\output\AndroidManifest.xml:25:5-27:34
