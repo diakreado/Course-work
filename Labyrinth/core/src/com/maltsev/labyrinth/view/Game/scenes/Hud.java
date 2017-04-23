@@ -52,11 +52,6 @@ public class Hud implements Disposable, Resizable {
     private Image image;
     private boolean isItPasuse = false;
 
-    private Skin skinForButton;
-    private TextureAtlas atlasUiForButton;
-
-    private ImageTextButton.ImageTextButtonStyle buttonStyle;
-
     public Hud(final Labyrinth game, final GameScreen gameScreen, IPresenter presenter) {
 
         this.game = game;
@@ -82,7 +77,7 @@ public class Hud implements Disposable, Resizable {
         skin = new Skin(atlasUi);
         pauseButton = new ImageButton(skin.getDrawable("pause"), skin.getDrawable("pause1"));
 
-        registeredListenerAgain();
+        //registeredListenerAgain();
 
         backPartOfControl = new Texture("hud_gui/shadedDark07.png");
         forwardPartOfControl = new Texture("hud_gui/shadedDark01.png");
@@ -114,31 +109,9 @@ public class Hud implements Disposable, Resizable {
         image = new Image(border);
         image.setPosition(375,220);
 
-        atlasUiForButton = new TextureAtlas("menu_ui/menu.pack");
-
-        skinForButton = new Skin(atlasUiForButton);
-
-        buttonStyle = new ImageTextButton.ImageTextButtonStyle();
-        buttonStyle.up = skinForButton.getDrawable("blue_button04");
-        buttonStyle.down = skinForButton.getDrawable("blue_button04_down");
-
-        buttonStyle.font = game.fontGenerator.getFont();
-
-        ImageTextButton backToMenu = new ImageTextButton("Back to Menu",buttonStyle);
-
-        backToMenu.addListener(new ClickListener() {
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-
-                game.dispose();
-            }
-        });
-
         Table table = new Table();
         table.setFillParent(true);
         table.center();
-        table.add(backToMenu);            //todo Отрисовывать конец игры через hud
 
 
         pauseStage.addActor(image);

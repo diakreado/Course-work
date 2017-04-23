@@ -95,15 +95,15 @@ ADDED from C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\Android
 	android:name
 		ADDED from C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\AndroidManifest.xml:27:27-74
 activity#com.maltsev.labyrinth.InfoViewActivity
-ADDED from C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\AndroidManifest.xml:30:9-35:72
+ADDED from C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\AndroidManifest.xml:30:9-35:74
 	android:screenOrientation
 		ADDED from C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\AndroidManifest.xml:33:13-50
 	android:label
-		ADDED from C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\AndroidManifest.xml:32:13-39
+		ADDED from C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\AndroidManifest.xml:32:13-45
 	android:configChanges
 		ADDED from C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\AndroidManifest.xml:34:13-83
 	android:theme
-		ADDED from C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\AndroidManifest.xml:35:13-69
+		ADDED from C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\AndroidManifest.xml:35:13-71
 	android:name
 		ADDED from C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\AndroidManifest.xml:31:13-66
 meta-data#android.support.VERSION

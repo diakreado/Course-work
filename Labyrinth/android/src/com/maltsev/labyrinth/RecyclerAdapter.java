@@ -11,9 +11,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.view.View;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
-    private String[] mDataset;
+    private JSONArray mDataset;
     private MainFragment fragment;
     private int numberOfCard = 0;
     private Context context;
@@ -31,7 +34,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public RecyclerAdapter(String[] myDataset, MainFragment fragment) {
+    public RecyclerAdapter(JSONArray myDataset, MainFragment fragment) {
         mDataset = myDataset;
         this.fragment = fragment;
         this.context = fragment.getContext();
@@ -46,19 +49,24 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 .inflate(R.layout.card_main, parent, false);
         // set the view's size, margins, paddings and layout parameters
 
-        TextView textViewTitle = (TextView) v.findViewById(R.id.tv_card_main_1_title);
-        textViewTitle.setText(mDataset[numberOfCard]);
+        TextView textViewTitle = (TextView) v.findViewById(R.id.tv_card_main_title_1);
+        LevelInfo levelInfo = JSON.parseObject(mDataset.getString(numberOfCard), LevelInfo.class);
+        textViewTitle.setText(levelInfo.getTitle());
         numberOfCard++;
 
-        TextView textViewSubtitle = (TextView) v.findViewById(R.id.tv_card_main1_subtitle);
-        textViewSubtitle.setText("уровень №" + numberOfCard);
+        TextView textViewSubtitle = (TextView) v.findViewById(R.id.tv_card_main_subtitle_1);
+        textViewSubtitle.setText(levelInfo.getSubTitle());
+
+        TextView textViewDescription = (TextView) v.findViewById(R.id.tv_card_main_description);
+        textViewDescription.setText(levelInfo.getDescription());
+
 
 
         v.setOnClickListener(fragment);
         v.setOnTouchListener(fragment);
 
-        v.findViewById(R.id.btn_card_main1_action1).setOnClickListener(fragment);
-        v.findViewById(R.id.btn_card_main1_action2).setOnClickListener(fragment);
+        v.findViewById(R.id.btn_card_main_1_action1).setOnClickListener(fragment);
+        v.findViewById(R.id.btn_card_main_1_action2).setOnClickListener(fragment);
 
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -75,17 +83,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, InfoViewActivity.class);
-                context.startActivity(intent, ActivityOptions.makeScaleUpAnimation(
-                        view,0,0, view.getMeasuredWidth(), view.getMeasuredHeight()).toBundle());
+
+                intent.putExtra("title", ((TextView) view.findViewById(R.id.tv_card_main_title_1)).getText());
+                intent.putExtra("subtitle", ((TextView) view.findViewById(R.id.tv_card_main_subtitle_1)).getText());
+                intent.putExtra("description", ((TextView) view.findViewById(R.id.tv_card_main_description)).getText());
+
+                context.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation
+                        ((Activity) context, view.findViewById(R.id.img_main_card_1), "shareView").toBundle());
             }
         });
-
-
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return mDataset.size();
     }
 }
