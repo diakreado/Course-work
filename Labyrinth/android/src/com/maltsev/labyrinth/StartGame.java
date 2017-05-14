@@ -6,5 +6,5 @@ package com.maltsev.labyrinth;
 
 interface StartGame {
 
-    void startGame();
+    void startGame(int numberOfField);
 }

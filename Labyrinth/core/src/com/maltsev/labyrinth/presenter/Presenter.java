@@ -11,7 +11,6 @@ import com.maltsev.labyrinth.presenter.interfaces.IGameScreen;
 import com.maltsev.labyrinth.presenter.interfaces.IProtagonistDrawer;
 import com.maltsev.labyrinth.presenter.tempdata.PointOnTheScreen;
 import com.maltsev.labyrinth.presenter.tempdata.SizeOfTexture;
-import static com.maltsev.labyrinth.presenter.ParsingFile.getFieldOnTheNumber;
 import static com.maltsev.labyrinth.presenter.transkatorofcoordinate.TranslatorOfCoordinate.*;
 
 import java.util.ArrayDeque;
@@ -55,13 +54,10 @@ public class Presenter implements IPresenter, GameOverListener, FoundKeyListener
     private boolean isKeyFound = false;
 
 
-    public Presenter(IGameScreen view, int numberOfTheField) {
+    public Presenter(IGameScreen view, String newField) {
 
         this.gameScreen = view;
         model = new Model();
-
-
-        String newField = getFieldOnTheNumber(numberOfTheField);
 
         try {
 

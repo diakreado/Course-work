@@ -18,12 +18,10 @@ import android.widget.RelativeLayout;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.ArrayList;
 
 public class MainFragment extends Fragment implements  View.OnClickListener, View.OnTouchListener {
 
@@ -45,63 +43,83 @@ public class MainFragment extends Fragment implements  View.OnClickListener, Vie
         mLayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        ArrayList<LevelInfo> levelInfo = new ArrayList<>();
-        levelInfo.add(new LevelInfo("Уровень 1","карткое описание 1","полное описание 1"));
-        levelInfo.add(new LevelInfo("Уровень 2","карткое описание 2","полное описание 2"));
-        levelInfo.add(new LevelInfo("Уровень 3","карткое описание 3","полное описание 3"));
-        levelInfo.add(new LevelInfo("Уровень 4","карткое описание 4","полное описание 4"));
-        levelInfo.add(new LevelInfo("Уровень 5","карткое описание 5","полное описание 5"));
-        levelInfo.add(new LevelInfo("Уровень 6","карткое описание 6","полное описание 6"));
-
-        String jsonString = JSON.toJSONString(levelInfo);
-
         JSONArray newLevelInfo = new JSONArray();
 
+        String readString = "";
         try {
             File file = new File(getContext().getExternalFilesDir(""), "labyrinth");
-
-            FileOutputStream fOut = new FileOutputStream(file);
-            OutputStreamWriter osw = new OutputStreamWriter(fOut);
-            osw.write(jsonString);
-            osw.flush();
-            osw.close();
-
             FileInputStream fIn = new FileInputStream(file);
             InputStreamReader isr = new InputStreamReader(fIn);
-            char[] inputBuffer = new char[jsonString.length()];
-            isr.read(inputBuffer);
+            BufferedReader bufferedReader = new BufferedReader(isr);
+            String polka = bufferedReader.readLine();
+            while (polka!=null) {
+                readString+=polka + '\n';
+                polka = bufferedReader.readLine();
+            }
             isr.close();
-            String readString = new String(inputBuffer);
+            bufferedReader.close();
 
             newLevelInfo = JSON.parseArray(readString);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-
-        String polka[] = {"Карточка №1","Карточка №2","Карточка №3","Карточка №4","Карточка №5"};
-
+//        ArrayList<LevelInfo> levelInfo = new ArrayList<>();
+//        levelInfo.add(new LevelInfo("Уровень 1","карткое описание 1","полное описание 1"));
+//        levelInfo.add(new LevelInfo("Уровень 2","карткое описание 2","полное описание 2"));
+//        levelInfo.add(new LevelInfo("Уровень 3","карткое описание 3","полное описание 3"));
+//        levelInfo.add(new LevelInfo("Уровень 4","карткое описание 4","полное описание 4"));
+//        levelInfo.add(new LevelInfo("Уровень 5","карткое описание 5","полное описание 5"));
+//        levelInfo.add(new LevelInfo("Уровень 6","карткое описание 6","полное описание 6"));
+//        levelInfo.add(new LevelInfo("Уровень 7","карткое описание 7","полное описание 7"));
+//        levelInfo.add(new LevelInfo("Уровень 8","карткое описание 8","полное описание 8"));
+//        levelInfo.add(new LevelInfo("Уровень 9","карткое описание 9","полное описание 9"));
+//        levelInfo.add(new LevelInfo("Уровень 10","карткое описание 10","полное описание 10"));
+//        levelInfo.add(new LevelInfo("Уровень 11","карткое описание 11","полное описание 11"));
+//        levelInfo.add(new LevelInfo("Уровень 12","карткое описание 12","полное описание 12"));
+//        levelInfo.add(new LevelInfo("Уровень 13","карткое описание 13","полное описание 13"));
+//
+//        String jsonString = JSON.toJSONString(levelInfo);
+//
+//        JSONArray newLevelInfo = new JSONArray();
+//
+//        try {
+//            File file = new File(getContext().getExternalFilesDir(""), "labyrinth");
+//
+//            FileOutputStream fOut = new FileOutputStream(file);
+//            OutputStreamWriter osw = new OutputStreamWriter(fOut);
+//            osw.write(jsonString);
+//            osw.flush();
+//            osw.close();
+//
+//            FileInputStream fIn = new FileInputStream(file);
+//            InputStreamReader isr = new InputStreamReader(fIn);
+//            char[] inputBuffer = new char[jsonString.length()];
+//            isr.read(inputBuffer);
+//            isr.close();
+//            String readString = new String(inputBuffer);
+//
+//            newLevelInfo = JSON.parseArray(readString);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         mAdapter = new RecyclerAdapter(newLevelInfo, this);
         mRecyclerView.setAdapter(mAdapter);
 
-//         Inflate the layout for this fragment
         return mRelativeLayout;
     }
 
     @Override
     public void onClick(View view) {
-
         switch (view.getId()) {
-
             case R.id.btn_card_main_1_action1:
-                ((StartGame)getActivity()).startGame();
+                int num = (int)view.getTag();
+                ((StartGame)getActivity()).startGame(num);
                 break;
-
             case R.id.btn_card_main_1_action2:
-                System.out.println(view.getClass());
-                ((Button)view).setText(counter);
+                ((Button)view).setText(Integer.toString(counter));
                 counter++;
                 break;
         }

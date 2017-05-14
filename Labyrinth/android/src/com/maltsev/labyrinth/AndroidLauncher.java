@@ -1,6 +1,7 @@
 package com.maltsev.labyrinth;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.os.Environment;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
+import com.maltsev.labyrinth.view.utils.ViewSwitcher;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,7 +24,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 
-public class AndroidLauncher extends FragmentActivity implements AndroidFragmentApplication.Callbacks, StartGame {
+public class AndroidLauncher extends FragmentActivity implements AndroidFragmentApplication.Callbacks, StartGame, GetterOfNumberField, ViewSwitcher {
+
+	private GameFragment fragment = new GameFragment();;
 
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
@@ -49,20 +53,32 @@ public class AndroidLauncher extends FragmentActivity implements AndroidFragment
 
 
 	private void setupGameFragment() {
-		GameFragment fragment = new GameFragment();
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		transaction.replace(R.id.game_fragment_container, fragment);
 		transaction.commit();
 	}
 
 	@Override
-	public void startGame() {
-
+	public void startGame(int numberOfField) {
+        this.numberOfField = numberOfField;
 		setupGameFragment();
 	}
+
+    public int getNumberOfField() {
+        return numberOfField;
+    }
+
+    private int numberOfField = 0;
 
     @Override
     public void exit() {
 
     }
+
+	@Override
+	public void exitFromGame() {
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+		transaction.remove(fragment);
+		transaction.commit();
+	}
 }

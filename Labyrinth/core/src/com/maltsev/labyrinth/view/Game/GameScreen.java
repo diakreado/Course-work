@@ -68,35 +68,19 @@ public class GameScreen implements Screen, IGameScreen {
 
         this.game = game;
         batch  = new SpriteBatch();
-
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Labyrinth.V_WIDTH, Labyrinth.V_HEIGHT);
-
         loadingOfTextures();
-
         typeOfControl = game.infoAboutSettings.getTypeOfTheControl();
-
         touchPos = new Vector3();
-
         fieldDrawer = new FieldDrawer(batch);
-
-
         protagonistDrawer = new ProtagonistDrawer(batch);
-
-        presenter = new Presenter(this, game.infoAboutSettings.getNumberOfGameField());
-
-
-
+        presenter = new Presenter(this, game.infoAboutSettings.getGameField());
         hud = new Hud(game,this, presenter);
         fonGameScreen = new Fon(batch);
-
-
-
         Gdx.input.setInputProcessor(hud.hudStage);
-
         camera.position.set(protagonistDrawer.getPositionOfProtagonist());
         camera.update();
-
         stage = new Stage();
     }
 
@@ -108,14 +92,12 @@ public class GameScreen implements Screen, IGameScreen {
      * Здесь фиксируется размер Блока, из которого будет конструироваться игровое поле (дорога, по которой идёт протагонист)
      */
     private  void loadingOfTextures() {
-
         exit = new Texture("game_ui/exit.png");
         doorClose = new Texture("game_ui/doorClose.png");
         doorOpen = new Texture("game_ui/doorOpen.png");
         key = new Texture("game_ui/key.png");
         infoGameEnd = new Texture("game_ui/grey_panel.png");
     }
-
 
     @Override
     public void dispose () {
@@ -136,67 +118,51 @@ public class GameScreen implements Screen, IGameScreen {
 
     @Override
     public SizeOfTexture getSizeOfBlock() {
-
         return fieldDrawer.getSizeOfBlock();
     }
 
     @Override
     public void lockInput() {
-
         lockInput = true;
     }
 
     @Override
     public void unlockInput() {
-
         lockInput = false;
     }
 
     @Override
     public void startMovement() {
-
         isInMotion = true;
     }
 
     @Override
     public void finishMovement() {
-
         isInMotion = false;
     }
-
-
 
     private void handelInput(float delta) {
 
         if (Gdx.input.justTouched() && !lockInput && !typeOfControl) {
-
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-
             camera.unproject(touchPos);
-
             presenter.moveProtagonist(touchPos.x, touchPos.y);
         }
-
         if(typeOfControl && !lockInput)
             hud.handleInput();
     }
 
     public void setPause() {
-
         lockInput();
         Gdx.input.setInputProcessor(hud.pauseStage);
         isItPause = true;
     }
 
     private void update(float delta) {
-
         handelInput(delta);
-
         if (isInMotion)
             protagonistDrawer.setPositionOfProtagonist(presenter.getPositionOfMovingProtagonist(delta));
-
         hud.setTime(delta);
-
         hud.setKeys(presenter.getNumberOfKeys());
     }
 
@@ -204,90 +170,70 @@ public class GameScreen implements Screen, IGameScreen {
      * Здесь происходит вся отрисовка
      */
     private void draw(float delta) {
-
         presenter.drawField();
         update(delta);
-
         protagonistDrawer.draw();
-
         if(isGameEnd) {
-
             batch.draw(infoGameEnd, protagonistDrawer.getPositionOfProtagonist().x - infoGameEnd.getWidth()/2,
                     protagonistDrawer.getPositionOfProtagonist().y - infoGameEnd.getHeight()/2);
-
             waitingAction();
         }
-
         camera.position.set(protagonistDrawer.getPositionOfProtagonist());
         camera.update();
     }
 
     private void waitingAction() {
-
         if (Gdx.input.justTouched()) {
-
             this.close();
         }
     }
 
     @Override
     public void render (float delta) {
-
         fonGameScreen.stage.draw();
-
         batch.setProjectionMatrix(camera.combined);
-
         // Следует вызывать методы отрисовки этого экрана только в пределах begin~end
         batch.begin();
         draw(delta);
         batch.end();
 
         hud.hudStage.draw();
-
         if(isItPause)
             hud.pauseStage.draw();
     }
 
     @Override
     public IProtagonistDrawer getProtagonistDrawer() {
-
         return protagonistDrawer;
     }
 
     @Override
     public IFieldDrawer getFieldDrawer() {
-
         return fieldDrawer;
     }
 
     @Override
     public void drawExit(PointOnTheScreen point) {
-
         batch.draw(exit, point.getX(), point.getY());
     }
 
     @Override
     public void drawKey(PointOnTheScreen point) {
-
         batch.draw(key, point.getX(), point.getY());
     }
 
     @Override
     public void drawCloseDoor(PointOnTheScreen point) {
-
         batch.draw(doorClose, point.getX(), point.getY());
     }
 
     @Override
     public void drawOpenDoor(PointOnTheScreen point) {
-
         batch.draw(doorOpen, point.getX(), point.getY());
     }
 
     public void close() {
-
-
-        dispose();
+        game.closeGameScreen();
     }
 
     @Override

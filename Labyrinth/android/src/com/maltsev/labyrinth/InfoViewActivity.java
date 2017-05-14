@@ -20,8 +20,6 @@ public class InfoViewActivity extends AppCompatActivity {
             String subtitle = extras.getString("subtitle");
             String description = extras.getString("description");
 
-            System.out.println("123" + description);
-
             TextView textViewTitle = (TextView) findViewById(R.id.tv_card_main_title);
             textViewTitle.setText(title);
 

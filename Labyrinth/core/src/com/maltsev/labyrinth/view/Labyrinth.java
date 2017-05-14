@@ -5,6 +5,7 @@ import com.badlogic.gdx.Game;
 import com.maltsev.labyrinth.view.game.GameScreen;
 import com.maltsev.labyrinth.view.utils.FontGenerator;
 import com.maltsev.labyrinth.view.utils.InfoAboutSettings;
+import com.maltsev.labyrinth.view.utils.ViewSwitcher;
 
 /**
  * Главный класс из пакета view
@@ -23,52 +24,39 @@ public class Labyrinth extends Game {
     public static final int V_HEIGHT = 1080;
 
     private GameScreen gameScreen;
-
-    /**
-     * Генератор шрифтов, с его помощь можно создать шрифт определённого размера
-     */
+    private ViewSwitcher switcher;
     public FontGenerator fontGenerator;
-
-    /**
-     * Структура, которая использауется для передачи настроечных данных
-     */
     public InfoAboutSettings infoAboutSettings;
 
+    public Labyrinth(ViewSwitcher switcher,InfoAboutSettings infoAboutSettings) {
+        this.infoAboutSettings = infoAboutSettings;
+        this.switcher = switcher;
+    }
 
     @Override
     public void create() {
-
         fontGenerator = new FontGenerator();
-        infoAboutSettings = new InfoAboutSettings(0,false);
-
         setGameScreen();
     }
 
-    /**
-     * Установка главным экраном - GameScreen
-     */
     public void setGameScreen() {
-
-        boolean choice = false;
-
-        infoAboutSettings = new InfoAboutSettings(1, choice);
         gameScreen = new GameScreen(this);
         this.setScreen(gameScreen);
     }
 
+    public void closeGameScreen() {
+        gameScreen.dispose();
+        switcher.exitFromGame();
+    }
+
     @Override
     public void render() {
-
         super.render();
     }
 
     @Override
     public void dispose() {
-
         fontGenerator.dispose();
-
-        gameScreen.dispose();
-
         super.dispose();
     }
 }

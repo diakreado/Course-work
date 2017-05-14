@@ -2,9 +2,9 @@ package com.maltsev.labyrinth;
 
 class LevelInfo {
 
-    private String description = "";
     private String title = "";
     private String subTitle = "";
+    private String description = "";
 
     LevelInfo(String title,String subTitle,String description) {
         this.title = title;
@@ -14,14 +14,6 @@ class LevelInfo {
 
     LevelInfo() {
 
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getTitle() {
@@ -38,5 +30,13 @@ class LevelInfo {
 
     public void setSubTitle(String subTitle) {
         this.subTitle = subTitle;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

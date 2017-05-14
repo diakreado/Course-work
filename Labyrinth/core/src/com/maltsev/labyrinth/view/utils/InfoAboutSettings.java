@@ -3,7 +3,7 @@ package com.maltsev.labyrinth.view.utils;
 
 public class InfoAboutSettings {
 
-    private int numberOfGameField = 0;
+    private String gameField = "";
 
     /**
      * true - контроллер
@@ -11,19 +11,18 @@ public class InfoAboutSettings {
      */
     private boolean typeOfTheControl = false;
 
-    public InfoAboutSettings(int numberOfGameField, boolean typeOfTheControl) {
+    public InfoAboutSettings(String gameField, boolean typeOfTheControl) {
 
-        this.numberOfGameField = numberOfGameField;
+        this.gameField = gameField;
         this.typeOfTheControl = typeOfTheControl;
     }
 
-    public int getNumberOfGameField() {
-
-        return numberOfGameField;
+    public String getGameField() {
+        return gameField;
     }
 
     public boolean getTypeOfTheControl() {
-
         return typeOfTheControl;
     }
+
 }
