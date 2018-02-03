@@ -2,5 +2,5 @@
 .idea
 *build*
 classes
-*iml
 local.properties
+!build.gradle
