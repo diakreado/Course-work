@@ -6,8 +6,8 @@ public class InfoAboutSettings {
     private String gameField = "";
 
     /**
-     * true - контроллер
-     * false - касание
+     * true - joystick
+     * false - touch
      */
     private boolean typeOfTheControl = false;
 

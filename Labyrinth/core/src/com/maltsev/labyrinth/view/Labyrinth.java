@@ -20,7 +20,15 @@ public class Labyrinth extends Game {
     private MenuScreen menuScreen;
 
     public FontGenerator fontGenerator;
-    public InfoAboutSettings infoAboutSettings = new InfoAboutSettings("111111111111111111",true);
+    public InfoAboutSettings infoAboutSettings = new InfoAboutSettings(
+            "11111111111d11111f\n" +
+                      "1111111111110g0t0t\n" +
+                      "111111111111k111s1\n" +
+                      "tttttttttttttttttt\n" +
+                      "tttttttttttttttttt\n" +
+                      "ttttttttgggttttttt\n" +
+                      "tttttttttttttttttt\n" +
+                      "tttttttttttttttttt",true);
 
     public Labyrinth() {
     }
@@ -41,10 +49,13 @@ public class Labyrinth extends Game {
 
     public void closeGameScreen() {
         gameScreen.dispose();
+
+        setMenuScreen();
     }
 
     public void setMenuScreen() {
-        this.setScreen(menuScreen);
+        setScreen(menuScreen);
+        menuScreen.activateScreen();
     }
 
     public void closeMenuScreen() {

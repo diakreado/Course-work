@@ -30,6 +30,9 @@ public class MenuScreen implements Screen {
     private Table tableForTitle;
     private Table tableForButtons;
 
+    private ImageTextButton startButton;
+    private ImageTextButton settingsButton;
+
     private final Labyrinth labyrinth;
 
 
@@ -47,24 +50,11 @@ public class MenuScreen implements Screen {
                 skin.getDrawable("blue_button04"), skin.getDrawable("blue_button04_down"),
                 skin.getDrawable("blue_button04"), labyrinth.fontGenerator.getFont());
 
-        ImageTextButton startButton = new ImageTextButton("Start", imageTextButtonStyle);
-        ImageTextButton settingsButton = new ImageTextButton("Settings", imageTextButtonStyle);
+        startButton = new ImageTextButton("Start", imageTextButtonStyle);
+        settingsButton = new ImageTextButton("Settings", imageTextButtonStyle);
 
-        ClickListener startListener = new ClickListener() {
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                labyrinth.setGameScreen();
-            }
-        };
-        ClickListener settingsListener = new ClickListener() {
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Settings");
-            }
-        };
-
-        startButton.addListener(startListener);
-        settingsButton.addListener(settingsListener);
+        registerStartListener();
+        registerSettingListener();
 
         tableForButtons = new Table();
         tableForButtons.left();
@@ -73,6 +63,32 @@ public class MenuScreen implements Screen {
         tableForButtons.add(startButton).padBottom(bottomPadding);
         tableForButtons.row();
         tableForButtons.add(settingsButton).padBottom(bottomPadding + 100);
+    }
+
+    private void registerStartListener() {
+        ClickListener startListener = new ClickListener() {
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                labyrinth.setGameScreen();
+                registerStartListener();
+            }
+        };
+        startButton.addListener(startListener);
+    }
+
+    private void registerSettingListener() {
+        ClickListener settingsListener = new ClickListener() {
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("Settings");
+                registerSettingListener();
+            }
+        };
+        settingsButton.addListener(settingsListener);
+    }
+
+    public void activateScreen() {
+        Gdx.input.setInputProcessor(stage);
     }
 
     private void initializeTableForTitle() {
@@ -116,8 +132,6 @@ public class MenuScreen implements Screen {
         stage = new Stage(viewport);
         stage.addActor(table);
         stage.getViewport().setScreenSize(Labyrinth.V_WIDTH, Labyrinth.V_HEIGHT);
-
-        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
