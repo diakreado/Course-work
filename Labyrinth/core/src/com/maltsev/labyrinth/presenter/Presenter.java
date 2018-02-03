@@ -1,45 +1,37 @@
 package com.maltsev.labyrinth.presenter;
 
-import com.maltsev.labyrinth.model.IModel;
 import com.maltsev.labyrinth.model.Model;
-import com.maltsev.labyrinth.model.analyzer.event.gameover.GameOverListener;
 import com.maltsev.labyrinth.model.analyzer.event.keysanddoors.doors.OpenDoorListener;
-import com.maltsev.labyrinth.model.analyzer.event.keysanddoors.keys.FoundKeyListener;
-import com.maltsev.labyrinth.model.field.FieldIsEmptyException;
-import com.maltsev.labyrinth.model.field.PointOnTheField;
-import com.maltsev.labyrinth.presenter.interfaces.IGameScreen;
-import com.maltsev.labyrinth.presenter.interfaces.IProtagonistDrawer;
 import com.maltsev.labyrinth.presenter.tempdata.PointOnTheScreen;
-import com.maltsev.labyrinth.presenter.tempdata.SizeOfTexture;
-import static com.maltsev.labyrinth.presenter.transkatorofcoordinate.TranslatorOfCoordinate.*;
+import com.maltsev.labyrinth.presenter.transkatorofcoordinate.TranslatorOfCoordinate;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class Presenter implements IPresenter, GameOverListener, FoundKeyListener, OpenDoorListener {
+public class Presenter implements IPresenter, com.maltsev.labyrinth.model.analyzer.event.gameover.GameOverListener, com.maltsev.labyrinth.model.analyzer.event.keysanddoors.keys.FoundKeyListener, OpenDoorListener {
 
-    IModel model;
-    private IGameScreen gameScreen;
+    com.maltsev.labyrinth.model.IModel model;
+    private com.maltsev.labyrinth.presenter.interfaces.IGameScreen gameScreen;
 
-    private SizeOfTexture sizeOfBlock;
-    private List<PointOnTheField> doorsClosed;
-    private List<PointOnTheField> doorsOpened;
-    private List<PointOnTheField> keys;
+    private com.maltsev.labyrinth.presenter.tempdata.SizeOfTexture sizeOfBlock;
+    private List<com.maltsev.labyrinth.model.field.PointOnTheField> doorsClosed;
+    private List<com.maltsev.labyrinth.model.field.PointOnTheField> doorsOpened;
+    private List<com.maltsev.labyrinth.model.field.PointOnTheField> keys;
 
-    private ArrayDeque<PointOnTheField> way;
+    private ArrayDeque<com.maltsev.labyrinth.model.field.PointOnTheField> way;
 
     private GameFieldDrawer gameFieldDrawer;
 
     private PointOnTheScreen pointOfMovement;
-    private PointOnTheField pointOfMovementInTheFiledCoordinate;  //TODO сомнительное поле
+    private com.maltsev.labyrinth.model.field.PointOnTheField pointOfMovementInTheFiledCoordinate;  //TODO сомнительное поле
 
     private double timer = 0;
     private double rateOfProtagonist = 0.185;
     private float frequencyOfIntermediateSteps = 10.88f;
 
-    private IProtagonistDrawer protagonistDrawer;
+    private com.maltsev.labyrinth.presenter.interfaces.IProtagonistDrawer protagonistDrawer;
 
     private int rangeOfStep = 7;
 
@@ -54,32 +46,29 @@ public class Presenter implements IPresenter, GameOverListener, FoundKeyListener
     private boolean isKeyFound = false;
 
 
-    public Presenter(IGameScreen view, String newField) {
-
+    public Presenter(com.maltsev.labyrinth.presenter.interfaces.IGameScreen view, String newField) {
         this.gameScreen = view;
         model = new Model();
 
         try {
-
             model.setGameField(newField);
         }
-        catch (FieldIsEmptyException ex){
+        catch (com.maltsev.labyrinth.model.field.FieldIsEmptyException ex){
 
             System.out.println(ex);
-
             String defaultField = "11111\n11111";
 
             try {
                 model.setGameField(defaultField);
             }
-            catch (FieldIsEmptyException error) {
+            catch (com.maltsev.labyrinth.model.field.FieldIsEmptyException error) {
 
                 throw new Error("Всё очень плохо");
             }
         }
 
         sizeOfBlock = view.getSizeOfBlock();
-        initializeOfTranslator(sizeOfBlock);
+        TranslatorOfCoordinate.initializeOfTranslator(sizeOfBlock);
 
         model.addListenerOfGameOver(this);
         model.addListenerOfFoundKey(this);
@@ -93,7 +82,7 @@ public class Presenter implements IPresenter, GameOverListener, FoundKeyListener
         gameFieldDrawer = new GameFieldDrawer(view.getFieldDrawer(), model);
 
         this.protagonistDrawer = view.getProtagonistDrawer();
-        protagonistDrawer.setPositionOfProtagonist(translatePointFieldToScreen(model.getPositionOfProtagonist()));
+        protagonistDrawer.setPositionOfProtagonist(TranslatorOfCoordinate.translatePointFieldToScreen(model.getPositionOfProtagonist()));
     }
 
 
@@ -116,7 +105,7 @@ public class Presenter implements IPresenter, GameOverListener, FoundKeyListener
      */
     public void drawExit() {
 
-        gameScreen.drawExit(translatePointFieldToScreen(model.getFinishPosition()));
+        gameScreen.drawExit(TranslatorOfCoordinate.translatePointFieldToScreen(model.getFinishPosition()));
     }
 
     /**
@@ -125,9 +114,9 @@ public class Presenter implements IPresenter, GameOverListener, FoundKeyListener
      */
     public void drawKeys() {
 
-        for (PointOnTheField point : keys) {
+        for (com.maltsev.labyrinth.model.field.PointOnTheField point : keys) {
 
-            gameScreen.drawKey(translatePointFieldToScreen(point));
+            gameScreen.drawKey(TranslatorOfCoordinate.translatePointFieldToScreen(point));
         }
     }
 
@@ -137,10 +126,10 @@ public class Presenter implements IPresenter, GameOverListener, FoundKeyListener
      */
     public void drawClosedDoors() {
 
-        for (PointOnTheField point : doorsClosed) {
+        for (com.maltsev.labyrinth.model.field.PointOnTheField point : doorsClosed) {
 
 
-            gameScreen.drawCloseDoor(translatePointFieldToScreen(point));
+            gameScreen.drawCloseDoor(TranslatorOfCoordinate.translatePointFieldToScreen(point));
         }
     }
 
@@ -150,9 +139,9 @@ public class Presenter implements IPresenter, GameOverListener, FoundKeyListener
      */
     public void drawOpenedDoors() {
 
-        for (PointOnTheField point : doorsOpened) {
+        for (com.maltsev.labyrinth.model.field.PointOnTheField point : doorsOpened) {
 
-            gameScreen.drawOpenDoor(translatePointFieldToScreen(point));
+            gameScreen.drawOpenDoor(TranslatorOfCoordinate.translatePointFieldToScreen(point));
         }
     }
 
@@ -188,7 +177,7 @@ public class Presenter implements IPresenter, GameOverListener, FoundKeyListener
         gameScreen.startMovement();
         timer = 0;
         pointOfMovementInTheFiledCoordinate = way.poll();
-        pointOfMovement = translatePointFieldToScreen(pointOfMovementInTheFiledCoordinate);
+        pointOfMovement = TranslatorOfCoordinate.translatePointFieldToScreen(pointOfMovementInTheFiledCoordinate);
     }
 
     /**
@@ -233,7 +222,7 @@ public class Presenter implements IPresenter, GameOverListener, FoundKeyListener
 
             timer = 0;
             pointOfMovementInTheFiledCoordinate = way.poll();
-            pointOfMovement = translatePointFieldToScreen(pointOfMovementInTheFiledCoordinate);
+            pointOfMovement = TranslatorOfCoordinate.translatePointFieldToScreen(pointOfMovementInTheFiledCoordinate);
 
         }
         if(timer > rateOfProtagonist/frequencyOfIntermediateSteps) {
@@ -264,11 +253,11 @@ public class Presenter implements IPresenter, GameOverListener, FoundKeyListener
      */
     public PointOnTheScreen getPositionOfProtagonist() {
 
-        return  translatePointFieldToScreen(model.getPositionOfProtagonist());
+        return  TranslatorOfCoordinate.translatePointFieldToScreen(model.getPositionOfProtagonist());
     }
 
     @Override
-    public PointOnTheField getPositionOfProtagonistInTheFieldCoordinate() {
+    public com.maltsev.labyrinth.model.field.PointOnTheField getPositionOfProtagonistInTheFieldCoordinate() {
 
         return  model.getPositionOfProtagonist();
     }
@@ -281,13 +270,13 @@ public class Presenter implements IPresenter, GameOverListener, FoundKeyListener
     }
 
     @Override
-    public void keyIsFound(PointOnTheField positionOfKey) {
+    public void keyIsFound(com.maltsev.labyrinth.model.field.PointOnTheField positionOfKey) {
 
         isKeyFound = true;
     }
 
     @Override
-    public void doorIsOpen(PointOnTheField doorPosition) {
+    public void doorIsOpen(com.maltsev.labyrinth.model.field.PointOnTheField doorPosition) {
 
         doorsClosed.remove(doorPosition);
         doorsOpened.add(voidFieldNearPoint(doorPosition));
@@ -300,15 +289,15 @@ public class Presenter implements IPresenter, GameOverListener, FoundKeyListener
      * @param point точка на игровом поле
      * @return ближайшая клетка, на которую не может сходить протигонист
      */
-    private PointOnTheField voidFieldNearPoint(PointOnTheField point) {
+    private com.maltsev.labyrinth.model.field.PointOnTheField voidFieldNearPoint(com.maltsev.labyrinth.model.field.PointOnTheField point) {
 
         int x = point.getX();
         int y = point.getY();
 
-        if(!model.isItPassableCells(x + 1, y))  return new PointOnTheField(x + 1, y);
-        if(!model.isItPassableCells(x, y + 1))  return new PointOnTheField(x, y + 1);
-        if(!model.isItPassableCells(x - 1, y))  return new PointOnTheField(x - 1, y);
-        if(!model.isItPassableCells(x, y - 1))  return new PointOnTheField(x, y - 1);
+        if(!model.isItPassableCells(x + 1, y))  return new com.maltsev.labyrinth.model.field.PointOnTheField(x + 1, y);
+        if(!model.isItPassableCells(x, y + 1))  return new com.maltsev.labyrinth.model.field.PointOnTheField(x, y + 1);
+        if(!model.isItPassableCells(x - 1, y))  return new com.maltsev.labyrinth.model.field.PointOnTheField(x - 1, y);
+        if(!model.isItPassableCells(x, y - 1))  return new com.maltsev.labyrinth.model.field.PointOnTheField(x, y - 1);
 
         return point;
     }

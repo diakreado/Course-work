@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
-import com.maltsev.labyrinth.presenter.interfaces.IProtagonistDrawer;
 import com.maltsev.labyrinth.presenter.tempdata.PointOnTheScreen;
 
 /**
@@ -13,7 +12,7 @@ import com.maltsev.labyrinth.presenter.tempdata.PointOnTheScreen;
  *
  * Создан, чтобы было возможно менять направление движения протагониста и менять текстуру его обозначающую
  */
-public class ProtagonistDrawer implements IProtagonistDrawer,Disposable {
+public class ProtagonistDrawer implements com.maltsev.labyrinth.presenter.interfaces.IProtagonistDrawer,Disposable {
 
     private Texture protagonist;
     /**

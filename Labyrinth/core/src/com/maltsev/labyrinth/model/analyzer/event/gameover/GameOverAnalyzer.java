@@ -2,14 +2,13 @@ package com.maltsev.labyrinth.model.analyzer.event.gameover;
 
 import com.maltsev.labyrinth.model.IModel;
 import com.maltsev.labyrinth.model.analyzer.event.EventAnalyzer;
-import com.maltsev.labyrinth.model.field.PointOnTheField;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class GameOverAnalyzer extends EventAnalyzer {
 
-    private PointOnTheField finishPoint;
+    private com.maltsev.labyrinth.model.field.PointOnTheField finishPoint;
 
     private Queue<GameOverListener> queue;
 
@@ -21,7 +20,7 @@ public class GameOverAnalyzer extends EventAnalyzer {
 
         queue = new LinkedList<GameOverListener>();
 
-        finishPoint = new PointOnTheField(IModel.getFinishPosition());
+        finishPoint = new com.maltsev.labyrinth.model.field.PointOnTheField(IModel.getFinishPosition());
     }
 
     /**

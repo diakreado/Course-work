@@ -1,9 +1,6 @@
 package com.maltsev.labyrinth.model.analyzer;
 
 
-import com.maltsev.labyrinth.model.IModel;
-import com.maltsev.labyrinth.model.field.PointOnTheField;
-
 import java.util.ArrayDeque;
 
 /**
@@ -11,7 +8,7 @@ import java.util.ArrayDeque;
  */
 public class WayAnalyzer {
 
-    private IModel IModel;
+    private com.maltsev.labyrinth.model.IModel IModel;
 
     private int[][] fieldForWave;
 
@@ -19,13 +16,13 @@ public class WayAnalyzer {
 
     private int range;
 
-    private PointOnTheField startPoint;              // По факту эти поля вынесены сюда, чтобы было удобнее делигировать
-    private PointOnTheField finishPoint;            //  выолнение различных частей алгоритма другим методам
+    private com.maltsev.labyrinth.model.field.PointOnTheField startPoint;              // По факту эти поля вынесены сюда, чтобы было удобнее делигировать
+    private com.maltsev.labyrinth.model.field.PointOnTheField finishPoint;            //  выолнение различных частей алгоритма другим методам
 
     private int sizeOfFieldX;
     private int sizeOfFieldY;
 
-    public WayAnalyzer(IModel IModel) {
+    public WayAnalyzer(com.maltsev.labyrinth.model.IModel IModel) {
 
         this.IModel = IModel;
     }
@@ -51,7 +48,7 @@ public class WayAnalyzer {
     /**
      * Метод по умолчанию, вызывает метод поиска пути с дефолтной длинной шага
      */
-    public ArrayDeque<PointOnTheField> getWay(final PointOnTheField startPoint, final PointOnTheField finishPoint) {
+    public ArrayDeque<com.maltsev.labyrinth.model.field.PointOnTheField> getWay(final com.maltsev.labyrinth.model.field.PointOnTheField startPoint, final com.maltsev.labyrinth.model.field.PointOnTheField finishPoint) {
 
         return getWay(startPoint, finishPoint, defaultRange);
     }
@@ -62,7 +59,7 @@ public class WayAnalyzer {
      * @param finishPoint финишная точка пути
      * @return возвращяет либо путь в виде массива точек, либо ноль, если путь содержит более range шагов или он невозможен
      */
-    public ArrayDeque<PointOnTheField> getWay(final PointOnTheField startPoint, final PointOnTheField finishPoint, int range) {
+    public ArrayDeque<com.maltsev.labyrinth.model.field.PointOnTheField> getWay(final com.maltsev.labyrinth.model.field.PointOnTheField startPoint, final com.maltsev.labyrinth.model.field.PointOnTheField finishPoint, int range) {
 
         if (!IModel.isItPassableCells(startPoint) || !IModel.isItPassableCells(finishPoint))
             return null;                            // Проверка на правильность задания начальной и конечной точки
@@ -82,7 +79,7 @@ public class WayAnalyzer {
 
         //ArrayList<PointOnTheField> wayBack = returningWave();
 
-        ArrayDeque<PointOnTheField> way = returningWave();
+        ArrayDeque<com.maltsev.labyrinth.model.field.PointOnTheField> way = returningWave();
 
         if (way == null) return null;
 
@@ -93,11 +90,11 @@ public class WayAnalyzer {
      * Возвращение волны
      * @return либо путь возвращения в виде коллекции точек, либо null
      */
-    private ArrayDeque<PointOnTheField> returningWave() {
+    private ArrayDeque<com.maltsev.labyrinth.model.field.PointOnTheField> returningWave() {
 
-        ArrayDeque<PointOnTheField> way = new ArrayDeque<PointOnTheField>();
+        ArrayDeque<com.maltsev.labyrinth.model.field.PointOnTheField> way = new ArrayDeque<com.maltsev.labyrinth.model.field.PointOnTheField>();
 
-        PointOnTheField bufferPoint = new PointOnTheField(finishPoint);
+        com.maltsev.labyrinth.model.field.PointOnTheField bufferPoint = new com.maltsev.labyrinth.model.field.PointOnTheField(finishPoint);
 
         way.addFirst(bufferPoint);
 
@@ -112,22 +109,22 @@ public class WayAnalyzer {
 
             if (bufferPointX + 1 < sizeOfFieldX && fieldForWave[bufferPointX + 1][bufferPointY] == weightOfTheWave - 1) {
 
-                bufferPoint = new PointOnTheField(bufferPointX + 1, bufferPointY);
+                bufferPoint = new com.maltsev.labyrinth.model.field.PointOnTheField(bufferPointX + 1, bufferPointY);
                 way.addFirst(bufferPoint);
             } else
             if (bufferPointY + 1 < sizeOfFieldY && fieldForWave[bufferPointX][bufferPointY + 1] == weightOfTheWave - 1) {
 
-                bufferPoint = new PointOnTheField(bufferPointX, bufferPointY + 1);
+                bufferPoint = new com.maltsev.labyrinth.model.field.PointOnTheField(bufferPointX, bufferPointY + 1);
                 way.addFirst(bufferPoint);
             } else
             if (bufferPointX - 1 >= 0 && fieldForWave[bufferPointX - 1][bufferPointY] == weightOfTheWave - 1) {
 
-                bufferPoint = new PointOnTheField(bufferPointX - 1, bufferPointY);
+                bufferPoint = new com.maltsev.labyrinth.model.field.PointOnTheField(bufferPointX - 1, bufferPointY);
                 way.addFirst(bufferPoint);
             } else
             if (bufferPointY - 1 >= 0 && fieldForWave[bufferPointX][bufferPointY - 1] == weightOfTheWave - 1) {
 
-                bufferPoint = new PointOnTheField(bufferPointX, bufferPointY - 1);
+                bufferPoint = new com.maltsev.labyrinth.model.field.PointOnTheField(bufferPointX, bufferPointY - 1);
                 way.addFirst(bufferPoint);
             }
 

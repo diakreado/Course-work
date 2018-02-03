@@ -1,9 +1,7 @@
 package com.maltsev.labyrinth.model.analyzer.event.keysanddoors.keys;
 
 
-import com.maltsev.labyrinth.model.IModel;
 import com.maltsev.labyrinth.model.analyzer.event.EventAnalyzer;
-import com.maltsev.labyrinth.model.field.PointOnTheField;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -16,12 +14,12 @@ public class FoundKeyAnalyzer extends EventAnalyzer {
 
     private Queue<FoundKeyListener> queue;
 
-    private List<PointOnTheField> keys;
+    private List<com.maltsev.labyrinth.model.field.PointOnTheField> keys;
 
-    private PointOnTheField keyPosition;
+    private com.maltsev.labyrinth.model.field.PointOnTheField keyPosition;
 
 
-    public FoundKeyAnalyzer(IModel IModel) {
+    public FoundKeyAnalyzer(com.maltsev.labyrinth.model.IModel IModel) {
 
         super(IModel);
 

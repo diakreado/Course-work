@@ -1,52 +1,54 @@
 package com.maltsev.labyrinth.view;
 
-
 import com.badlogic.gdx.Game;
 import com.maltsev.labyrinth.view.game.GameScreen;
+import com.maltsev.labyrinth.view.menu.MenuScreen;
 import com.maltsev.labyrinth.view.utils.FontGenerator;
 import com.maltsev.labyrinth.view.utils.InfoAboutSettings;
-import com.maltsev.labyrinth.view.utils.ViewSwitcher;
 
 /**
- * Главный класс из пакета view
- *
- * Общее определение IGameScreen из шаблона проектирования MVP:
- * Представление, как правило, реализуется в Activity,
- * которая содержит ссылку на презентер.
- * Единственное, что делает представление,
- * это вызывает методы презентера при каком-либо действии пользователя
+ * Class organize correct interaction between screens
  */
 public class Labyrinth extends Game {
 
-    // Размеры экрана, на которые ориентируются при отрисовке, далее если размеры реального экрана
-    // не совпадают с ними происходит  масштабирование
+    // Default size of the screen
+    // If you have different size, screen will be resized
     public static final int V_WIDTH = 1920;
     public static final int V_HEIGHT = 1080;
 
     private GameScreen gameScreen;
-    private ViewSwitcher switcher;
-    public FontGenerator fontGenerator;
-    public InfoAboutSettings infoAboutSettings;
+    private MenuScreen menuScreen;
 
-    public Labyrinth(ViewSwitcher switcher,InfoAboutSettings infoAboutSettings) {
-        this.infoAboutSettings = infoAboutSettings;
-        this.switcher = switcher;
+    public FontGenerator fontGenerator;
+    public InfoAboutSettings infoAboutSettings = new InfoAboutSettings("111111111111111111",true);
+
+    public Labyrinth() {
     }
 
     @Override
     public void create() {
         fontGenerator = new FontGenerator();
-        setGameScreen();
+        menuScreen = new MenuScreen(this);
+
+        setMenuScreen();
     }
 
     public void setGameScreen() {
         gameScreen = new GameScreen(this);
+
         this.setScreen(gameScreen);
     }
 
     public void closeGameScreen() {
         gameScreen.dispose();
-        switcher.exitFromGame();
+    }
+
+    public void setMenuScreen() {
+        this.setScreen(menuScreen);
+    }
+
+    public void closeMenuScreen() {
+        menuScreen.dispose();
     }
 
     @Override
@@ -56,7 +58,10 @@ public class Labyrinth extends Game {
 
     @Override
     public void dispose() {
+        closeMenuScreen();
+
         fontGenerator.dispose();
+
         super.dispose();
     }
 }

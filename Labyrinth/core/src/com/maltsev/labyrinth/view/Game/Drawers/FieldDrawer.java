@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Disposable;
-import com.maltsev.labyrinth.presenter.interfaces.IFieldDrawer;
 import com.maltsev.labyrinth.presenter.tempdata.PointOnTheScreen;
 import com.maltsev.labyrinth.presenter.tempdata.SizeOfTexture;
 
@@ -18,7 +17,7 @@ import com.maltsev.labyrinth.presenter.tempdata.SizeOfTexture;
  *
  * Реализует интерфейс Disposable, следовательно требует, вызова метода dispose() по завершению работы для освобождения памяти
  */
-public class FieldDrawer implements IFieldDrawer, Disposable {
+public class FieldDrawer implements com.maltsev.labyrinth.presenter.interfaces.IFieldDrawer, Disposable {
 
     private SpriteBatch batch;
 

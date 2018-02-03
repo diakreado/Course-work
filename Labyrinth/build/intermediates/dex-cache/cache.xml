@@ -2,31 +2,13 @@
 <items version="2" >
 
     <item
-        is-multidex="true"
-        jar="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\core\build\libs\core-1.0.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.1"
-        sha1="fae6b1386d175911c9ba3e35b754ef34f3c01777">
-        <dex dex="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_7a8f23b9be72c38e2a8127130ed5fe9c00c14d81\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="510aa6efc159983dfbffa676a0dae37568c0a46f">
-        <dex dex="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_7720c4c6f7e8bf87d0856e597632291bec37c0e2\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Mikle\.gradle\caches\modules-2\files-2.1\com.alibaba\fastjson\1.2.32\eac1870fca5d61f508b55b8b77cb0456bac491ba\fastjson-1.2.32.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="eac1870fca5d61f508b55b8b77cb0456bac491ba">
-        <dex dex="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\transforms\dex\debug\folders\1000\10\fastjson-1.2.32_4b750c3b6cb99c11cfdd8793b33998483fc82de4\classes.dex" />
+        sha1="adc88e7a7f46e40d1b5f0a5c2ab2b36ce044847c">
+        <dex dex="C:\Users\Mikle\Documents\GitHub\Course-work\Labyrinth\android\build\intermediates\pre-dexed\debug\core-1.0_4d62840c87f47467ecb275872aba2afb6a5cfdca.jar" />
     </item>
 
 </items>

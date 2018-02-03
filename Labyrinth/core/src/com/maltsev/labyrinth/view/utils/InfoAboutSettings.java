@@ -12,7 +12,6 @@ public class InfoAboutSettings {
     private boolean typeOfTheControl = false;
 
     public InfoAboutSettings(String gameField, boolean typeOfTheControl) {
-
         this.gameField = gameField;
         this.typeOfTheControl = typeOfTheControl;
     }

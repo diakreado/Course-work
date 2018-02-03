@@ -3,7 +3,6 @@ package com.maltsev.labyrinth.model.analyzer.event.keysanddoors.doors;
 
 import com.maltsev.labyrinth.model.IModel;
 import com.maltsev.labyrinth.model.analyzer.event.EventAnalyzer;
-import com.maltsev.labyrinth.model.field.PointOnTheField;
 
 import java.util.*;
 
@@ -14,7 +13,7 @@ public class OpenDoorAnalyzer extends EventAnalyzer{
 
     private Queue<OpenDoorListener> queue;
 
-    List<PointOnTheField> doors;
+    List<com.maltsev.labyrinth.model.field.PointOnTheField> doors;
 
 
     public OpenDoorAnalyzer(IModel IModel) {
@@ -48,7 +47,7 @@ public class OpenDoorAnalyzer extends EventAnalyzer{
     /**
      * Вызывается при открытие двери, чтобы оповестить об этом слушателей
      */
-    public void doorIsOpen(PointOnTheField doorPosition) {
+    public void doorIsOpen(com.maltsev.labyrinth.model.field.PointOnTheField doorPosition) {
 
         alertListener(doorPosition);
     }
@@ -56,7 +55,7 @@ public class OpenDoorAnalyzer extends EventAnalyzer{
     /**
      * Оповещание слушателей об окончание игры
      */
-    private void alertListener(PointOnTheField doorPosition) {
+    private void alertListener(com.maltsev.labyrinth.model.field.PointOnTheField doorPosition) {
 
         OpenDoorListener item;
 

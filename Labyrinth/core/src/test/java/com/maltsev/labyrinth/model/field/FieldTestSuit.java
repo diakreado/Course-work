@@ -8,7 +8,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
 
         CellOfFieldTest.class,
-        GameFieldTest.class,
+        com.maltsev.labyrinth.model.field.GameFieldTest.class,
         PointOnTheFieldTest.class  })
 
 /**

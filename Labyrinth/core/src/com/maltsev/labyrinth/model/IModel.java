@@ -1,11 +1,8 @@
 package com.maltsev.labyrinth.model;
 
 
-import com.maltsev.labyrinth.model.analyzer.event.gameover.GameOverListener;
 import com.maltsev.labyrinth.model.analyzer.event.keysanddoors.doors.OpenDoorListener;
-import com.maltsev.labyrinth.model.analyzer.event.keysanddoors.keys.FoundKeyListener;
 import com.maltsev.labyrinth.model.field.FieldIsEmptyException;
-import com.maltsev.labyrinth.model.field.PointOnTheField;
 
 import java.util.ArrayDeque;
 import java.util.List;
@@ -29,7 +26,7 @@ public interface IModel {
      * @param point точка указывающая на ячейку
      * @return возвращяет значение логического типа, если true, то протагонист может находится в этой ячейке, иначе false
      */
-    boolean isItPassableCells(final PointOnTheField point);
+    boolean isItPassableCells(final com.maltsev.labyrinth.model.field.PointOnTheField point);
 
     /**
      * @return Размер поля по оси Х
@@ -44,7 +41,7 @@ public interface IModel {
     /**
      * @return Массив объектов Точка на плоскости, который содержит номера ячеек, которые являются проходимыми
      */
-    List<PointOnTheField> getPassableCells();
+    List<com.maltsev.labyrinth.model.field.PointOnTheField> getPassableCells();
 
     /**
      * Установка игрового поля
@@ -60,31 +57,31 @@ public interface IModel {
      * @param y координата ячейки по оси Y
      * @return маршрут(массив точек) перемещения из одной точки в другую, если он возможен, иначе null
      */
-    ArrayDeque<PointOnTheField> movesOfProtagonist(final int x, final int y);
+    ArrayDeque<com.maltsev.labyrinth.model.field.PointOnTheField> movesOfProtagonist(final int x, final int y);
 
     /**
      * Добавляет слушателя на событие окончание игры
      * @param listener объект-слушатель
      */
-    void addListenerOfGameOver(GameOverListener listener);
+    void addListenerOfGameOver(com.maltsev.labyrinth.model.analyzer.event.gameover.GameOverListener listener);
 
     /**
      * Отписка слушателя от раассылки на Конец игры
      * @param listener объект-слушатель
      */
-    void removeListenerOfGameOver(GameOverListener listener);
+    void removeListenerOfGameOver(com.maltsev.labyrinth.model.analyzer.event.gameover.GameOverListener listener);
 
     /**
      * Добавляет слушателя на событие Найден ключ
      * @param listener объект-слушатель
      */
-    void addListenerOfFoundKey(FoundKeyListener listener);
+    void addListenerOfFoundKey(com.maltsev.labyrinth.model.analyzer.event.keysanddoors.keys.FoundKeyListener listener);
 
     /**
      * Отписка слушателя от раассылки на Найден ключ
      * @param listener объект-слушатель
      */
-    void removeListenerOfFoundKey(FoundKeyListener listener);
+    void removeListenerOfFoundKey(com.maltsev.labyrinth.model.analyzer.event.keysanddoors.keys.FoundKeyListener listener);
 
     /**
      * Добавляет слушателя на событие Открытие двери
@@ -101,21 +98,21 @@ public interface IModel {
     /**
      * @return Точка, местоположение героя
      */
-    PointOnTheField getPositionOfProtagonist();
+    com.maltsev.labyrinth.model.field.PointOnTheField getPositionOfProtagonist();
 
     /**
      * @return начальная точка поля
      *
      * Та точка, куда помещается протагонист, с самого начала игры
      */
-    PointOnTheField getStartPosition();
+    com.maltsev.labyrinth.model.field.PointOnTheField getStartPosition();
 
     /**
      * @return конечная точка поля
      *
      * Точка, куда нужно пройти протагонисту, чтобы окончить игру
      */
-    PointOnTheField getFinishPosition();
+    com.maltsev.labyrinth.model.field.PointOnTheField getFinishPosition();
 
     /**
      * Установить значение дальности шага протагониста
@@ -131,13 +128,13 @@ public interface IModel {
      * Изначально двери закрыты, но если есть ключ, то дверь откроется, а
      * количество ключей уменьшится на 1
      */
-    List<PointOnTheField> getDoors();
+    List<com.maltsev.labyrinth.model.field.PointOnTheField> getDoors();
 
     /**
      * @return Массив с координатами ключей
      * Ключи нужны чтобы открывать двери
      */
-    List<PointOnTheField> getKeys();
+    List<com.maltsev.labyrinth.model.field.PointOnTheField> getKeys();
 
     /**
      * @return Число ключей, собраных игроком
@@ -148,7 +145,7 @@ public interface IModel {
      * @return Массив с координатами деревьев
      * по факту это лишь дектор
      */
-    List<PointOnTheField> getTrees();
+    List<com.maltsev.labyrinth.model.field.PointOnTheField> getTrees();
 
     /**
      * @return Массив с координатами травы на игровом поле
@@ -156,5 +153,5 @@ public interface IModel {
      *
      * Возможно перейдёт в нечто другое, т.к. трава не справляется со своей задачей, удачно декорировать лабиринт
      */
-    List<PointOnTheField> getGrass();
+    List<com.maltsev.labyrinth.model.field.PointOnTheField> getGrass();
 }

@@ -1,14 +1,12 @@
 package com.maltsev.labyrinth.model.field;
 
-import com.maltsev.labyrinth.model.analyzer.event.keysanddoors.keys.FoundKeyListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  *  Игровое поле
  */
-public class GameField implements FoundKeyListener{
+public class GameField implements com.maltsev.labyrinth.model.analyzer.event.keysanddoors.keys.FoundKeyListener {
 
     /**
      *  Матрица ячеек, т.е. само поле

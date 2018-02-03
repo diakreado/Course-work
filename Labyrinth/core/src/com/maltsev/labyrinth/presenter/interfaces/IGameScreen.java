@@ -2,7 +2,6 @@ package com.maltsev.labyrinth.presenter.interfaces;
 
 
 import com.maltsev.labyrinth.presenter.tempdata.PointOnTheScreen;
-import com.maltsev.labyrinth.presenter.tempdata.SizeOfTexture;
 
 /**
  * Интерфейс для взаимодействия с Presenter
@@ -12,7 +11,7 @@ public interface IGameScreen {
     /**
      * @return размер блока текстуры
      */
-    SizeOfTexture getSizeOfBlock();
+    com.maltsev.labyrinth.presenter.tempdata.SizeOfTexture getSizeOfBlock();
 
     /**
      * Отрисовка финишной клетки

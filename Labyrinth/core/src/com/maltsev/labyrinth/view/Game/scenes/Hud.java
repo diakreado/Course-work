@@ -16,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.*;
-import com.maltsev.labyrinth.model.field.PointOnTheField;
 import com.maltsev.labyrinth.presenter.IPresenter;
 import com.maltsev.labyrinth.view.Labyrinth;
 import com.maltsev.labyrinth.view.utils.Resizable;
@@ -27,36 +26,45 @@ import com.maltsev.labyrinth.view.game.GameScreen;
  */
 public class Hud implements Disposable, Resizable {
 
+    private final Labyrinth labyrinth;
+
     public Stage hudStage;
     public Stage pauseStage;
+
     private BitmapFont font;
-    private double timeCount =0;
+    private double timeCounter =0;
+
     private Label keys;
     private Label timer;
+
     private Table tableTop;
-    private ImageButton pauseButton;
+
     private TextureAtlas atlasUi;
     private Skin skin;
+    private ImageButton pauseButton;
+
     private Texture backPartOfControl;
     private Texture forwardPartOfControl;
+
     private ClickListener pauseListener;
     private GameScreen gameScreen;
     private ExtendViewport viewport;
     private OrthographicCamera camera;
+
     private boolean isStopTimer = false;
     private boolean typeOfControl;
-    private final Labyrinth game;
+
     private Touchpad touchpad;
     private IPresenter presenter;
     private Texture border;
     private Image image;
     private boolean isItPasuse = false;
 
-    public Hud(final Labyrinth game, final GameScreen gameScreen, IPresenter presenter) {
+    public Hud(final Labyrinth labyrinth, final GameScreen gameScreen, com.maltsev.labyrinth.presenter.IPresenter presenter) {
 
-        this.game = game;
+        this.labyrinth = labyrinth;
         this.gameScreen = gameScreen;
-        this.typeOfControl = game.infoAboutSettings.getTypeOfTheControl();
+        this.typeOfControl = labyrinth.infoAboutSettings.getTypeOfTheControl();
         this.presenter = presenter;
 
         generateFont();
@@ -113,7 +121,6 @@ public class Hud implements Disposable, Resizable {
         table.setFillParent(true);
         table.center();
 
-
         pauseStage.addActor(image);
         pauseStage.addActor(table);
     }
@@ -125,7 +132,7 @@ public class Hud implements Disposable, Resizable {
         float coordinateOfTouchpadX = touchpad.getKnobPercentX();
         float coordinateOfTouchpadY = touchpad.getKnobPercentY();
 
-        PointOnTheField point = presenter.getPositionOfProtagonistInTheFieldCoordinate();
+        com.maltsev.labyrinth.model.field.PointOnTheField point = presenter.getPositionOfProtagonistInTheFieldCoordinate();
 
         if((Math.abs(coordinateOfTouchpadX) > sqrt2/2 || Math.abs(coordinateOfTouchpadY) > sqrt2/2) && !gameScreen.isLockInput()) {
 
@@ -156,7 +163,6 @@ public class Hud implements Disposable, Resizable {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-
                 setPause();
                 registeredListenerAgain();
             }
@@ -165,36 +171,30 @@ public class Hud implements Disposable, Resizable {
     }
 
     private void setPause() {
-
         isItPasuse = true;
         gameScreen.setPause();
         stopTimer();
     }
 
     public void setTime(float delta) {
-
         if(!isStopTimer)
-            timeCount += delta;
-        timer.setText("time: " + String.format("%.0f%n", timeCount));
+            timeCounter += delta;
+        timer.setText("time: " + String.format("%.0f%n", timeCounter));
     }
 
     public void stopTimer() {
-
         isStopTimer = true;
     }
 
     public void continueTimer() {
-
         isStopTimer = false;
     }
 
     public void setKeys(int numberOfKeys) {
-
         keys.setText("keys: " + numberOfKeys);
     }
 
     private void generateFont() {
-
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/abc.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 70;
@@ -202,12 +202,13 @@ public class Hud implements Disposable, Resizable {
         generator.dispose();
     }
 
-    /**
-     * Использовать при окончание работы с объектом
-     */
+    @Override
+    public void resize(int width, int height) {
+        hudStage.getViewport().update(width, height, true);
+    }
+
     @Override
     public void dispose() {
-
         skin.dispose();
         atlasUi.dispose();
         hudStage.dispose();
@@ -215,11 +216,5 @@ public class Hud implements Disposable, Resizable {
         backPartOfControl.dispose();
         forwardPartOfControl.dispose();
         border.dispose();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-        hudStage.getViewport().update(width, height, true);
     }
 }

@@ -1,18 +1,15 @@
 package com.maltsev.labyrinth.model.protagonist;
 
 
-import com.maltsev.labyrinth.model.analyzer.event.keysanddoors.keys.FoundKeyListener;
-import com.maltsev.labyrinth.model.field.PointOnTheField;
-
 /**
  *  Главный герой
  */
-public class Protagonist implements FoundKeyListener {
+public class Protagonist implements com.maltsev.labyrinth.model.analyzer.event.keysanddoors.keys.FoundKeyListener {
 
     /**
      *  Позиция главного героя на карте
      */
-    private PointOnTheField locationOfProtagonist;
+    private com.maltsev.labyrinth.model.field.PointOnTheField locationOfProtagonist;
 
     /**
      * Количество ключей, которые имеются у протагониста
@@ -20,7 +17,7 @@ public class Protagonist implements FoundKeyListener {
     private int numberOfKeys = 0;
 
     @Override
-    public void keyIsFound(PointOnTheField positionOfKey) {
+    public void keyIsFound(com.maltsev.labyrinth.model.field.PointOnTheField positionOfKey) {
 
         numberOfKeys++;
     }
@@ -45,9 +42,9 @@ public class Protagonist implements FoundKeyListener {
      *  Перемещения протагониста на новую позицию
      * @param newPoint - точка - новая позиция расположения героя
      */
-    public void movesOfProtagonist(final PointOnTheField newPoint) {
+    public void movesOfProtagonist(final com.maltsev.labyrinth.model.field.PointOnTheField newPoint) {
 
-        locationOfProtagonist = new PointOnTheField(newPoint);
+        locationOfProtagonist = new com.maltsev.labyrinth.model.field.PointOnTheField(newPoint);
     }
 
     /**
@@ -57,16 +54,16 @@ public class Protagonist implements FoundKeyListener {
      */
     public void movesOfProtagonist(final int x, final  int y) {
 
-        locationOfProtagonist = new PointOnTheField(x,y);
+        locationOfProtagonist = new com.maltsev.labyrinth.model.field.PointOnTheField(x,y);
     }
 
     /**
      * Конструктор, с установкой начального положения героя
      * @param startPoint точка - начальное положение героя
      */
-    public Protagonist(final PointOnTheField startPoint) {
+    public Protagonist(final com.maltsev.labyrinth.model.field.PointOnTheField startPoint) {
 
-        locationOfProtagonist = new PointOnTheField(startPoint);
+        locationOfProtagonist = new com.maltsev.labyrinth.model.field.PointOnTheField(startPoint);
     }
 
     /**
@@ -76,13 +73,13 @@ public class Protagonist implements FoundKeyListener {
      */
     public Protagonist(final int x, final  int y) {
 
-        locationOfProtagonist = new PointOnTheField(x, y);
+        locationOfProtagonist = new com.maltsev.labyrinth.model.field.PointOnTheField(x, y);
     }
 
     /**
      * @return точка, положения героя
      */
-    public PointOnTheField getLocationOfProtagonist() {
+    public com.maltsev.labyrinth.model.field.PointOnTheField getLocationOfProtagonist() {
 
         return locationOfProtagonist;
     }

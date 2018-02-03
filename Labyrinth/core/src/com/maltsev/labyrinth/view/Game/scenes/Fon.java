@@ -27,7 +27,6 @@ public class Fon implements Disposable, Resizable{
     private OrthographicCamera camera;
 
     public Fon(SpriteBatch spriteBatch) {
-
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Labyrinth.V_WIDTH, Labyrinth.V_HEIGHT);
 
@@ -45,7 +44,6 @@ public class Fon implements Disposable, Resizable{
 
     @Override
     public void dispose() {
-
         fon.dispose();
         stage.dispose();
     }

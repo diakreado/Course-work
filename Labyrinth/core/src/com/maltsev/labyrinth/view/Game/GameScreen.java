@@ -10,7 +10,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.maltsev.labyrinth.presenter.IPresenter;
 import com.maltsev.labyrinth.presenter.Presenter;
-import com.maltsev.labyrinth.presenter.interfaces.IFieldDrawer;
 import com.maltsev.labyrinth.presenter.interfaces.IProtagonistDrawer;
 import com.maltsev.labyrinth.presenter.interfaces.IGameScreen;
 import com.maltsev.labyrinth.presenter.tempdata.PointOnTheScreen;
@@ -18,8 +17,8 @@ import com.maltsev.labyrinth.view.Labyrinth;
 import com.maltsev.labyrinth.view.game.drawers.FieldDrawer;
 import com.maltsev.labyrinth.view.game.drawers.ProtagonistDrawer;
 import com.maltsev.labyrinth.view.game.scenes.Fon;
-import com.maltsev.labyrinth.view.game.scenes.Hud;
 import com.maltsev.labyrinth.presenter.tempdata.SizeOfTexture;
+import com.maltsev.labyrinth.view.game.scenes.Hud;
 
 /**
  * Игровой экран
@@ -29,11 +28,18 @@ import com.maltsev.labyrinth.presenter.tempdata.SizeOfTexture;
  * Контактирует с классами Fon  и Hud, используя из для удобной отрисовки, с классом Presenter, выступает в качестве
  * IGameScreen для него и как следствие обладает методами для отрисовки по запросу, а так же может обратиться к Labyrinth для того,
  * чтобы закончить игру и перевести управление к другому экрану, в частности к MainMenuScreen
+ *
+ * Общее определение IGameScreen из шаблона проектирования MVP:
+ * Представление, как правило, реализуется в Activity,
+ * которая содержит ссылку на презентер.
+ * Единственное, что делает представление,
+ * это вызывает методы презентера при каком-либо действии пользователя
  */
 public class GameScreen implements Screen, IGameScreen {
 
-    private Labyrinth game;
+    private Labyrinth labyrinth;
     private IPresenter presenter;
+
     private Hud hud;
     private Fon fonGameScreen;
 
@@ -64,23 +70,29 @@ public class GameScreen implements Screen, IGameScreen {
     private FieldDrawer fieldDrawer;
 
 
-    public GameScreen(final Labyrinth game) {
+    public GameScreen(final Labyrinth labyrinth) {
 
-        this.game = game;
+        this.labyrinth = labyrinth;
+
         batch  = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Labyrinth.V_WIDTH, Labyrinth.V_HEIGHT);
         loadingOfTextures();
-        typeOfControl = game.infoAboutSettings.getTypeOfTheControl();
+
+        typeOfControl = labyrinth.infoAboutSettings.getTypeOfTheControl();
         touchPos = new Vector3();
+
         fieldDrawer = new FieldDrawer(batch);
         protagonistDrawer = new ProtagonistDrawer(batch);
-        presenter = new Presenter(this, game.infoAboutSettings.getGameField());
-        hud = new Hud(game,this, presenter);
+
+        presenter = new Presenter(this, labyrinth.infoAboutSettings.getGameField());
+        hud = new Hud(labyrinth,this, presenter);
         fonGameScreen = new Fon(batch);
+
         Gdx.input.setInputProcessor(hud.hudStage);
         camera.position.set(protagonistDrawer.getPositionOfProtagonist());
         camera.update();
+
         stage = new Stage();
     }
 
@@ -208,7 +220,7 @@ public class GameScreen implements Screen, IGameScreen {
     }
 
     @Override
-    public IFieldDrawer getFieldDrawer() {
+    public com.maltsev.labyrinth.presenter.interfaces.IFieldDrawer getFieldDrawer() {
         return fieldDrawer;
     }
 
@@ -233,7 +245,7 @@ public class GameScreen implements Screen, IGameScreen {
     }
 
     public void close() {
-        game.closeGameScreen();
+        labyrinth.closeGameScreen();
     }
 
     @Override

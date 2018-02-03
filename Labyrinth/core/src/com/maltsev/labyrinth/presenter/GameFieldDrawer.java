@@ -1,10 +1,7 @@
 package com.maltsev.labyrinth.presenter;
 
 
-import com.maltsev.labyrinth.model.IModel;
-import com.maltsev.labyrinth.model.field.PointOnTheField;
-import com.maltsev.labyrinth.presenter.interfaces.IFieldDrawer;
-import static com.maltsev.labyrinth.presenter.transkatorofcoordinate.TranslatorOfCoordinate.translatePointFieldToScreen;
+import com.maltsev.labyrinth.presenter.transkatorofcoordinate.TranslatorOfCoordinate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,37 +11,37 @@ import java.util.List;
  */
 class GameFieldDrawer {
 
-    private List<PointOnTheField> passableCells;
+    private List<com.maltsev.labyrinth.model.field.PointOnTheField> passableCells;
 
-    private ArrayList<PointOnTheField> cellsTopBottom;
-    private ArrayList<PointOnTheField> cellsLeftRight;
-    private ArrayList<PointOnTheField> cellsLeftTopRightBottom;
+    private ArrayList<com.maltsev.labyrinth.model.field.PointOnTheField> cellsTopBottom;
+    private ArrayList<com.maltsev.labyrinth.model.field.PointOnTheField> cellsLeftRight;
+    private ArrayList<com.maltsev.labyrinth.model.field.PointOnTheField> cellsLeftTopRightBottom;
 
-    private ArrayList<PointOnTheField> cellsLeftTop;
-    private ArrayList<PointOnTheField> cellsRightTop;
-    private ArrayList<PointOnTheField> cellsLeftBottom;
-    private ArrayList<PointOnTheField> cellsRightBottom;
+    private ArrayList<com.maltsev.labyrinth.model.field.PointOnTheField> cellsLeftTop;
+    private ArrayList<com.maltsev.labyrinth.model.field.PointOnTheField> cellsRightTop;
+    private ArrayList<com.maltsev.labyrinth.model.field.PointOnTheField> cellsLeftBottom;
+    private ArrayList<com.maltsev.labyrinth.model.field.PointOnTheField> cellsRightBottom;
 
-    private ArrayList<PointOnTheField> cellsBottom;
-    private ArrayList<PointOnTheField> cellsTop;
-    private ArrayList<PointOnTheField> cellsLeft;
-    private ArrayList<PointOnTheField> cellsRight;
+    private ArrayList<com.maltsev.labyrinth.model.field.PointOnTheField> cellsBottom;
+    private ArrayList<com.maltsev.labyrinth.model.field.PointOnTheField> cellsTop;
+    private ArrayList<com.maltsev.labyrinth.model.field.PointOnTheField> cellsLeft;
+    private ArrayList<com.maltsev.labyrinth.model.field.PointOnTheField> cellsRight;
 
-    private ArrayList<PointOnTheField> cellsLeftTopRight;
-    private ArrayList<PointOnTheField> cellsBottomLeftTop;
-    private ArrayList<PointOnTheField> cellsRightBottomLeft;
-    private ArrayList<PointOnTheField> cellsTopRightBottom;
+    private ArrayList<com.maltsev.labyrinth.model.field.PointOnTheField> cellsLeftTopRight;
+    private ArrayList<com.maltsev.labyrinth.model.field.PointOnTheField> cellsBottomLeftTop;
+    private ArrayList<com.maltsev.labyrinth.model.field.PointOnTheField> cellsRightBottomLeft;
+    private ArrayList<com.maltsev.labyrinth.model.field.PointOnTheField> cellsTopRightBottom;
 
-    private List<PointOnTheField> trees;
-    private List<PointOnTheField> grass;
+    private List<com.maltsev.labyrinth.model.field.PointOnTheField> trees;
+    private List<com.maltsev.labyrinth.model.field.PointOnTheField> grass;
 
-    private IFieldDrawer fieldDrawer;
+    private com.maltsev.labyrinth.presenter.interfaces.IFieldDrawer fieldDrawer;
 
     /**
      * @param fieldDrawer отрисовщик
      * @param model ссылка на Model, для извлечения данных необходимых для отрисовки
      */
-    GameFieldDrawer(IFieldDrawer fieldDrawer, IModel model) {
+    GameFieldDrawer(com.maltsev.labyrinth.presenter.interfaces.IFieldDrawer fieldDrawer, com.maltsev.labyrinth.model.IModel model) {
 
         this.passableCells = model.getPassableCells();
         this.fieldDrawer = fieldDrawer;
@@ -60,14 +57,14 @@ class GameFieldDrawer {
      */
     void drawDecoration(){
 
-        for (PointOnTheField point : grass) {
+        for (com.maltsev.labyrinth.model.field.PointOnTheField point : grass) {
 
-            fieldDrawer.drawGrass(translatePointFieldToScreen(point));
+            fieldDrawer.drawGrass(TranslatorOfCoordinate.translatePointFieldToScreen(point));
         }
 
-        for (PointOnTheField point : trees) {
+        for (com.maltsev.labyrinth.model.field.PointOnTheField point : trees) {
 
-            fieldDrawer.drawTree(translatePointFieldToScreen(point));
+            fieldDrawer.drawTree(TranslatorOfCoordinate.translatePointFieldToScreen(point));
         }
     }
 
@@ -96,115 +93,115 @@ class GameFieldDrawer {
         cellsRightBottomLeft = new ArrayList<>();
         cellsTopRightBottom = new ArrayList<>();
 
-        for (PointOnTheField point : passableCells) {
+        for (com.maltsev.labyrinth.model.field.PointOnTheField point : passableCells) {
 
-            if (passableCells.contains(new PointOnTheField(point.getX() + 1, point.getY())) &&
-                    passableCells.contains(new PointOnTheField(point.getX() - 1, point.getY())) &&
-                    passableCells.contains(new PointOnTheField(point.getX(), point.getY() + 1)) &&
-                    passableCells.contains(new PointOnTheField(point.getX(), point.getY() - 1))) {
+            if (passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX() + 1, point.getY())) &&
+                    passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX() - 1, point.getY())) &&
+                    passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX(), point.getY() + 1)) &&
+                    passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX(), point.getY() - 1))) {
 
                 cellsLeftTopRightBottom.add(point);
                 continue;
             }
 
-            if (passableCells.contains(new PointOnTheField(point.getX() + 1, point.getY())) &&
-                    passableCells.contains(new PointOnTheField(point.getX() - 1, point.getY())) &&
-                    passableCells.contains(new PointOnTheField(point.getX(), point.getY() + 1))) {
+            if (passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX() + 1, point.getY())) &&
+                    passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX() - 1, point.getY())) &&
+                    passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX(), point.getY() + 1))) {
 
                 cellsLeftTopRight.add(point);
                 continue;
             }
 
-            if (passableCells.contains(new PointOnTheField(point.getX() - 1, point.getY())) &&
-                    passableCells.contains(new PointOnTheField(point.getX(), point.getY() + 1)) &&
-                    passableCells.contains(new PointOnTheField(point.getX(), point.getY() - 1))) {
+            if (passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX() - 1, point.getY())) &&
+                    passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX(), point.getY() + 1)) &&
+                    passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX(), point.getY() - 1))) {
 
                 cellsBottomLeftTop.add(point);
                 continue;
             }
 
-            if (passableCells.contains(new PointOnTheField(point.getX() + 1, point.getY())) &&
-                    passableCells.contains(new PointOnTheField(point.getX() - 1, point.getY())) &&
-                    passableCells.contains(new PointOnTheField(point.getX(), point.getY() - 1))) {
+            if (passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX() + 1, point.getY())) &&
+                    passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX() - 1, point.getY())) &&
+                    passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX(), point.getY() - 1))) {
 
                 cellsRightBottomLeft.add(point);
                 continue;
             }
 
-            if (passableCells.contains(new PointOnTheField(point.getX() + 1, point.getY())) &&
-                    passableCells.contains(new PointOnTheField(point.getX(), point.getY() + 1)) &&
-                    passableCells.contains(new PointOnTheField(point.getX(), point.getY() - 1))) {
+            if (passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX() + 1, point.getY())) &&
+                    passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX(), point.getY() + 1)) &&
+                    passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX(), point.getY() - 1))) {
 
                 cellsTopRightBottom.add(point);
                 continue;
             }
 
 
-            if (passableCells.contains(new PointOnTheField(point.getX() + 1, point.getY())) &&
-                    passableCells.contains(new PointOnTheField(point.getX() - 1, point.getY()))){
+            if (passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX() + 1, point.getY())) &&
+                    passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX() - 1, point.getY()))){
 
                 cellsLeftRight.add(point);
                 continue;
             }
 
-            if (passableCells.contains(new PointOnTheField(point.getX(), point.getY() + 1)) &&
-                    passableCells.contains(new PointOnTheField(point.getX(), point.getY() - 1))){
+            if (passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX(), point.getY() + 1)) &&
+                    passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX(), point.getY() - 1))){
 
                 cellsTopBottom.add(point);
                 continue;
             }
 
 
-            if (passableCells.contains(new PointOnTheField(point.getX() - 1, point.getY())) &&
-                    passableCells.contains(new PointOnTheField(point.getX(), point.getY() - 1))){
+            if (passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX() - 1, point.getY())) &&
+                    passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX(), point.getY() - 1))){
 
                 cellsLeftBottom.add(point);
                 continue;
             }
 
 
-            if (passableCells.contains(new PointOnTheField(point.getX() + 1, point.getY())) &&
-                    passableCells.contains(new PointOnTheField(point.getX(), point.getY() - 1))){
+            if (passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX() + 1, point.getY())) &&
+                    passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX(), point.getY() - 1))){
 
                 cellsRightBottom.add(point);
                 continue;
             }
 
 
-            if (passableCells.contains(new PointOnTheField(point.getX() - 1, point.getY())) &&
-                    passableCells.contains(new PointOnTheField(point.getX(), point.getY() + 1))){
+            if (passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX() - 1, point.getY())) &&
+                    passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX(), point.getY() + 1))){
 
                 cellsLeftTop.add(point);
                 continue;
             }
 
 
-            if (passableCells.contains(new PointOnTheField(point.getX() + 1, point.getY())) &&
-                    passableCells.contains(new PointOnTheField(point.getX(), point.getY() + 1))){
+            if (passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX() + 1, point.getY())) &&
+                    passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX(), point.getY() + 1))){
 
                 cellsRightTop.add(point);
                 continue;
             }
 
-            if(passableCells.contains(new PointOnTheField(point.getX() + 1, point.getY()))){
+            if(passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX() + 1, point.getY()))){
 
                 cellsRight.add(point);
                 continue;
             }
 
-            if(passableCells.contains(new PointOnTheField(point.getX() - 1, point.getY()))){
+            if(passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX() - 1, point.getY()))){
 
                 cellsLeft.add(point);
                 continue;
             }
 
-            if(passableCells.contains(new PointOnTheField(point.getX(), point.getY() + 1))){
+            if(passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX(), point.getY() + 1))){
 
                 cellsTop.add(point);
                 continue;
             }
 
-            if(passableCells.contains(new PointOnTheField(point.getX(), point.getY() - 1))){
+            if(passableCells.contains(new com.maltsev.labyrinth.model.field.PointOnTheField(point.getX(), point.getY() - 1))){
 
                 cellsBottom.add(point);
             }
@@ -217,49 +214,49 @@ class GameFieldDrawer {
      */
     void drawPassableCells() {
 
-        for (PointOnTheField point : cellsLeftTopRightBottom)
-            fieldDrawer.drawLeftTopRightBottomCells(translatePointFieldToScreen(point));
+        for (com.maltsev.labyrinth.model.field.PointOnTheField point : cellsLeftTopRightBottom)
+            fieldDrawer.drawLeftTopRightBottomCells(TranslatorOfCoordinate.translatePointFieldToScreen(point));
 
-        for (PointOnTheField point : cellsTop)
-            fieldDrawer.drawTopCells(translatePointFieldToScreen(point));
+        for (com.maltsev.labyrinth.model.field.PointOnTheField point : cellsTop)
+            fieldDrawer.drawTopCells(TranslatorOfCoordinate.translatePointFieldToScreen(point));
 
-        for (PointOnTheField point : cellsRight)
-            fieldDrawer.drawRightCells(translatePointFieldToScreen(point));
+        for (com.maltsev.labyrinth.model.field.PointOnTheField point : cellsRight)
+            fieldDrawer.drawRightCells(TranslatorOfCoordinate.translatePointFieldToScreen(point));
 
-        for (PointOnTheField point : cellsLeft)
-            fieldDrawer.drawLeftCells(translatePointFieldToScreen(point));
+        for (com.maltsev.labyrinth.model.field.PointOnTheField point : cellsLeft)
+            fieldDrawer.drawLeftCells(TranslatorOfCoordinate.translatePointFieldToScreen(point));
 
-        for (PointOnTheField point : cellsBottom)
-            fieldDrawer.drawBottomCells(translatePointFieldToScreen(point));
+        for (com.maltsev.labyrinth.model.field.PointOnTheField point : cellsBottom)
+            fieldDrawer.drawBottomCells(TranslatorOfCoordinate.translatePointFieldToScreen(point));
 
-        for (PointOnTheField point : cellsLeftTop)
-            fieldDrawer.drawLeftTopCells(translatePointFieldToScreen(point));
+        for (com.maltsev.labyrinth.model.field.PointOnTheField point : cellsLeftTop)
+            fieldDrawer.drawLeftTopCells(TranslatorOfCoordinate.translatePointFieldToScreen(point));
 
-        for (PointOnTheField point : cellsRightBottom)
-            fieldDrawer.drawRightBottomCells(translatePointFieldToScreen(point));
+        for (com.maltsev.labyrinth.model.field.PointOnTheField point : cellsRightBottom)
+            fieldDrawer.drawRightBottomCells(TranslatorOfCoordinate.translatePointFieldToScreen(point));
 
-        for (PointOnTheField point : cellsLeftRight)
-            fieldDrawer.drawLeftRightCells(translatePointFieldToScreen(point));
+        for (com.maltsev.labyrinth.model.field.PointOnTheField point : cellsLeftRight)
+            fieldDrawer.drawLeftRightCells(TranslatorOfCoordinate.translatePointFieldToScreen(point));
 
-        for (PointOnTheField point : cellsLeftBottom)
-            fieldDrawer.drawLeftBottomCells(translatePointFieldToScreen(point));
+        for (com.maltsev.labyrinth.model.field.PointOnTheField point : cellsLeftBottom)
+            fieldDrawer.drawLeftBottomCells(TranslatorOfCoordinate.translatePointFieldToScreen(point));
 
-        for (PointOnTheField point : cellsRightTop)
-            fieldDrawer.drawRightTopCells(translatePointFieldToScreen(point));
+        for (com.maltsev.labyrinth.model.field.PointOnTheField point : cellsRightTop)
+            fieldDrawer.drawRightTopCells(TranslatorOfCoordinate.translatePointFieldToScreen(point));
 
-        for (PointOnTheField point : cellsTopBottom)
-            fieldDrawer.drawTopBottomCells(translatePointFieldToScreen(point));
+        for (com.maltsev.labyrinth.model.field.PointOnTheField point : cellsTopBottom)
+            fieldDrawer.drawTopBottomCells(TranslatorOfCoordinate.translatePointFieldToScreen(point));
 
-        for (PointOnTheField point : cellsLeftTopRight)
-            fieldDrawer.drawLeftTopRightCells(translatePointFieldToScreen(point));
+        for (com.maltsev.labyrinth.model.field.PointOnTheField point : cellsLeftTopRight)
+            fieldDrawer.drawLeftTopRightCells(TranslatorOfCoordinate.translatePointFieldToScreen(point));
 
-        for (PointOnTheField point : cellsBottomLeftTop)
-            fieldDrawer.drawBottomLeftTopCells(translatePointFieldToScreen(point));
+        for (com.maltsev.labyrinth.model.field.PointOnTheField point : cellsBottomLeftTop)
+            fieldDrawer.drawBottomLeftTopCells(TranslatorOfCoordinate.translatePointFieldToScreen(point));
 
-        for (PointOnTheField point : cellsRightBottomLeft)
-            fieldDrawer.drawRightBottomLeftCells(translatePointFieldToScreen(point));
+        for (com.maltsev.labyrinth.model.field.PointOnTheField point : cellsRightBottomLeft)
+            fieldDrawer.drawRightBottomLeftCells(TranslatorOfCoordinate.translatePointFieldToScreen(point));
 
-        for (PointOnTheField point : cellsTopRightBottom)
-            fieldDrawer.drawTopRightBottomCells(translatePointFieldToScreen(point));
+        for (com.maltsev.labyrinth.model.field.PointOnTheField point : cellsTopRightBottom)
+            fieldDrawer.drawTopRightBottomCells(TranslatorOfCoordinate.translatePointFieldToScreen(point));
     }
 }

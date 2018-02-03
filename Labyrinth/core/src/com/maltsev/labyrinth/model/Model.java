@@ -1,17 +1,6 @@
 package com.maltsev.labyrinth.model;
 
-import com.maltsev.labyrinth.model.analyzer.WayAnalyzer;
-import com.maltsev.labyrinth.model.analyzer.event.gameover.GameOverAnalyzer;
-import com.maltsev.labyrinth.model.analyzer.event.gameover.GameOverListener;
-import com.maltsev.labyrinth.model.analyzer.event.keysanddoors.doors.OpenDoorAnalyzer;
 import com.maltsev.labyrinth.model.analyzer.event.keysanddoors.doors.OpenDoorListener;
-import com.maltsev.labyrinth.model.analyzer.event.keysanddoors.keys.FoundKeyAnalyzer;
-import com.maltsev.labyrinth.model.analyzer.event.keysanddoors.keys.FoundKeyListener;
-import com.maltsev.labyrinth.model.field.FieldIsEmptyException;
-import com.maltsev.labyrinth.model.field.GameField;
-import com.maltsev.labyrinth.model.field.OutOfBoundaryOfTheFieldException;
-import com.maltsev.labyrinth.model.field.PointOnTheField;
-import com.maltsev.labyrinth.model.protagonist.Protagonist;
 
 import java.util.ArrayDeque;
 import java.util.List;
@@ -25,54 +14,54 @@ public class Model implements IModel {
      * Здесь хранится информацию о том, где он находится и его
      * определённые параметры (например, сколько у него ключей)
      */
-    private Protagonist protagonist;
+    private com.maltsev.labyrinth.model.protagonist.Protagonist protagonist;
 
     /**
      * Игровое поле.
      */
-    private GameField gameField;
+    private com.maltsev.labyrinth.model.field.GameField gameField;
 
     /**
      *  Наблюдатель за концом игры
      *  Оповещает его слушателей о том, что игра закночилась
      */
-    private GameOverAnalyzer analyzerOfGameOver;
+    private com.maltsev.labyrinth.model.analyzer.event.gameover.GameOverAnalyzer analyzerOfGameOver;
 
     /**
      * Наблюдатель за открытием дверей
      * Оповещает слушателей о том, что была открыта дверь
      */
-    private OpenDoorAnalyzer analyzerOfOpenDoor;
+    private com.maltsev.labyrinth.model.analyzer.event.keysanddoors.doors.OpenDoorAnalyzer analyzerOfOpenDoor;
 
     /**
      * Наблюдатель за нахождением ключей
      * Оповещает слушателей о том, что найден ключ
      */
-    private FoundKeyAnalyzer analyzerOfFoundKey;
+    private com.maltsev.labyrinth.model.analyzer.event.keysanddoors.keys.FoundKeyAnalyzer analyzerOfFoundKey;
 
     /**
      * Анализатор пути
      * Строит путь определённой длинны между двумя точкам
      * Длинна ограниченна, потому что не хотелось бы, чтобы игрок в одно касание перешёл от начал к концу
      */
-    private WayAnalyzer analyzerOfWay;
+    private com.maltsev.labyrinth.model.analyzer.WayAnalyzer analyzerOfWay;
 
     /**
      * Массив дверей
      * Запоминается, т.к. многократно используется при проверке возможности хода
      */
-    private List<PointOnTheField> doors;
+    private List<com.maltsev.labyrinth.model.field.PointOnTheField> doors;
 
 
     @Override
-    public void setGameField(final String newField) throws FieldIsEmptyException {
+    public void setGameField(final String newField) throws com.maltsev.labyrinth.model.field.FieldIsEmptyException {
 
-        this.gameField = new GameField(newField);
-        protagonist = new Protagonist(gameField.getStartingPoint());
-        analyzerOfGameOver = new GameOverAnalyzer(this);
-        analyzerOfFoundKey = new FoundKeyAnalyzer(this);
-        analyzerOfOpenDoor = new OpenDoorAnalyzer(this);
-        analyzerOfWay = new WayAnalyzer(this);
+        this.gameField = new com.maltsev.labyrinth.model.field.GameField(newField);
+        protagonist = new com.maltsev.labyrinth.model.protagonist.Protagonist(gameField.getStartingPoint());
+        analyzerOfGameOver = new com.maltsev.labyrinth.model.analyzer.event.gameover.GameOverAnalyzer(this);
+        analyzerOfFoundKey = new com.maltsev.labyrinth.model.analyzer.event.keysanddoors.keys.FoundKeyAnalyzer(this);
+        analyzerOfOpenDoor = new com.maltsev.labyrinth.model.analyzer.event.keysanddoors.doors.OpenDoorAnalyzer(this);
+        analyzerOfWay = new com.maltsev.labyrinth.model.analyzer.WayAnalyzer(this);
         doors = gameField.getDoors();
 
         analyzerOfFoundKey.addListener(protagonist);
@@ -83,7 +72,7 @@ public class Model implements IModel {
      * Вызывается перед тем, как сделать ход, т.к. возможно дверь откроется
      * @param point - точка, в которую попытался сходить игрок
      */
-    private void checkDoors(PointOnTheField point) {
+    private void checkDoors(com.maltsev.labyrinth.model.field.PointOnTheField point) {
 
         if (doors.contains(point) && protagonist.getNumberOfKeys() > 0 && !isItPassableCells(point)) {
 
@@ -94,11 +83,11 @@ public class Model implements IModel {
     }
 
     @Override
-    public ArrayDeque<PointOnTheField> movesOfProtagonist(final int x, final  int y) {
+    public ArrayDeque<com.maltsev.labyrinth.model.field.PointOnTheField> movesOfProtagonist(final int x, final  int y) {
 
-        checkDoors(new PointOnTheField(x,y));
+        checkDoors(new com.maltsev.labyrinth.model.field.PointOnTheField(x,y));
 
-        ArrayDeque<PointOnTheField> way = analyzerOfWay.getWay(getPositionOfProtagonist(), new PointOnTheField(x,y));
+        ArrayDeque<com.maltsev.labyrinth.model.field.PointOnTheField> way = analyzerOfWay.getWay(getPositionOfProtagonist(), new com.maltsev.labyrinth.model.field.PointOnTheField(x,y));
 
         if (way == null) return null;
 
@@ -126,20 +115,20 @@ public class Model implements IModel {
 
             return gameField.isItPassableCell(x,y);
 
-        }catch (OutOfBoundaryOfTheFieldException ex) {
+        }catch (com.maltsev.labyrinth.model.field.OutOfBoundaryOfTheFieldException ex) {
 
             return false;
         }
     }
 
     @Override
-    public boolean isItPassableCells(final PointOnTheField point) {
+    public boolean isItPassableCells(final com.maltsev.labyrinth.model.field.PointOnTheField point) {
 
         try {
 
             return gameField.isItPassableCell(point);
 
-        }catch (OutOfBoundaryOfTheFieldException ex) {
+        }catch (com.maltsev.labyrinth.model.field.OutOfBoundaryOfTheFieldException ex) {
 
             return false;
         }
@@ -158,25 +147,25 @@ public class Model implements IModel {
     }
 
     @Override
-    public List<PointOnTheField> getPassableCells() {
+    public List<com.maltsev.labyrinth.model.field.PointOnTheField> getPassableCells() {
 
         return gameField.getPassableCells();
     }
 
     @Override
-    public PointOnTheField getPositionOfProtagonist() {
+    public com.maltsev.labyrinth.model.field.PointOnTheField getPositionOfProtagonist() {
 
         return protagonist.getLocationOfProtagonist();
     }
 
     @Override
-    public PointOnTheField getStartPosition() {
+    public com.maltsev.labyrinth.model.field.PointOnTheField getStartPosition() {
 
         return gameField.getStartingPoint();
     }
 
     @Override
-    public PointOnTheField getFinishPosition() {
+    public com.maltsev.labyrinth.model.field.PointOnTheField getFinishPosition() {
 
         return gameField.getFinishingPoint();
     }
@@ -188,38 +177,38 @@ public class Model implements IModel {
     }
 
     @Override
-    public List<PointOnTheField> getKeys() {
+    public List<com.maltsev.labyrinth.model.field.PointOnTheField> getKeys() {
 
         return gameField.getKeys();
     }
 
     @Override
-    public List<PointOnTheField> getDoors() {
+    public List<com.maltsev.labyrinth.model.field.PointOnTheField> getDoors() {
 
         return gameField.getDoors();
     }
 
 
     @Override
-    public void addListenerOfGameOver(GameOverListener listener) {
+    public void addListenerOfGameOver(com.maltsev.labyrinth.model.analyzer.event.gameover.GameOverListener listener) {
 
         analyzerOfGameOver.addListener(listener);
     }
 
     @Override
-    public void removeListenerOfGameOver(GameOverListener listener) {
+    public void removeListenerOfGameOver(com.maltsev.labyrinth.model.analyzer.event.gameover.GameOverListener listener) {
 
         analyzerOfGameOver.removeListener(listener);
     }
 
     @Override
-    public void addListenerOfFoundKey(FoundKeyListener listener) {
+    public void addListenerOfFoundKey(com.maltsev.labyrinth.model.analyzer.event.keysanddoors.keys.FoundKeyListener listener) {
 
         analyzerOfFoundKey.addListener(listener);
     }
 
     @Override
-    public void removeListenerOfFoundKey(FoundKeyListener listener) {
+    public void removeListenerOfFoundKey(com.maltsev.labyrinth.model.analyzer.event.keysanddoors.keys.FoundKeyListener listener) {
 
         analyzerOfFoundKey.removeListener(listener);
     }
@@ -243,13 +232,13 @@ public class Model implements IModel {
     }
 
     @Override
-    public List<PointOnTheField> getTrees() {
+    public List<com.maltsev.labyrinth.model.field.PointOnTheField> getTrees() {
 
         return gameField.getTrees();
     }
 
     @Override
-    public List<PointOnTheField> getGrass() {
+    public List<com.maltsev.labyrinth.model.field.PointOnTheField> getGrass() {
 
         return gameField.getGrass();
     }
